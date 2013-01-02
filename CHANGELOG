@@ -1,0 +1,7 @@
+# AdTonik Client Changelog #
+
+Version 1.0.0 (January 2, 2013):
+- iOS: Initial production release
+- iOS: Support for Apple's IFA in iOS 6, UDID otherwise
+- iOS: refreshTimer specified by API server
+
