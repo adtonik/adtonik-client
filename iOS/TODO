@@ -1,0 +1,12 @@
+
+TODO
+----
+
+Refactoring Tasks
+* Kiwi BDD testing framework
+  - Write tests for RestAPI class, AudioRecorder, AudioACR
+  - Write AutoRefresh feature using BDD process (hard set 5 minute refresh, dynamic server specified refresh)
+
+Preferences and Opt-Out:
+* Look into automatically adding a setting in preferences with toggle to enable/disable ambient audio targeting
+
