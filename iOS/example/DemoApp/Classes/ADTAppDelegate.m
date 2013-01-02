@@ -7,6 +7,7 @@
 //
 
 #import "ADTAppDelegate.h"
+#import <AVFoundation/AVFoundation.h>
 
 @implementation ADTAppDelegate
 
@@ -20,6 +21,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error: NULL];
+
+  UInt32 allowMixing = true;
+  
+ AudioSessionSetProperty (kAudioSessionProperty_OverrideCategoryMixWithOthers,  // 1
+                          sizeof (allowMixing),                                 // 2
+                          &allowMixing                                          // 3
+                          );
+
   // Override point for customization after application launch.
   return YES;
 }

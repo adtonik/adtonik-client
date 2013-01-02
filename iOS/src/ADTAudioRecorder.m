@@ -16,6 +16,7 @@
   BOOL recording_;
   NSURL *filename_;
   NSString *defaultCategory_;
+  NSString *defaultMode_;
   NSTimeInterval duration_;
   AVAudioRecorder *audioRecorder_;
   NSDictionary *recordSettings_;
@@ -24,6 +25,7 @@
 
 @property (nonatomic, retain) NSURL *filename;
 @property (nonatomic, copy)   NSString *defaultCategory;
+@property (nonatomic, copy)   NSString *defaultMode;
 @property (nonatomic, retain) AVAudioRecorder  *audioRecorder;
 @property (nonatomic, assign) id<ADTAudioRecorderDelegate> delegate;
 @property (nonatomic, assign) NSTimeInterval duration;
@@ -38,6 +40,7 @@
 @synthesize filename = filename_;
 @synthesize defaultCategory = defaultCategory_;
 @synthesize duration = duration_;
+@synthesize defaultMode = defaultMode_;
 
 #pragma mark -
 #pragma mark Initializing an ADTAudioRecorder Object
@@ -66,7 +69,8 @@
                        [NSNumber numberWithInt:AVAudioQualityMax], AVSampleRateConverterAudioQualityKey,
                        [NSNumber numberWithBool:YES], AVLinearPCMIsFloatKey, nil];
 
-    defaultCategory_ = [[AVAudioSession sharedInstance] category];
+    defaultCategory_ = [[[AVAudioSession sharedInstance] category] retain];
+    defaultMode_     = [[[AVAudioSession sharedInstance] mode] retain];
   }
 
   return self;
@@ -93,6 +97,15 @@
     ADTLogError(@"Error setting AVAudioSession category to PlayAndRecord: %@", audioSessionError);
     return NO;
   }
+
+  UInt32 allowMixing = true;
+  
+  AudioSessionSetProperty (kAudioSessionProperty_OverrideCategoryMixWithOthers,  // 1
+                           sizeof (allowMixing),                                 // 2
+                           &allowMixing                                          // 3
+                           );
+    
+  [[AVAudioSession sharedInstance] setMode:AVAudioSessionModeMeasurement error:nil];
 
   // Generate temporary filename for our recording session
   self.filename = [NSURL fileURLWithPath:[self generateUniqueFilename]];
@@ -144,6 +157,7 @@
   [filename_ release];
   [defaultCategory_ release];
   [audioRecorder_ release];
+  [defaultMode_ release];
 
   [super dealloc];
 }
@@ -212,7 +226,9 @@
 - (void) resetAudioSessionCategory {
   self.filename = nil;
   ADTLogInfo(@"Resetting Audio Session Category back to %@", self.defaultCategory);
-  [[AVAudioSession sharedInstance] setCategory:self.defaultCategory error: NULL];
+
+  [[AVAudioSession sharedInstance] setCategory:self.defaultCategory error: nil];
+  [[AVAudioSession sharedInstance] setMode:self.defaultMode error: nil];
 }
 
 #pragma mark -
