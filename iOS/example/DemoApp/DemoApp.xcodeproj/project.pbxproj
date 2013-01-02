@@ -49,6 +49,7 @@
 		AB3C08C6154F97C600EEFA58 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		AB3E9A1616517F5E00307E5D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		AB3F092A1694D30C00132794 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		AB3F09341694E0C900132794 /* ADTVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTVersion.h; sourceTree = "<group>"; };
 		ABD1AF9C1587FF9700BF789E /* ADTAudioACR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTAudioACR.h; sourceTree = "<group>"; };
 		ABD1AF9D1587FF9700BF789E /* ADTAudioACR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTAudioACR.m; sourceTree = "<group>"; };
 		ABD1AF9E1587FF9700BF789E /* ADTAudioACRDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTAudioACRDelegate.h; sourceTree = "<group>"; };
@@ -148,6 +149,7 @@
 		ABD1AF9B1587FF9700BF789E /* AdTonikSDK */ = {
 			isa = PBXGroup;
 			children = (
+				AB3F09341694E0C900132794 /* ADTVersion.h */,
 				ABD1AF9C1587FF9700BF789E /* ADTAudioACR.h */,
 				ABD1AF9D1587FF9700BF789E /* ADTAudioACR.m */,
 				ABD1AF9E1587FF9700BF789E /* ADTAudioACRDelegate.h */,
