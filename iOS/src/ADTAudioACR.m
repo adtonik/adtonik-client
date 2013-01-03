@@ -126,6 +126,7 @@
 #endif
 
   if(self.isRunning) {
+    ADTLogError(@"acr is already running..");
     return NO;
   }
 
@@ -189,8 +190,14 @@
   self.audioRecorder = nil;
 
   // Refresh process if necessary
-  if([self doRefresh])
+  if([self doRefresh]) {
     [self performSelectorInBackground:@selector(startTimer) withObject:nil];
+  } else {
+    self.running = NO;
+
+    if([delegate_ respondsToSelector:@selector(acrComplete)])
+      [delegate_ acrComplete];    
+  }
 }
 
 #pragma mark -
@@ -338,5 +345,15 @@ NSString *ADTSHA1Digest(NSString *string) {
 
   [self finishedRun];
 }
+
+- (void) restAPIOptOut {
+  ADTLogInfo(@"Device is opted out.. stopping");
+  
+  self.running = NO;
+  
+  if([delegate_ respondsToSelector:@selector(acrComplete)])
+    [delegate_ acrComplete];
+}
+
 
 @end

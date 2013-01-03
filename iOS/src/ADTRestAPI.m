@@ -52,9 +52,6 @@
 #pragma mark Deallocate
 
 - (void) dealloc {
-  [conn_ cancel];
-
-  [conn_ release];
   [appId_ release];
   [appSecret_ release];
   [request_ release];
@@ -183,7 +180,15 @@
 
   // save the state
   self.state = [jsonObject objectForKey:@"state"];
-
+  
+  // check for user opt out flag
+  if(e == nil && [[self.state objectForKey:@"optout"] boolValue] == YES) {
+    if([delegate_ respondsToSelector:@selector(restAPIOptOut)])
+      [delegate_ restAPIOptOut];
+    
+    return;
+  }
+    
   // Check for successful response in envelope
   if(e == nil && [ADTRestEnvelope successResponse:jsonObject] == YES) {
     NSDictionary *results = [jsonObject objectForKey:@"data"];

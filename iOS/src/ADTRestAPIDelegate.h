@@ -13,4 +13,6 @@
 - (void) restAPIResponse:(NSDictionary *) results successfully:(BOOL) flag;
 - (void) restAPIError:(id) error;
 
+- (void) restAPIOptOut;
+
 @end

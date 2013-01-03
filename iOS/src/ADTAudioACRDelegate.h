@@ -60,4 +60,9 @@
  */
 - (void) acrAudioProcessingError: (NSString *) error;
 
+/**
+ Called by the system when ACR is completed. 
+ */
+- (void) acrComplete;
+
 @end

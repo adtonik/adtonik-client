@@ -68,11 +68,11 @@
 }
 
 - (NSString *) acrAppId {
-  return @"appID";
+  return @"ADTDemoApp";
 }
 
 - (NSString *) acrAppSecret {
-  return @"appSecret";
+  return @"ADTDemoApp";
 }
 
 - (void) acrAPIReceivedResults: (NSDictionary *) results successfully:(BOOL) flag {  
@@ -118,6 +118,10 @@
 
 - (void) acrAudioProcessingError: (NSString *) error {
   NSLog(@"Encountered audio processing error %@", error);
+}
+
+- (void) acrComplete {
+  NSLog(@"ACR Complete!");
 }
 
 @end
