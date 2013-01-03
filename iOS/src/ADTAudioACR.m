@@ -27,7 +27,7 @@
   BOOL running_;
   BOOL authorized_;
   BOOL refresh_;
-  
+
   NSString *udid_;
   NSUInteger sampleDuration_;
   NSOperationQueue *acrQueue_;
@@ -87,7 +87,7 @@
     acrQueue_  = [[NSOperationQueue alloc] init];
     sampleDuration_ = ADT_SAMPLE_SECONDS;
     udid_      = [[self getUDID] retain];
-    
+
     restAPI_   = [[ADTRestAPI alloc] initWithDelegate:self andAppId:[delegate acrAppId] andAppSecret:[delegate acrAppSecret] andUDID: udid_];
 
     // make sure allocations successful, bail otherwise.
@@ -196,7 +196,7 @@
     self.running = NO;
 
     if([delegate_ respondsToSelector:@selector(acrComplete)])
-      [delegate_ acrComplete];    
+      [delegate_ acrComplete];
   }
 }
 
@@ -207,9 +207,9 @@
 - (void) startTimer {
   NSRunLoop* runLoop = [NSRunLoop currentRunLoop];
   NSTimer *refreshTimer;
-  
+
   ADTLogInfo(@"Scheduling ACR to run in %d seconds", self.restAPI.refreshTimer);
-  
+
   refreshTimer = [NSTimer scheduledTimerWithTimeInterval:self.restAPI.refreshTimer
                                                   target:self
                                                 selector:@selector(queueOperation)
@@ -271,29 +271,29 @@ NSString *ADTSHA1Digest(NSString *string) {
   unsigned char digest[CC_SHA1_DIGEST_LENGTH];
   NSData *data = [string dataUsingEncoding:NSASCIIStringEncoding];
   CC_SHA1([data bytes], [data length], digest);
-  
+
   NSMutableString *output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
   for (int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++)
   {
     [output appendFormat:@"%02x", digest[i]];
   }
-  
+
   return output;
 }
 
 - (NSString *) getUDID {
   NSString *identifier = nil;
-  
+
   if([delegate_ respondsToSelector:@selector(acrUDID)]) {
     return [delegate_ acrUDID];
   }
-  
+
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
-  identifier = [[[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString] uppercaseString];
+  identifier = [[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString];
 #else
-  identifier = [ADTSHA1Digest([[UIDevice currentDevice] uniqueIdentifier]) uppercaseString];
+  identifier = ADTSHA1Digest([[UIDevice currentDevice] uniqueIdentifier]);
 #endif
-  
+
   return identifier;
 }
 
@@ -331,7 +331,7 @@ NSString *ADTSHA1Digest(NSString *string) {
 #pragma mark ADTRestAPI Delegate Methods
 
 - (void) restAPIResponse:(NSDictionary *) results successfully:(BOOL) flag {
-  
+
   if([delegate_ respondsToSelector:@selector(acrAPIReceivedResults:successfully:)])
     [delegate_ acrAPIReceivedResults: results successfully:flag];
 
@@ -348,9 +348,9 @@ NSString *ADTSHA1Digest(NSString *string) {
 
 - (void) restAPIOptOut {
   ADTLogInfo(@"Device is opted out.. stopping");
-  
+
   self.running = NO;
-  
+
   if([delegate_ respondsToSelector:@selector(acrComplete)])
     [delegate_ acrComplete];
 }
