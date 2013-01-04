@@ -289,7 +289,7 @@ NSString *ADTSHA1Digest(NSString *string) {
   }
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
-  identifier = [[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString];
+  identifier = ADTSHA1Digest([[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString]);
 #else
   identifier = ADTSHA1Digest([[UIDevice currentDevice] uniqueIdentifier]);
 #endif
