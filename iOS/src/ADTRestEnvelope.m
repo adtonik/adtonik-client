@@ -33,12 +33,12 @@
 #pragma mark -
 #pragma mark Envelope Construction
 
-+ (NSData *) messageWithData: (id) data
-                       state: (NSDictionary *) state
-                       appId: (NSString *) appId
-                   appSecret: (NSString *) appSecret
-                  acrVersion: (NSString *) acrVersion
-                     andUDID: (NSString *) udid
++ (NSData *)messageWithData:(id)data
+                      state:(NSDictionary *)state
+                      appId:(NSString *)appId
+                  appSecret:(NSString *)appSecret
+                 acrVersion:(NSString *)acrVersion
+                    andUDID:(NSString *)udid
 {
 
   time_t unixTime = (time_t) [[NSDate date] timeIntervalSince1970];
@@ -68,57 +68,48 @@
 #pragma mark -
 #pragma mark Envelope Validation
 
-+ (BOOL) validEnvelope: (NSDictionary *) envelope
++ (BOOL)validEnvelope:(NSDictionary *)envelope
 {
   // validate required envelope fields
-  if(([envelope objectForKey:@"status"] &&
-      [envelope objectForKey:@"timestamp"] &&
-      [envelope objectForKey:@"data"] &&
-      [envelope objectForKey:@"match"] &&
-      [envelope objectForKey:@"refreshTimer"] &&
-      [envelope objectForKey:@"envelopeVersion"]) == NO) {
+  if(!envelope[@"status"] && envelope[@"timestamp"] && envelope[@"data"] &&
+     envelope[@"refreshTimer"] && envelope[@"envelopeVersion"] && envelope[@"match"]) {
     return NO;
   }
-
+  
   // validate envelope version
-  if(![[envelope objectForKey:@"envelopeVersion"]
-       isEqualToString:[ADTRestEnvelope envelopeVersion]]) {
+  if(![envelope[@"envelopeVersion"] isEqualToString:[ADTRestEnvelope envelopeVersion]]) {
     return NO;
   }
 
-  // make sure type is response
-  if(![[envelope objectForKey:@"type"] isEqualToString:@"response"])
-    return NO;
-
-  return YES;
+  return [envelope[@"type"] isEqualToString:@"response"];
 }
 
 #pragma mark -
 #pragma mark Check for successful response
 
-+ (BOOL) successResponse: (NSDictionary *) envelope
-{
-  if([ADTRestEnvelope validEnvelope:envelope] == NO)
++ (BOOL)successResponse:(NSDictionary *)envelope
+{  
+  if(![ADTRestEnvelope validEnvelope:envelope]) {
     return NO;
+  }
 
-  if([[envelope objectForKey:@"status"] isEqualToString:@"success"] &&
-     [[envelope objectForKey:@"match"] boolValue] == YES)
-    return YES;
-  else
-    return NO;
+  BOOL envelopeStatus = [envelope[@"status"] isEqualToString:@"success"];
+  BOOL matchStatus = [envelope[@"match"] boolValue] == YES;
+  
+  return envelopeStatus && matchStatus;  
 }
 
 #pragma mark -
 #pragma mark HMAC Message Signing
 
-+ (NSString *) signMessage: (NSData *) message
-                 withAppID: (NSString *) appID
-              andAppSecret: (NSString *) appSecret
++ (NSString *)signMessage:(NSData *)message
+                withAppID:(NSString *)appID
+             andAppSecret:(NSString *)appSecret
 {
 
   CCHmacContext    ctx;
-  unsigned char    mac[ CC_SHA1_DIGEST_LENGTH ];
-  char             hexmac[ 2 * CC_SHA1_DIGEST_LENGTH + 1 ];
+  unsigned char    mac[CC_SHA1_DIGEST_LENGTH];
+  char             hexmac[2 * CC_SHA1_DIGEST_LENGTH + 1];
   char             *p;
 
   const char *data = [message bytes];

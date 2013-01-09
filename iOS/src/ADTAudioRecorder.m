@@ -11,56 +11,39 @@
 #import "ADTAudioRecorder.h"
 #import "ADTLogging.h"
 
-@interface ADTAudioRecorder () <AVAudioRecorderDelegate> {
-@private
-  BOOL recording_;
-  NSURL *filename_;
-  NSString *defaultCategory_;
-  NSString *defaultMode_;
-  NSTimeInterval duration_;
-  AVAudioRecorder *audioRecorder_;
-  NSDictionary *recordSettings_;
-  id<ADTAudioRecorderDelegate> delegate_;
-}
+@interface ADTAudioRecorder () <AVAudioRecorderDelegate>
 
 @property (nonatomic, retain) NSURL *filename;
 @property (nonatomic, copy)   NSString *defaultCategory;
 @property (nonatomic, copy)   NSString *defaultMode;
 @property (nonatomic, retain) AVAudioRecorder  *audioRecorder;
 @property (nonatomic, assign) id<ADTAudioRecorderDelegate> delegate;
+@property (nonatomic, retain) NSDictionary* recordSettings;
 @property (nonatomic, assign) NSTimeInterval duration;
 
 @end
 
 @implementation ADTAudioRecorder
 
-@synthesize recording = recording_;
-@synthesize audioRecorder = audioRecorder_;
-@synthesize delegate = delegate_;
-@synthesize filename = filename_;
-@synthesize defaultCategory = defaultCategory_;
-@synthesize duration = duration_;
-@synthesize defaultMode = defaultMode_;
-
 #pragma mark -
 #pragma mark Initializing an ADTAudioRecorder Object
 
-- (id) initWithDelegate:(id<ADTAudioRecorderDelegate>) delegate {
-
+- (id)initWithDelegate:(id<ADTAudioRecorderDelegate>)delegate
+{
   self = [self init];
 
   if(self) {
-    delegate_ = delegate;
+    _delegate = delegate;
   }
 
   return self;
 }
 
-- (id) init {
-
+- (id)init
+{
   if(self = [super init]) {
 
-    recordSettings_ = [NSDictionary dictionaryWithObjectsAndKeys:
+    _recordSettings = [NSDictionary dictionaryWithObjectsAndKeys:
                        [NSNumber numberWithInt:kAudioFormatLinearPCM], AVFormatIDKey,
                        [NSNumber numberWithFloat:8000], AVSampleRateKey,
                        [NSNumber numberWithInt:1], AVNumberOfChannelsKey,
@@ -69,17 +52,32 @@
                        [NSNumber numberWithInt:AVAudioQualityMax], AVSampleRateConverterAudioQualityKey,
                        [NSNumber numberWithBool:YES], AVLinearPCMIsFloatKey, nil];
 
-    defaultCategory_ = [[[AVAudioSession sharedInstance] category] retain];
-    defaultMode_     = [[[AVAudioSession sharedInstance] mode] retain];
+    _defaultCategory = [[[AVAudioSession sharedInstance] category] retain];
+    _defaultMode     = [[[AVAudioSession sharedInstance] mode] retain];
   }
 
   return self;
 }
 
 #pragma mark -
+#pragma mark Deallocate
+
+- (void)dealloc
+{  
+  [_filename release];
+  [_defaultCategory release];
+  [_recordSettings release];
+  [_audioRecorder release];
+  [_defaultMode release];
+  
+  [super dealloc];
+}
+
+#pragma mark -
 #pragma mark Controlling Recording
 
-- (BOOL) record: (NSTimeInterval) duration {
+- (BOOL)record:(NSTimeInterval)duration
+{
 
   if(self.isRecording) {
     ADTLogWarn(@"Called record while ADTAudioRecorder is already recording..");
@@ -115,7 +113,7 @@
   NSError *recordError = nil;
   
   AVAudioRecorder *newAudioRecorder = [[AVAudioRecorder alloc] initWithURL: self.filename
-                                                                  settings: recordSettings_
+                                                                  settings: self.recordSettings
                                                                       error: &recordError];
 
 
@@ -132,7 +130,7 @@
   [self.audioRecorder setDelegate: self];
 
   // Kick off async record operation
-  if([audioRecorder_ recordForDuration:duration] == NO) {
+  if([self.audioRecorder recordForDuration:duration] == NO) {
     ADTLogError(@"AudioRecorder returned FALSE");
   }
 
@@ -141,31 +139,19 @@
   return YES;
 }
 
-- (void) stop {
+- (void)stop {
   if(self.isRecording) {
     ADTLogInfo(@"Stopping audio recorder..");
-    [audioRecorder_ stop];
+    [self.audioRecorder stop];
     self.recording = NO;
   }
 }
 
 #pragma mark -
-#pragma mark Deallocate
-
-- (void) dealloc {
-    
-  [filename_ release];
-  [defaultCategory_ release];
-  [audioRecorder_ release];
-  [defaultMode_ release];
-
-  [super dealloc];
-}
-
-#pragma mark -
 #pragma mark Audio Recorder Delegate Methods
 
-- (void) audioRecorderDidFinishRecording:(AVAudioRecorder *) recorder successfully:(BOOL) flag {
+- (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag
+{
   self.recording = NO;
 
   if(flag == YES) {
@@ -174,8 +160,8 @@
     ADTLogInfo(@"Audio record did not complete successfully..");
   }
 
-  if([delegate_ respondsToSelector:@selector(recorderFinished:successfully:)]) {
-    [delegate_ recorderFinished:self.filename successfully:flag];
+  if([self.delegate respondsToSelector:@selector(recorderFinished:successfully:)]) {
+    [self.delegate recorderFinished:self.filename successfully:flag];
   }
   
   // After file is processed, delete from disk and reset the audio session category to default..
@@ -184,13 +170,14 @@
   [self resetAudioSessionCategory];
 }
 
-- (void) audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *) recorder error:(NSError *) error {
+- (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError *)error
+{
   self.recording = NO;
 
   ADTLogInfo(@"An encoder error occurred while recording audio %@", error);
 
-  if([delegate_ respondsToSelector:@selector(recorderFailure:)]) {
-    [delegate_ recorderFailure:error];
+  if([self.delegate respondsToSelector:@selector(recorderFailure:)]) {
+    [self.delegate recorderFailure:error];
   }
 
   // TODO: call observer when completed. observer's responsibility should be to reset
@@ -201,16 +188,18 @@
   [self resetAudioSessionCategory];
 }
 
-- (void) audioRecorderBeginInterruption:(AVAudioRecorder *) recorder {
+- (void)audioRecorderBeginInterruption:(AVAudioRecorder *)recorder
+{
   ADTLogInfo(@"Audio recorder began interruption..pausing recording");
-  [audioRecorder_ pause];
+  [self.audioRecorder pause];
 }
 
-- (void) audioRecorderEndInterruption:(AVAudioRecorder *) recorder withFlags:(NSUInteger) flags {
+- (void)audioRecorderEndInterruption:(AVAudioRecorder *)recorder withFlags:(NSUInteger)flags
+{
   if(flags == AVAudioSessionInterruptionFlags_ShouldResume) {
     ADTLogInfo(@"Audio recorder interruption ended.. resuming");
     // for some reason audioRecorder record doesn't resume with original duration..
-    [audioRecorder_ recordForDuration:self.duration];
+    [self.audioRecorder recordForDuration:self.duration];
     self.recording = YES;
   } else {
     ADTLogInfo(@"Audio recorder cannot recover from interruption.. stopping it.");
@@ -223,7 +212,8 @@
 #pragma mark -
 #pragma mark Reset Audio Session Category
 
-- (void) resetAudioSessionCategory {
+- (void)resetAudioSessionCategory
+{
   self.filename = nil;
   ADTLogInfo(@"Resetting Audio Session Category back to %@", self.defaultCategory);
 
@@ -234,7 +224,8 @@
 #pragma mark -
 #pragma mark Generate Temporary Filename
 
-- (NSString *) generateUniqueFilename {
+- (NSString *)generateUniqueFilename
+{
   CFUUIDRef uuid = CFUUIDCreate(NULL);
   CFStringRef uuidString = CFUUIDCreateString(NULL, uuid);
 

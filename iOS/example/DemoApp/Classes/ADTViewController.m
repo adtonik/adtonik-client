@@ -8,17 +8,21 @@
 
 #import "ADTViewController.h"
 
-@implementation ADTViewController
+@interface ADTViewController () <ADTAudioACRDelegate>
 
-@synthesize audioACR = audioACR_;
-@synthesize webView = webView_;
-@synthesize liveTitle = liveTitle_;
+@property (nonatomic, retain) IBOutlet UIWebView *webView;
+@property (nonatomic, retain) ADTAudioACR *audioACR;
+@property (nonatomic, copy) NSString *liveTitle;
+
+@end
+
+@implementation ADTViewController
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
 
-  ADTAudioACR *newAudioACR = [[ADTAudioACR alloc] initWithDelegate:self refresh:YES];
+  ADTAudioACR *newAudioACR = [[ADTAudioACR alloc] initWithDelegate:self doRefresh:YES andAppID:@"ADTDemoApp" andAppSecret:@"ADTDemoApp"];
 
   self.audioACR = newAudioACR;
   [newAudioACR release];
@@ -47,14 +51,15 @@
 
 - (void)dealloc
 {
-  [self.audioACR release];
-  [self.webView release];
-  [self.liveTitle release];
+  [_audioACR release];
+  [_webView release];
+  [_liveTitle release];
   
   [super dealloc];
 }
 
-- (void) resetView {
+- (void) resetView
+{
   [self.webView loadHTMLString:@"" baseURL:nil];
 }
 
@@ -70,15 +75,8 @@
 #pragma mark -
 #pragma mark Required Delegate Methods
 
-- (NSString *) acrAppId {
-  return @"ADTDemoApp";
-}
-
-- (NSString *) acrAppSecret {
-  return @"ADTDemoApp";
-}
-
-- (void) acrAPIDidReceivedResults:(NSDictionary *)results matchedSuccessfully:(BOOL)flag {
+- (void) acrAPIDidReceiveMatch:(NSDictionary *)results matchedSuccessfully:(BOOL)flag
+{
   if(flag == YES) {
     
     NSNumber *live_tv = [results objectForKey:@"live_tv"];
@@ -110,20 +108,23 @@
     NSString *url  = [results objectForKey:@"url"];
 
     if(url != NULL) {      
-      [webView_  loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
+      [self.webView  loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
     }
   }
 }
 
-- (void) acrAPIErrorDidOccur: (NSString *) error {
+- (void)acrAPIErrorDidOccur:(NSString *)error
+{
   NSLog(@"Encountered API ERROR %@", error);
 }
 
-- (void) acrAudioProcessingError: (NSString *) error {
+- (void)acrAudioProcessingError:(NSString *)error
+{
   NSLog(@"Encountered audio processing error %@", error);
 }
 
-- (void) acrComplete {
+- (void)acrComplete
+{
   NSLog(@"ACR Complete!");
 }
 

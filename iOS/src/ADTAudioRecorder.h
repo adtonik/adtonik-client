@@ -38,7 +38,7 @@
  @return Returns initialized instance or `nil` if initialization fails.
 */
 
-- (id) initWithDelegate: (id<ADTAudioRecorderDelegate>) delegate;
+- (id)initWithDelegate:(id<ADTAudioRecorderDelegate>)delegate;
 
 ///---------------------------------------------------------------------------------------
 /// @name Controlling Recording
@@ -51,11 +51,11 @@
  @return YES if record starts successfully, NO if record start fails.
 */
 
-- (BOOL) record: (NSTimeInterval) duration;
+- (BOOL)record:(NSTimeInterval) duration;
 
 /** Stops recording and closes the audio file */
 
-- (void) stop;
+- (void)stop;
 
 ///---------------------------------------------------------------------------------------
 /// @name Get Information About Recording

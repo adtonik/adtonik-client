@@ -60,10 +60,15 @@
  - [ADTAudioACRDelegate acrAudioProcessingError:] is called when there is a recording error
 
  @param delegate The ADTAudioACRDelegate object
+ @param appID The AdTonik assigned appID
+ @param appSecret The AdTonik assigned appSecret
+ 
  @return Returns initialized instance or `nil` if initialization fails.
  */
 
-- (id) initWithDelegate:(id<ADTAudioACRDelegate>) delegate;
+- (id)initWithDelegate:(id<ADTAudioACRDelegate>)delegate
+              andAppID:(NSString *)appID
+          andAppSecret:(NSString *)appSecret;
 
 /**
  Initializes the audio ACR object
@@ -74,10 +79,16 @@
 
  @param delegate The ADTAudioACRDelegate object
  @param refreshFlag Set to YES to continue to run in background
+ @param appID The AdTonik assigned appID
+ @param appSecret The AdTonik assigned appSecret
+
  @return Returns initialized instance or `nil` if initialization fails.
  */
 
-- (id) initWithDelegate:(id<ADTAudioACRDelegate>) delegate refresh: (BOOL) refreshFlag;
+- (id)initWithDelegate:(id<ADTAudioACRDelegate>)delegate
+             doRefresh: (BOOL) refreshFlag
+              andAppID:(NSString *)appID
+          andAppSecret:(NSString *)appSecret;
 
 
 #pragma mark -
@@ -89,7 +100,7 @@
  @return YES if start was successful
  */
 
-- (BOOL) start;
+- (BOOL)start;
 
 /**
  Call stop to end ACR process.
@@ -97,14 +108,6 @@
  @return YES if stop was successful
  */
 
-- (BOOL) stop;
+- (BOOL)stop;
 
-#pragma mark -
-#pragma mark Deallocate
-
-/**
- Deallocate ACR object and cleanup.
- */
-
-- (void) dealloc;
 @end

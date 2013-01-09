@@ -10,10 +10,5 @@
 
 #import "ADTAudioACR.h"
 
-@interface ADTViewController : UIViewController <ADTAudioACRDelegate>
-
-@property (nonatomic, retain) IBOutlet UIWebView *webView;
-@property (nonatomic, retain) ADTAudioACR *audioACR;
-@property (nonatomic, copy) NSString *liveTitle;
-
+@interface ADTViewController : UIViewController
 @end

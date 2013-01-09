@@ -44,8 +44,12 @@
 #pragma mark -
 #pragma mark Initializers
 
-- (id) initWithDelegate:(id<ADTAudioACRDelegate>) delegate refresh:(BOOL)refreshFlag {
-  self = [self initWithDelegate:delegate];
+- (id)initWithDelegate:(id<ADTAudioACRDelegate>)delegate
+             doRefresh:(BOOL)refreshFlag
+              andAppID:(NSString *)appID
+          andAppSecret:(NSString *)appSecret
+{
+  self = [self initWithDelegate:delegate andAppID:appID andAppSecret:appSecret];
 
   if(self) {
     _refresh = refreshFlag;
@@ -54,7 +58,10 @@
   return self;
 }
 
-- (id) initWithDelegate:(id<ADTAudioACRDelegate>) delegate {
+- (id)initWithDelegate:(id<ADTAudioACRDelegate>)delegate
+              andAppID:(NSString *)appID
+          andAppSecret:(NSString *)appSecret
+{
   self = [super init];
 
   if(self) {
@@ -62,8 +69,8 @@
     _acrQueue  = [[NSOperationQueue alloc] init];
     _sampleDuration = ADT_SAMPLE_SECONDS;
     _udid      = [[self getUDID] retain];
-
-    _restAPI   = [[ADTRestAPI alloc] initWithDelegate:self andAppId:[delegate acrAppId] andAppSecret:[delegate acrAppSecret] andUDID: _udid];
+    
+    _restAPI   = [[ADTRestAPI alloc] initWithDelegate:self andAppId:appID andAppSecret:appSecret andUDID:_udid];
 
     // make sure allocations successful, bail otherwise.
     if(!_acrQueue || !_restAPI) {
@@ -79,8 +86,8 @@
 #pragma mark -
 #pragma mark Deallocate
 
-- (void) dealloc {
-
+- (void)dealloc
+{
   [_audioRecorder release];
   [_acrQueue release];
   [_restAPI release];
@@ -92,8 +99,8 @@
 #pragma mark -
 #pragma mark ACR process control methods
 
-- (BOOL) start {
-
+- (BOOL)start
+{
   // Need to decide what we want to return here..
 #if TARGET_IPHONE_SIMULATOR
   NSLog(@"ADTAudioACR cannot run in the simulator, returning..");
@@ -114,8 +121,9 @@
 
 #pragma mark -
 #pragma mark Add Operation to Queue
-- (BOOL) queueOperation {
 
+- (BOOL)queueOperation
+{
   NSInvocationOperation *acrOperation;
 
   acrOperation = [[NSInvocationOperation alloc] initWithTarget:self
@@ -131,8 +139,9 @@
 #pragma mark -
 #pragma mark Starts Asynchronous Operations
 
-- (void) startAsyncOperations {
-  self.audioRecorder = [[[ADTAudioRecorder alloc] initWithDelegate: self] autorelease];
+- (void)startAsyncOperations
+{
+  self.audioRecorder = [[[ADTAudioRecorder alloc] initWithDelegate:self] autorelease];
   [self.audioRecorder record:self.sampleDuration];
 }
 
@@ -196,7 +205,7 @@
 #pragma mark -
 #pragma mark Run ACR algorithm on fingerprint file
 
-- (void) runAlgorithm: (NSString *) filename {
+- (void) runAlgorithm:(NSString *) filename {
   NSSet *fingerprints = [ADTlibacrWrapper getFingerprintsForFile:filename];
 
   // it is now our responsibility to delete the file..
@@ -221,7 +230,7 @@
     ADTLogError(@"ACR process ending: no fingerprints found in set");
 
     if([self.delegate respondsToSelector:@selector(acrAudioProcessingError:)]) {
-      [self.delegate acrAudioProcessingErrorDidOccur: @"Error recording audio"];
+      [self.delegate acrAudioProcessingErrorDidOccur:@"Error recording audio"];
     }
   }
 
@@ -231,7 +240,7 @@
     ADTLogError(@"ACR process ending: queryWithFingerprints failed");
 
     if([self.delegate respondsToSelector:@selector(acrAudioProcessingErrorDidOccur:)]) {
-      [self.delegate acrAudioProcessingErrorDidOccur: @"Error processing fingerprints"];
+      [self.delegate acrAudioProcessingErrorDidOccur:@"Error processing fingerprints"];
     }
   }
 }
@@ -271,7 +280,8 @@ NSString *ADTSHA1Digest(NSString *string) {
 #pragma mark -
 #pragma mark ACRAudioRecorder Delegate Methods
 
-- (void) recorderFinished:(NSURL *)filename successfully:(BOOL)flag {
+- (void) recorderFinished:(NSURL *)filename successfully:(BOOL)flag
+{
   if(flag == YES) {
     ADTLogInfo(@"successfully recorded audio.. generating fingerprints");
 
@@ -281,18 +291,19 @@ NSString *ADTSHA1Digest(NSString *string) {
     ADTLogInfo(@"ACR process ending: recorderFinished experienced and error..");
 
     if([self.delegate respondsToSelector:@selector(acrAudioProcessingErrorDidOccur:)]) {
-      [self.delegate acrAudioProcessingErrorDidOccur: @"Error recording audio"];
+      [self.delegate acrAudioProcessingErrorDidOccur:@"Error recording audio"];
     }
 
     self.audioRecorder = nil;
   }
 }
 
-- (void) recorderFailure: (NSError *) error {
+- (void) recorderFailure:(NSError *)error
+{
   ADTLogInfo(@"ACR process ending: recorderFinished experienced and error..");
 
   if([self.delegate respondsToSelector:@selector(acrAudioProcessingErrorDidOccur:)]) {
-    [self.delegate acrAudioProcessingErrorDidOccur: @"Error recording audio"];
+    [self.delegate acrAudioProcessingErrorDidOccur:@"Error recording audio"];
   }
 
   self.audioRecorder = nil;
@@ -301,23 +312,24 @@ NSString *ADTSHA1Digest(NSString *string) {
 #pragma mark -
 #pragma mark ADTRestAPI Delegate Methods
 
-- (void) restAPIResponse:(NSDictionary *) results successfully:(BOOL) flag {
-
-  if([self.delegate respondsToSelector:@selector(acrAPIDidReceivedResults:matchedSuccessfully:)])
-    [self.delegate acrAPIDidReceivedResults: results matchedSuccessfully:flag];
+- (void) restAPIDidReceiveResponse:(NSDictionary *)results successfully:(BOOL)flag
+{
+  if([self.delegate respondsToSelector:@selector(acrAPIDidReceiveMatch:matchedSuccessfully:)])
+    [self.delegate acrAPIDidReceiveMatch:results matchedSuccessfully:flag];
 
   [self finishedRun];
 }
 
-- (void) restAPIError:(id) error {
-
+- (void) restAPIDidErrorOccur:(id)error
+{
   if([self.delegate respondsToSelector:@selector(acrAPIErrorDidOccur:)])
-    [self.delegate acrAPIErrorDidOccur: error];
+    [self.delegate acrAPIErrorDidOccur:error];
 
   [self finishedRun];
 }
 
-- (void) restAPIOptOut {
+- (void) restAPIDidReceiveOptOut
+{
   ADTLogInfo(@"Device is opted out.. stopping");
 
   self.running = NO;
@@ -325,6 +337,5 @@ NSString *ADTSHA1Digest(NSString *string) {
   if([self.delegate respondsToSelector:@selector(acrDidFinishSuccessfully)])
     [self.delegate acrDidFinishSuccessfully];
 }
-
 
 @end

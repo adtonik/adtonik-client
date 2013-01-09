@@ -174,19 +174,20 @@
   // reset refresh timer if there is an error..
   self.refreshTimer = ADT_DEFAULT_REFRESH_TIMER;
 
-  if([self.delegate respondsToSelector:@selector(restAPIError:)])
-    [self.delegate restAPIError: error];
+  if([self.delegate respondsToSelector:@selector(restAPIDidErrorOccur:)])
+    [self.delegate restAPIDidErrorOccur: error];
 }
 
 - (void) connectionDidFinishLoading:(NSURLConnection *) connection {
   self.loading = NO;
 
   NSError *e = nil;
+  
   NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:self.data
                                                              options:NSJSONReadingMutableContainers
                                                                error:&e];
   
-  NSNumber *refreshTimerNum = [jsonObject objectForKey:@"refreshTimer"];
+  NSNumber *refreshTimerNum = jsonObject[@"refreshTimer"];
 
   if(!refreshTimerNum) {
     self.refreshTimer = ADT_DEFAULT_REFRESH_TIMER;
@@ -195,24 +196,24 @@
   }
 
   // Save the state
-  self.state = [jsonObject objectForKey:@"state"];
+  self.state = jsonObject[@"state"];
   
   // Check for user opt out flag
-  if(e == nil && [[self.state objectForKey:@"optout"] boolValue] == YES) {
-    if([self.delegate respondsToSelector:@selector(restAPIOptOut)])
-      [self.delegate restAPIOptOut];
+  if(e == nil && [self.state[@"optout"] boolValue] == YES) {
+    if([self.delegate respondsToSelector:@selector(restAPIDidReceiveOptOut)])
+      [self.delegate restAPIDidReceiveOptOut];
     
     return;
   }
     
   // Check for successful response in envelope
   if(e == nil && [ADTRestEnvelope successResponse:jsonObject] == YES) {
-    NSDictionary *results = [jsonObject objectForKey:@"data"];
+    NSDictionary *results = jsonObject[@"data"];
 
     ADTLogInfo(@"API server returned match %@", results);
 
-    if([self.delegate respondsToSelector:@selector(restAPIResponse:successfully:)])
-      [self.delegate restAPIResponse:results successfully:YES];
+    if([self.delegate respondsToSelector:@selector(restAPIDidReceiveResponse:successfully:)])
+      [self.delegate restAPIDidReceiveResponse:results successfully:YES];
 
   } else {
 
@@ -222,8 +223,8 @@
 
     ADTLogInfo(@"API server returned no successful match");
 
-    if([self.delegate respondsToSelector:@selector(restAPIResponse:successfully:)])
-      [self.delegate restAPIResponse:nil successfully:NO];
+    if([self.delegate respondsToSelector:@selector(restAPIDidReceiveResponse:successfully:)])
+      [self.delegate restAPIDidReceiveResponse:nil successfully:NO];
   }
 }
 
