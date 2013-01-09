@@ -38,24 +38,24 @@
 
 - (void)didReceiveMemoryWarning
 {
-  [audioACR_ release];
-  [webView_ release];
-  [liveTitle_ release];
+  [self.audioACR release];
+  [self.webView release];
+  [self.liveTitle release];
   
   [super didReceiveMemoryWarning];
 }
 
 - (void)dealloc
 {
-  [audioACR_ release];
-  [webView_ release];
-  [liveTitle_ release];
+  [self.audioACR release];
+  [self.webView release];
+  [self.liveTitle release];
   
   [super dealloc];
 }
 
 - (void) resetView {
-  [webView_ loadHTMLString:@"" baseURL:nil];
+  [self.webView loadHTMLString:@"" baseURL:nil];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -67,6 +67,9 @@
   }
 }
 
+#pragma mark -
+#pragma mark Required Delegate Methods
+
 - (NSString *) acrAppId {
   return @"ADTDemoApp";
 }
@@ -75,7 +78,7 @@
   return @"ADTDemoApp";
 }
 
-- (void) acrAPIReceivedResults: (NSDictionary *) results successfully:(BOOL) flag {  
+- (void) acrAPIDidReceivedResults:(NSDictionary *)results matchedSuccessfully:(BOOL)flag {
   if(flag == YES) {
     
     NSNumber *live_tv = [results objectForKey:@"live_tv"];

@@ -22,20 +22,6 @@
 #import <CommonCrypto/CommonDigest.h>
 
 @interface ADTAudioACR () <ADTAudioRecorderDelegate, ADTRestAPIDelegate>
-{
-@private
-  BOOL running_;
-  BOOL authorized_;
-  BOOL refresh_;
-
-  NSString *udid_;
-  NSUInteger sampleDuration_;
-  NSOperationQueue *acrQueue_;
-  ADTRestAPI *restAPI_;
-  ADTAudioRecorder *audioRecorder_;
-
-  id<ADTAudioACRDelegate> delegate_;
-}
 
 @property (getter=doRefresh)    BOOL              refresh;
 @property (nonatomic, retain)   ADTAudioRecorder* audioRecorder;
@@ -48,23 +34,12 @@
 
 @implementation ADTAudioACR
 
-@synthesize running        = running_;
-@synthesize delegate       = delegate_;
-@synthesize audioRecorder  = audioRecorder_;
-@synthesize acrQueue       = acrQueue_;
-@synthesize restAPI        = restAPI_;
-@synthesize sampleDuration = sampleDuration_;
-@synthesize refresh        = refresh_;
-@synthesize udid           = udid_;
-
 #pragma mark -
 #pragma mark Collecting SDK Information
 
 + (NSString *)sdkVersion {
-  return ADT_SDK_VERSION;
+  return kAdTonikSDKVersion;
 }
-
-// TODO: need delegate method to call when completely finished
 
 #pragma mark -
 #pragma mark Initializers
@@ -73,7 +48,7 @@
   self = [self initWithDelegate:delegate];
 
   if(self) {
-    refresh_ = refreshFlag;
+    _refresh = refreshFlag;
   }
 
   return self;
@@ -83,15 +58,15 @@
   self = [super init];
 
   if(self) {
-    delegate_  = delegate;
-    acrQueue_  = [[NSOperationQueue alloc] init];
-    sampleDuration_ = ADT_SAMPLE_SECONDS;
-    udid_      = [[self getUDID] retain];
+    _delegate  = delegate;
+    _acrQueue  = [[NSOperationQueue alloc] init];
+    _sampleDuration = ADT_SAMPLE_SECONDS;
+    _udid      = [[self getUDID] retain];
 
-    restAPI_   = [[ADTRestAPI alloc] initWithDelegate:self andAppId:[delegate acrAppId] andAppSecret:[delegate acrAppSecret] andUDID: udid_];
+    _restAPI   = [[ADTRestAPI alloc] initWithDelegate:self andAppId:[delegate acrAppId] andAppSecret:[delegate acrAppSecret] andUDID: _udid];
 
     // make sure allocations successful, bail otherwise.
-    if(!acrQueue_ || !restAPI_) {
+    if(!_acrQueue || !_restAPI) {
       ADTLogError(@"ADTAudioACR initWithDelegate failed..");
       [self release];
       return nil;
@@ -106,10 +81,10 @@
 
 - (void) dealloc {
 
-  [audioRecorder_ release];
-  [acrQueue_ release];
-  [restAPI_ release];
-  [udid_ release];
+  [_audioRecorder release];
+  [_acrQueue release];
+  [_restAPI release];
+  [_udid release];
 
   [super dealloc];
 }
@@ -147,7 +122,7 @@
                                                       selector:@selector(startAsyncOperations)
                                                         object:nil];
 
-  [acrQueue_ addOperation:acrOperation];
+  [self.acrQueue addOperation:acrOperation];
   [acrOperation release];
 
   return YES;
@@ -158,23 +133,20 @@
 
 - (void) startAsyncOperations {
   self.audioRecorder = [[[ADTAudioRecorder alloc] initWithDelegate: self] autorelease];
-
-  // TODO: update audioRecorder to use blocks instead of delegates..
   [self.audioRecorder record:self.sampleDuration];
 }
 
 - (BOOL) stop {
   if(self.isRunning) {
-    if(audioRecorder_.isRecording)
+    if(self.audioRecorder.isRecording)
       [self.audioRecorder stop];
 
-    if(restAPI_.isLoading)
-      [restAPI_ cancel];
+    if(self.restAPI.isLoading)
+      [self.restAPI cancel];
 
     self.running = NO;
 
-    // dereference audio recorder for autorelease
-    self.audioRecorder = nil;
+    self.audioRecorder = nil; // deref for autorelease
 
     return YES;
   }
@@ -195,8 +167,8 @@
   } else {
     self.running = NO;
 
-    if([delegate_ respondsToSelector:@selector(acrComplete)])
-      [delegate_ acrComplete];
+    if([self.delegate respondsToSelector:@selector(acrDidFinishSuccessfully)])
+      [self.delegate acrDidFinishSuccessfully];
   }
 }
 
@@ -248,8 +220,8 @@
   if(!fingerprints || [fingerprints count] == 0) {
     ADTLogError(@"ACR process ending: no fingerprints found in set");
 
-    if([delegate_ respondsToSelector:@selector(acrAudioProcessingError:)]) {
-      [delegate_ acrAudioProcessingError: @"Error recording audio"];
+    if([self.delegate respondsToSelector:@selector(acrAudioProcessingError:)]) {
+      [self.delegate acrAudioProcessingErrorDidOccur: @"Error recording audio"];
     }
   }
 
@@ -258,8 +230,8 @@
   if([self.restAPI queryWithFingerprints:fingerprints andVersion:acrVersion] == NO) {
     ADTLogError(@"ACR process ending: queryWithFingerprints failed");
 
-    if([delegate_ respondsToSelector:@selector(acrAudioProcessingError:)]) {
-      [delegate_ acrAudioProcessingError: @"Error processing fingerprints"];
+    if([self.delegate respondsToSelector:@selector(acrAudioProcessingErrorDidOccur:)]) {
+      [self.delegate acrAudioProcessingErrorDidOccur: @"Error processing fingerprints"];
     }
   }
 }
@@ -273,8 +245,7 @@ NSString *ADTSHA1Digest(NSString *string) {
   CC_SHA1([data bytes], [data length], digest);
 
   NSMutableString *output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
-  for (int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++)
-  {
+  for (int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++) {
     [output appendFormat:@"%02x", digest[i]];
   }
 
@@ -284,8 +255,8 @@ NSString *ADTSHA1Digest(NSString *string) {
 - (NSString *) getUDID {
   NSString *identifier = nil;
 
-  if([delegate_ respondsToSelector:@selector(acrUDID)]) {
-    return [delegate_ acrUDID];
+  if([self.delegate respondsToSelector:@selector(acrUDID)]) {
+    return [self.delegate acrUDID];
   }
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
@@ -309,8 +280,8 @@ NSString *ADTSHA1Digest(NSString *string) {
   } else {
     ADTLogInfo(@"ACR process ending: recorderFinished experienced and error..");
 
-    if([delegate_ respondsToSelector:@selector(acrAudioProcessingError:)]) {
-      [delegate_ acrAudioProcessingError: @"Error recording audio"];
+    if([self.delegate respondsToSelector:@selector(acrAudioProcessingErrorDidOccur:)]) {
+      [self.delegate acrAudioProcessingErrorDidOccur: @"Error recording audio"];
     }
 
     self.audioRecorder = nil;
@@ -320,8 +291,8 @@ NSString *ADTSHA1Digest(NSString *string) {
 - (void) recorderFailure: (NSError *) error {
   ADTLogInfo(@"ACR process ending: recorderFinished experienced and error..");
 
-  if([delegate_ respondsToSelector:@selector(acrAudioProcessingError:)]) {
-    [delegate_ acrAudioProcessingError: @"Error recording audio"];
+  if([self.delegate respondsToSelector:@selector(acrAudioProcessingErrorDidOccur:)]) {
+    [self.delegate acrAudioProcessingErrorDidOccur: @"Error recording audio"];
   }
 
   self.audioRecorder = nil;
@@ -332,16 +303,16 @@ NSString *ADTSHA1Digest(NSString *string) {
 
 - (void) restAPIResponse:(NSDictionary *) results successfully:(BOOL) flag {
 
-  if([delegate_ respondsToSelector:@selector(acrAPIReceivedResults:successfully:)])
-    [delegate_ acrAPIReceivedResults: results successfully:flag];
+  if([self.delegate respondsToSelector:@selector(acrAPIDidReceivedResults:matchedSuccessfully:)])
+    [self.delegate acrAPIDidReceivedResults: results matchedSuccessfully:flag];
 
   [self finishedRun];
 }
 
 - (void) restAPIError:(id) error {
 
-  if([delegate_ respondsToSelector:@selector(acrAPIErrorDidOccur:)])
-    [delegate_ acrAPIErrorDidOccur: error];
+  if([self.delegate respondsToSelector:@selector(acrAPIErrorDidOccur:)])
+    [self.delegate acrAPIErrorDidOccur: error];
 
   [self finishedRun];
 }
@@ -351,8 +322,8 @@ NSString *ADTSHA1Digest(NSString *string) {
 
   self.running = NO;
 
-  if([delegate_ respondsToSelector:@selector(acrComplete)])
-    [delegate_ acrComplete];
+  if([self.delegate respondsToSelector:@selector(acrDidFinishSuccessfully)])
+    [self.delegate acrDidFinishSuccessfully];
 }
 
 

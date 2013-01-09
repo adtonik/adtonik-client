@@ -13,10 +13,10 @@
 #define ADT_SAMPLE_SECONDS 6
 #define ADT_DEFAULT_REFRESH_TIMER 10
 
-static NSString *ADT_SDK_VERSION = ADT_BUILD_TAG;
+static NSString *kAdTonikSDKVersion = ADT_BUILD_TAG;
 
 #if ADT_USE_DEV_API == 1
-  static NSString *ADT_HOSTNAME = @"http://dev.api.adtonik.net:3000";
+  static NSString *kAdTonikHostname = @"http://dev.api.adtonik.net:3000";
 #else
-  static NSString *ADT_HOSTNAME = @"http://api.adtonik.net";
+  static NSString *kAdTonikHostname = @"http://api.adtonik.net";
 #endif

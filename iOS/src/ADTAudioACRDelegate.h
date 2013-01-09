@@ -15,8 +15,6 @@
  When you register your application with AdTonik, you will be given an appID and an
  appSecret. Both of these must be specified in the delegate object.
  */
-
-
 @protocol ADTAudioACRDelegate <NSObject>
 
 /** 
@@ -36,7 +34,7 @@
  @param flag The flag indicating a sucessful match (YES), or failure (NO)
  */
 
-- (void) acrAPIReceivedResults: (NSDictionary *) results successfully: (BOOL) flag;
+- (void) acrAPIDidReceivedResults: (NSDictionary *) results matchedSuccessfully: (BOOL) flag;
 
 @optional
 
@@ -49,7 +47,7 @@
 /** 
  Called by the system when an API error occurs.
  
- @param error NSString containing the error message
+ @param error NSString containing the error message from the server
  */
 - (void) acrAPIErrorDidOccur: (NSString *) error;
 
@@ -58,11 +56,11 @@
  
  @param error NSString containing the error message
  */
-- (void) acrAudioProcessingError: (NSString *) error;
+- (void) acrAudioProcessingErrorDidOccur: (NSString *) error;
 
 /**
  Called by the system when ACR is completed. 
  */
-- (void) acrComplete;
+- (void) acrDidFinishSuccessfully;
 
 @end

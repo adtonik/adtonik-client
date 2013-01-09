@@ -41,7 +41,7 @@
                            [NSNumber numberWithLong:unixTime], @"timestamp",
                            @"request"                        , @"type",
                            [ADTRestEnvelope envelopeVersion] , @"envelopeVersion",
-                           ADT_SDK_VERSION                   , @"sdkVersion",
+                           kAdTonikSDKVersion                , @"sdkVersion",
                            acrVersion                        , @"acrVersion",
                            udid                              , @"udid",
                            appId                             , @"appID",
