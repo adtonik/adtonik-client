@@ -13,15 +13,20 @@
 #import "ADTLogging.h"
 #import "ADTConstants.h"
 
-@implementation ADTRestEnvelope
+@interface ADTRestEnvelope ()
 
-@synthesize appId = appId_;
-@synthesize appSecret = appSecret_;
+@property (nonatomic, copy) NSString *appId;
+@property (nonatomic, copy) NSString *appSecret;
+
+@end
+
+@implementation ADTRestEnvelope
 
 #pragma mark -
 #pragma mark Envelope Version
 
-+ (NSString *) envelopeVersion {
++ (NSString *) envelopeVersion
+{
   return @"1.0.0";
 }
 
@@ -33,7 +38,8 @@
                        appId: (NSString *) appId
                    appSecret: (NSString *) appSecret
                   acrVersion: (NSString *) acrVersion
-                     andUDID: (NSString *) udid {
+                     andUDID: (NSString *) udid
+{
 
   time_t unixTime = (time_t) [[NSDate date] timeIntervalSince1970];
 
@@ -48,11 +54,11 @@
                            state                             , @"state",
                            data                              , @"data", nil];
   
-  NSError *e = nil;
-  NSData *jsonData = [NSJSONSerialization dataWithJSONObject:message options:0 error:&e];
+  NSError *error = nil;
+  NSData *jsonData = [NSJSONSerialization dataWithJSONObject:message options:0 error:&error];
   
-  if(e) {
-    ADTLogError(@"error serializing %@ - %@", message, e);
+  if(error) {
+    ADTLogError(@"error serializing %@ - %@", message, error);
     return nil;
   }
 
@@ -62,8 +68,8 @@
 #pragma mark -
 #pragma mark Envelope Validation
 
-+ (BOOL) validEnvelope: (NSDictionary *) envelope {
-
++ (BOOL) validEnvelope: (NSDictionary *) envelope
+{
   // validate required envelope fields
   if(([envelope objectForKey:@"status"] &&
       [envelope objectForKey:@"timestamp"] &&
@@ -81,9 +87,8 @@
   }
 
   // make sure type is response
-  if(![[envelope objectForKey:@"type"] isEqualToString:@"response"]) {
+  if(![[envelope objectForKey:@"type"] isEqualToString:@"response"])
     return NO;
-  }
 
   return YES;
 }
@@ -91,12 +96,13 @@
 #pragma mark -
 #pragma mark Check for successful response
 
-+ (BOOL) successResponse: (NSDictionary *) envelope {
-
++ (BOOL) successResponse: (NSDictionary *) envelope
+{
   if([ADTRestEnvelope validEnvelope:envelope] == NO)
     return NO;
 
-  if([[envelope objectForKey:@"status"] isEqualToString:@"success"] && [[envelope objectForKey:@"match"] boolValue] == YES)
+  if([[envelope objectForKey:@"status"] isEqualToString:@"success"] &&
+     [[envelope objectForKey:@"match"] boolValue] == YES)
     return YES;
   else
     return NO;
@@ -107,7 +113,8 @@
 
 + (NSString *) signMessage: (NSData *) message
                  withAppID: (NSString *) appID
-              andAppSecret: (NSString *) appSecret {
+              andAppSecret: (NSString *) appSecret
+{
 
   CCHmacContext    ctx;
   unsigned char    mac[ CC_SHA1_DIGEST_LENGTH ];

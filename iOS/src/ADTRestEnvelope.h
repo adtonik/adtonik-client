@@ -9,13 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Foundation/NSJSONSerialization.h>
 
-@interface ADTRestEnvelope : NSObject {
-  NSString *appId_;
-  NSString *appSecret_;
-}
-
-@property (nonatomic, copy) NSString *appId;
-@property (nonatomic, copy) NSString *appSecret;
+@interface ADTRestEnvelope : NSObject;
 
 + (NSData *) messageWithData: (id) data
                        state: (NSDictionary *) state
