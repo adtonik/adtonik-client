@@ -23,7 +23,7 @@
  @param flag The flag indicating success (YES), or failure (NO)
 */
 
-- (void) recorderFinished:(NSURL *) filename successfully:(BOOL) flag;
+- (void)recorderFinished:(NSURL *)filename successfully:(BOOL)flag;
 
 /** 
  Called by the system when a recording experiences an unrecoverable error.
@@ -31,6 +31,6 @@
  @param error The recording error
 */
 
-- (void) recorderFailure: (NSError *) error;
+- (void)recorderFailure:(NSError *)error;
 
 @end

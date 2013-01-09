@@ -1,12 +1,12 @@
 //
-//  ADTAudioACR.m
-//  ADTAudioACR
+//  ADTClient.m
+//  ADTClient
 //
 //  Created by Marshall Beddoe on 3/27/12.
 //  Copyright (c) 2012 AdTonik, Inc. All rights reserved.
 //
 
-#import "ADTAudioACR.h"
+#import "ADTClient.h"
 #import "ADTAudioRecorder.h"
 #import "ADTAudioRecorderDelegate.h"
 #import "ADTRestAPI.h"
@@ -21,30 +21,29 @@
 
 #import <CommonCrypto/CommonDigest.h>
 
-@interface ADTAudioACR () <ADTAudioRecorderDelegate, ADTRestAPIDelegate>
+@interface ADTClient () <ADTAudioRecorderDelegate, ADTRestAPIDelegate>
 
 @property (getter=doRefresh)    BOOL              refresh;
 @property (nonatomic, retain)   ADTAudioRecorder* audioRecorder;
 @property (nonatomic, retain)   NSOperationQueue* acrQueue;
 @property (nonatomic, retain)   ADTRestAPI*       restAPI;
-@property (nonatomic, copy)     NSString*         udid;
 @property (nonatomic, assign)   NSUInteger        sampleDuration;
 
 @end
 
-@implementation ADTAudioACR
+@implementation ADTClient
 
 #pragma mark -
 #pragma mark Collecting SDK Information
 
 + (NSString *)sdkVersion {
-  return kAdTonikSDKVersion;
+  return kADTSDKVersion;
 }
 
 #pragma mark -
 #pragma mark Initializers
 
-- (id)initWithDelegate:(id<ADTAudioACRDelegate>)delegate
+- (id)initWithDelegate:(id<ADTClientDelegate>)delegate
              doRefresh:(BOOL)refreshFlag
               andAppID:(NSString *)appID
           andAppSecret:(NSString *)appSecret
@@ -58,7 +57,7 @@
   return self;
 }
 
-- (id)initWithDelegate:(id<ADTAudioACRDelegate>)delegate
+- (id)initWithDelegate:(id<ADTClientDelegate>)delegate
               andAppID:(NSString *)appID
           andAppSecret:(NSString *)appSecret
 {
@@ -74,7 +73,7 @@
 
     // make sure allocations successful, bail otherwise.
     if(!_acrQueue || !_restAPI) {
-      ADTLogError(@"ADTAudioACR initWithDelegate failed..");
+      ADTLogError(@"ADTClient initWithDelegate failed..");
       [self release];
       return nil;
     }
@@ -103,7 +102,7 @@
 {
   // Need to decide what we want to return here..
 #if TARGET_IPHONE_SIMULATOR
-  NSLog(@"ADTAudioACR cannot run in the simulator, returning..");
+  NSLog(@"ADTClient cannot run in the simulator, returning..");
   return NO;
 #endif
 
@@ -167,7 +166,6 @@
 #pragma mark Called when ACR process completes
 
 - (void) finishedRun {
-  // dereference audio recorder for autorelease
   self.audioRecorder = nil;
 
   // Refresh process if necessary
@@ -176,8 +174,8 @@
   } else {
     self.running = NO;
 
-    if([self.delegate respondsToSelector:@selector(acrDidFinishSuccessfully)])
-      [self.delegate acrDidFinishSuccessfully];
+    if([self.delegate respondsToSelector:@selector(ADTClientDidFinishSuccessfully)])
+      [self.delegate ADTClientDidFinishSuccessfully];
   }
 }
 
@@ -229,8 +227,9 @@
   if(!fingerprints || [fingerprints count] == 0) {
     ADTLogError(@"ACR process ending: no fingerprints found in set");
 
-    if([self.delegate respondsToSelector:@selector(acrAudioProcessingError:)]) {
-      [self.delegate acrAudioProcessingErrorDidOccur:@"Error recording audio"];
+    if([self.delegate respondsToSelector:@selector(ADTClientErrorDidOccur:)]) {
+      NSError *error = [NSError errorWithDomain:kADTClientErrorDomain code:kADTAudioNoFingerprints userInfo:nil];
+      [self.delegate ADTClientErrorDidOccur:error];
     }
   }
 
@@ -239,8 +238,9 @@
   if([self.restAPI queryWithFingerprints:fingerprints andVersion:acrVersion] == NO) {
     ADTLogError(@"ACR process ending: queryWithFingerprints failed");
 
-    if([self.delegate respondsToSelector:@selector(acrAudioProcessingErrorDidOccur:)]) {
-      [self.delegate acrAudioProcessingErrorDidOccur:@"Error processing fingerprints"];
+    if([self.delegate respondsToSelector:@selector(ADTClientErrorDidOccur:)]) {
+      NSError *error = [NSError errorWithDomain:kADTClientErrorDomain code:kADTError userInfo:nil];
+      [self.delegate ADTClientErrorDidOccur:error];
     }
   }
 }
@@ -264,8 +264,8 @@ NSString *ADTSHA1Digest(NSString *string) {
 - (NSString *) getUDID {
   NSString *identifier = nil;
 
-  if([self.delegate respondsToSelector:@selector(acrUDID)]) {
-    return [self.delegate acrUDID];
+  if([self.delegate respondsToSelector:@selector(ADTClientUDID)]) {
+    return [self.delegate ADTClientUDID];
   }
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
@@ -280,7 +280,7 @@ NSString *ADTSHA1Digest(NSString *string) {
 #pragma mark -
 #pragma mark ACRAudioRecorder Delegate Methods
 
-- (void) recorderFinished:(NSURL *)filename successfully:(BOOL)flag
+- (void)recorderFinished:(NSURL *)filename successfully:(BOOL)flag
 {
   if(flag == YES) {
     ADTLogInfo(@"successfully recorded audio.. generating fingerprints");
@@ -290,20 +290,22 @@ NSString *ADTSHA1Digest(NSString *string) {
   } else {
     ADTLogInfo(@"ACR process ending: recorderFinished experienced and error..");
 
-    if([self.delegate respondsToSelector:@selector(acrAudioProcessingErrorDidOccur:)]) {
-      [self.delegate acrAudioProcessingErrorDidOccur:@"Error recording audio"];
+    if([self.delegate respondsToSelector:@selector(ADTClientErrorDidOccur:)]) {
+      NSError *error = [NSError errorWithDomain:kADTClientErrorDomain code:kADTAudioError userInfo:nil];
+      [self.delegate ADTClientErrorDidOccur:error];
     }
 
     self.audioRecorder = nil;
   }
 }
 
-- (void) recorderFailure:(NSError *)error
+- (void)recorderFailure:(NSError *)error
 {
   ADTLogInfo(@"ACR process ending: recorderFinished experienced and error..");
 
-  if([self.delegate respondsToSelector:@selector(acrAudioProcessingErrorDidOccur:)]) {
-    [self.delegate acrAudioProcessingErrorDidOccur:@"Error recording audio"];
+  if([self.delegate respondsToSelector:@selector(ADTClientErrorDidOccur:)]) {
+    NSError *error = [NSError errorWithDomain:kADTClientErrorDomain code:kADTAudioError userInfo:nil];
+    [self.delegate ADTClientErrorDidOccur:error];
   }
 
   self.audioRecorder = nil;
@@ -312,30 +314,32 @@ NSString *ADTSHA1Digest(NSString *string) {
 #pragma mark -
 #pragma mark ADTRestAPI Delegate Methods
 
-- (void) restAPIDidReceiveResponse:(NSDictionary *)results successfully:(BOOL)flag
+- (void)restAPIDidReceiveResponse:(NSDictionary *)results successfully:(BOOL)flag
 {
-  if([self.delegate respondsToSelector:@selector(acrAPIDidReceiveMatch:matchedSuccessfully:)])
-    [self.delegate acrAPIDidReceiveMatch:results matchedSuccessfully:flag];
+  if([self.delegate respondsToSelector:@selector(ADTClientDidReceiveMatch:matchedSuccessfully:)])
+    [self.delegate ADTClientDidReceiveMatch:results matchedSuccessfully:flag];
 
   [self finishedRun];
 }
 
-- (void) restAPIDidErrorOccur:(id)error
+- (void)restAPIDidErrorOccur:(id)error
 {
-  if([self.delegate respondsToSelector:@selector(acrAPIErrorDidOccur:)])
-    [self.delegate acrAPIErrorDidOccur:error];
+  if([self.delegate respondsToSelector:@selector(ADTClientErrorDidOccur:)]) {
+    NSError *error = [NSError errorWithDomain:kADTClientErrorDomain code:kADTAPIError userInfo:nil];
+    [self.delegate ADTClientErrorDidOccur:error];
+  }
 
   [self finishedRun];
 }
 
-- (void) restAPIDidReceiveOptOut
+- (void)restAPIDidReceiveOptOut
 {
   ADTLogInfo(@"Device is opted out.. stopping");
 
   self.running = NO;
 
-  if([self.delegate respondsToSelector:@selector(acrDidFinishSuccessfully)])
-    [self.delegate acrDidFinishSuccessfully];
+  if([self.delegate respondsToSelector:@selector(ADTClientDidFinishSuccessfully)])
+    [self.delegate ADTClientDidFinishSuccessfully];
 }
 
 @end

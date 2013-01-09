@@ -7,7 +7,7 @@
 //
 
 #import "ADTRestAPI.h"
-#import "ADTAudioACR.h"
+#import "ADTClient.h"
 #import "ADTRestEnvelope.h"
 #import "ADTLogging.h"
 
@@ -236,7 +236,7 @@
   NSString *escapedUri = [URL stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
 
   NSURL *fullUri = [NSURL URLWithString:escapedUri
-                          relativeToURL:[NSURL URLWithString:kAdTonikHostname]];
+                          relativeToURL:[NSURL URLWithString:kADTHostname]];
 
   ADTLogInfo(@"URI path equal to %@", [fullUri absoluteString]);
 

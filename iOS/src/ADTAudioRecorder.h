@@ -1,6 +1,6 @@
 //
 //  ADTAudioRecorder.h
-//  ADTAudioACR
+//  ADTClient
 //
 //  Created by Marshall Beddoe on 4/9/12.
 //  Copyright (c) 2012 AdTonik, Inc. All rights reserved.

@@ -9,7 +9,7 @@
 #import <CommonCrypto/CommonHMAC.h>
 
 #import "ADTRestEnvelope.h"
-#import "ADTAudioACR.h"
+#import "ADTClient.h"
 #import "ADTLogging.h"
 #import "ADTConstants.h"
 
@@ -47,7 +47,7 @@
                            [NSNumber numberWithLong:unixTime], @"timestamp",
                            @"request"                        , @"type",
                            [ADTRestEnvelope envelopeVersion] , @"envelopeVersion",
-                           kAdTonikSDKVersion                , @"sdkVersion",
+                           kADTSDKVersion                    , @"sdkVersion",
                            acrVersion                        , @"acrVersion",
                            udid                              , @"udid",
                            appId                             , @"appID",

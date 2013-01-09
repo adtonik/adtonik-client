@@ -1,6 +1,6 @@
 //
 //  ADTAudioRecorder.m
-//  ADTAudioACR
+//  ADTClient
 //
 //  Created by Marshall Beddoe on 4/9/12.
 //  Copyright (c) 2012 AdTonik, Inc. All rights reserved.
@@ -43,14 +43,14 @@
 {
   if(self = [super init]) {
 
-    _recordSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+    _recordSettings = [[NSDictionary dictionaryWithObjectsAndKeys:
                        [NSNumber numberWithInt:kAudioFormatLinearPCM], AVFormatIDKey,
                        [NSNumber numberWithFloat:8000], AVSampleRateKey,
                        [NSNumber numberWithInt:1], AVNumberOfChannelsKey,
                        [NSNumber numberWithInt:16], AVLinearPCMBitDepthKey,
                        [NSNumber numberWithInt:AVAudioQualityMax], AVEncoderAudioQualityKey,
                        [NSNumber numberWithInt:AVAudioQualityMax], AVSampleRateConverterAudioQualityKey,
-                       [NSNumber numberWithBool:YES], AVLinearPCMIsFloatKey, nil];
+                       [NSNumber numberWithBool:YES], AVLinearPCMIsFloatKey, nil] retain];
 
     _defaultCategory = [[[AVAudioSession sharedInstance] category] retain];
     _defaultMode     = [[[AVAudioSession sharedInstance] mode] retain];
@@ -118,7 +118,7 @@
 
 
   if(!newAudioRecorder) {
-    ADTLogError(@"(ADTAudioACR) Error setting up AVAudioRecorder: %@",
+    ADTLogError(@"(ADTClient) Error setting up AVAudioRecorder: %@",
                 [recordError localizedDescription]);
     return NO;
   }

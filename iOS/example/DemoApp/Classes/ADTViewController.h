@@ -8,7 +8,5 @@
 
 #import <UIKit/UIKit.h>
 
-#import "ADTAudioACR.h"
-
 @interface ADTViewController : UIViewController
 @end

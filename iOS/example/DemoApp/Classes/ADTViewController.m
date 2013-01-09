@@ -7,11 +7,12 @@
 //
 
 #import "ADTViewController.h"
+#import "ADTClient.h"
 
-@interface ADTViewController () <ADTAudioACRDelegate>
+@interface ADTViewController () <ADTClientDelegate>
 
 @property (nonatomic, retain) IBOutlet UIWebView *webView;
-@property (nonatomic, retain) ADTAudioACR *audioACR;
+@property (nonatomic, retain) ADTClient *audioACR;
 @property (nonatomic, copy) NSString *liveTitle;
 
 @end
@@ -22,7 +23,7 @@
 {
   [super viewDidLoad];
 
-  ADTAudioACR *newAudioACR = [[ADTAudioACR alloc] initWithDelegate:self doRefresh:YES andAppID:@"ADTDemoApp" andAppSecret:@"ADTDemoApp"];
+  ADTClient *newAudioACR = [[ADTClient alloc] initWithDelegate:self doRefresh:YES andAppID:@"ADTDemoApp" andAppSecret:@"ADTDemoApp"];
 
   self.audioACR = newAudioACR;
   [newAudioACR release];
@@ -42,9 +43,9 @@
 
 - (void)didReceiveMemoryWarning
 {
-  [self.audioACR release];
-  [self.webView release];
-  [self.liveTitle release];
+  [_audioACR release];
+  [_webView release];
+  [_liveTitle release];
   
   [super didReceiveMemoryWarning];
 }
@@ -75,7 +76,7 @@
 #pragma mark -
 #pragma mark Required Delegate Methods
 
-- (void) acrAPIDidReceiveMatch:(NSDictionary *)results matchedSuccessfully:(BOOL)flag
+- (void) ADTClientDidReceiveMatch:(NSDictionary *)results matchedSuccessfully:(BOOL)flag
 {
   if(flag == YES) {
     
@@ -113,17 +114,16 @@
   }
 }
 
-- (void)acrAPIErrorDidOccur:(NSString *)error
+- (void)ADTClientDidReceiveAd
 {
-  NSLog(@"Encountered API ERROR %@", error);
 }
 
-- (void)acrAudioProcessingError:(NSString *)error
+- (void)ADTClientErrorDidOccur:(NSError *)error
 {
-  NSLog(@"Encountered audio processing error %@", error);
+  NSLog(@"ADTClient error occurred: %@", error);
 }
 
-- (void)acrComplete
+- (void)ADTClientDidFinishSuccessfully
 {
   NSLog(@"ACR Complete!");
 }
