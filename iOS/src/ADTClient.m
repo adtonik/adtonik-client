@@ -206,15 +206,14 @@
 - (void) runAlgorithm:(NSString *) filename {
   NSSet *fingerprints = [ADTlibacrWrapper getFingerprintsForFile:filename];
 
-  // it is now our responsibility to delete the file..
-  NSError *e = nil;
-  [[NSFileManager defaultManager] removeItemAtPath:filename error:&e];
+  // It is now our responsibility to delete the file
+  NSError *error = nil;
+  [[NSFileManager defaultManager] removeItemAtPath:filename error:&error];
 
-  if(e) {
+  if(error)
     ADTLogError(@"Unable to delete file %@", filename);
-  }
 
-  // query the api server in the main thread..
+  // Query the api server in the main thread
   [self performSelectorOnMainThread:@selector(queryAPIServer:) withObject:fingerprints waitUntilDone:NO];
 }
 
@@ -252,28 +251,28 @@ NSString *ADTSHA1Digest(NSString *string) {
   unsigned char digest[CC_SHA1_DIGEST_LENGTH];
   NSData *data = [string dataUsingEncoding:NSASCIIStringEncoding];
   CC_SHA1([data bytes], [data length], digest);
-
+  
   NSMutableString *output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
   for (int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++) {
     [output appendFormat:@"%02x", digest[i]];
   }
-
+  
   return output;
 }
 
 - (NSString *) getUDID {
   NSString *identifier = nil;
-
+  
   if([self.delegate respondsToSelector:@selector(ADTClientUDID)]) {
     return [self.delegate ADTClientUDID];
   }
-
+  
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
   identifier = ADTSHA1Digest([[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString]);
 #else
   identifier = ADTSHA1Digest([[UIDevice currentDevice] uniqueIdentifier]);
 #endif
-
+  
   return identifier;
 }
 
@@ -316,9 +315,20 @@ NSString *ADTSHA1Digest(NSString *string) {
 
 - (void)restAPIDidReceiveResponse:(NSDictionary *)results successfully:(BOOL)flag
 {
-  if([self.delegate respondsToSelector:@selector(ADTClientDidReceiveMatch:matchedSuccessfully:)])
-    [self.delegate ADTClientDidReceiveMatch:results matchedSuccessfully:flag];
-
+  if(flag) {
+    if([results[@"hasAd"] boolValue] == YES) {
+      if([self.delegate respondsToSelector:@selector(ADTClientDidReceiveAd)]) {
+        [self.delegate ADTClientDidReceiveAd];
+      }
+    }
+  
+    if([results[@"match"] boolValue] == YES) {
+      if([self.delegate respondsToSelector:@selector(ADTClientDidReceiveMatch:)]) {
+        [self.delegate ADTClientDidReceiveMatch:results[@"data"]];
+      }
+    }
+  }
+  
   [self finishedRun];
 }
 

@@ -13,21 +13,20 @@
 
 @interface ADTRestAPI () <NSURLConnectionDataDelegate>
 
-@property (nonatomic, assign) NSURLConnection *conn;
 
-@property (nonatomic, copy) NSString *appId;
-@property (nonatomic, copy) NSString *appSecret;
-@property (nonatomic, copy) NSString *udid;
-
-@property (nonatomic, copy) NSDictionary *response;
-@property (nonatomic, copy) NSDictionary *state;
+@property (nonatomic, copy) NSString* appId;
+@property (nonatomic, copy) NSString* appSecret;
+@property (nonatomic, copy) NSString* udid;
+@property (nonatomic, copy) NSDictionary* response;
+@property (nonatomic, copy) NSDictionary* state;
 
 @property (nonatomic, assign) NSUInteger timeout;
 @property (nonatomic, assign) id <ADTRestAPIDelegate> delegate;
 
-@property (nonatomic, retain) NSMutableURLRequest *request;
-@property (nonatomic, retain) NSMutableData *data;
-@property (nonatomic, retain) NSDictionary *headers;
+@property (nonatomic, retain) NSURLConnection* conn;
+@property (nonatomic, retain) NSMutableURLRequest* request;
+@property (nonatomic, retain) NSMutableData* data;
+@property (nonatomic, retain) NSDictionary* headers;
 
 @end
 
@@ -36,10 +35,10 @@
 #pragma mark -
 #pragma mark Initializer Methods
 
-- (id) initWithDelegate: (id<ADTRestAPIDelegate>) delegate
-               andAppId: (NSString *) appId
-           andAppSecret: (NSString *) appSecret
-                andUDID: (NSString *) udid
+- (id) initWithDelegate:(id<ADTRestAPIDelegate>) delegate
+               andAppId:(NSString *) appId
+           andAppSecret:(NSString *) appSecret
+                andUDID:(NSString *) udid
 {
   self = [super init];
 
@@ -77,7 +76,7 @@
 #pragma mark -
 #pragma mark Fingerprint Query API Method
 
-- (BOOL) queryWithFingerprints: (NSSet *) fingerprints andVersion: (NSString *) acrVersion
+- (BOOL) queryWithFingerprints:(NSSet *)fingerprints andVersion:(NSString *)acrVersion
 {
   if(self.isLoading) {
     ADTLogInfo(@"queryWithFingerprints is already loading a request");
@@ -129,7 +128,7 @@
 #pragma mark -
 #pragma mark NSURLConnectionData Delegate Methods
 
-- (void) connection:(NSURLConnection *) connection didReceiveResponse:(NSURLResponse *) response {
+- (void) connection:(NSURLConnection *) connection didReceiveResponse:(NSURLResponse *)response {
   if([response respondsToSelector:@selector(statusCode)]) {
     int statusCode = [((NSHTTPURLResponse *) response) statusCode];
 
@@ -137,7 +136,7 @@
       [connection cancel];
 
       NSDictionary *errorInfo = [NSDictionary dictionaryWithObject:
-        [NSString stringWithFormat: NSLocalizedString(@"Server returned status code %d", @""),
+        [NSString stringWithFormat:NSLocalizedString(@"Server returned status code %d", @""),
          statusCode] forKey:NSLocalizedDescriptionKey];
 
       NSError *statusError = [NSError errorWithDomain:@"adtonik.net"
@@ -175,17 +174,17 @@
   self.refreshTimer = ADT_DEFAULT_REFRESH_TIMER;
 
   if([self.delegate respondsToSelector:@selector(restAPIDidErrorOccur:)])
-    [self.delegate restAPIDidErrorOccur: error];
+    [self.delegate restAPIDidErrorOccur:error];
 }
 
 - (void) connectionDidFinishLoading:(NSURLConnection *) connection {
   self.loading = NO;
 
-  NSError *e = nil;
+  NSError *error = nil;
   
   NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:self.data
                                                              options:NSJSONReadingMutableContainers
-                                                               error:&e];
+                                                               error:&error];
   
   NSNumber *refreshTimerNum = jsonObject[@"refreshTimer"];
 
@@ -199,39 +198,34 @@
   self.state = jsonObject[@"state"];
   
   // Check for user opt out flag
-  if(e == nil && [self.state[@"optout"] boolValue] == YES) {
+  if(error == nil && [self.state[@"optout"] boolValue] == YES) {
     if([self.delegate respondsToSelector:@selector(restAPIDidReceiveOptOut)])
       [self.delegate restAPIDidReceiveOptOut];
     
     return;
   }
-    
-  // Check for successful response in envelope
-  if(e == nil && [ADTRestEnvelope successResponse:jsonObject] == YES) {
-    NSDictionary *results = jsonObject[@"data"];
-
-    ADTLogInfo(@"API server returned match %@", results);
-
-    if([self.delegate respondsToSelector:@selector(restAPIDidReceiveResponse:successfully:)])
-      [self.delegate restAPIDidReceiveResponse:results successfully:YES];
-
+  
+  BOOL success;
+  
+  if(error) {
+    success = NO;
+    ADTLogError(@"experienced error decoding json response: %@", error);
   } else {
-
-    if(e) {
-      ADTLogError(@"experienced error decoding json response: %@", e);
-    }
-
-    ADTLogInfo(@"API server returned no successful match");
-
-    if([self.delegate respondsToSelector:@selector(restAPIDidReceiveResponse:successfully:)])
-      [self.delegate restAPIDidReceiveResponse:nil successfully:NO];
+    success = [ADTRestEnvelope successResponse:jsonObject];
   }
+  
+  ADTLogInfo(@"Received %@ response from server", success == 1 ? @"success" : @"error");
+  
+  if([self.delegate respondsToSelector:@selector(restAPIDidReceiveResponse:successfully:)])
+    [self.delegate restAPIDidReceiveResponse:jsonObject successfully:success];
+  
+  return;
 }
 
 #pragma mark -
 #pragma mark URL Construction
 
-- (NSURL *) apiURL: (NSString *) URL {
+- (NSURL *) apiURL:(NSString *) URL {
 
   NSString *escapedUri = [URL stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
 

@@ -76,46 +76,43 @@
 #pragma mark -
 #pragma mark Required Delegate Methods
 
-- (void) ADTClientDidReceiveMatch:(NSDictionary *)results matchedSuccessfully:(BOOL)flag
+- (void) ADTClientDidReceiveMatch:(NSDictionary *)results
 {
-  if(flag == YES) {
-    
-    NSNumber *live_tv = [results objectForKey:@"live_tv"];
-    
-    if([live_tv intValue] == 1) {
-      NSString *title = [results objectForKey:@"title"];
-      NSString *subtitle = [results objectForKey:@"subtitle"];
+  NSNumber *liveTV = [results objectForKey:@"live_tv"];
 
-      if([subtitle isKindOfClass:[NSNull class]] == NO) {
-        title = [NSString stringWithFormat:@"%@ - %@", title, subtitle];
-      }
-            
-      UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Live TV"
-                                                        message:title
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-      
-      if([self.liveTitle isEqualToString:title]) {
-        [message show];
-      }
-      
-      self.liveTitle = title;
-      
-      [message release];
-      return;
+  NSLog(@"%@", results);
+  
+  if([liveTV intValue] == 1) {
+    NSString *title = results[@"title"];
+    NSString *subtitle = results[@"subtitle"];
+    
+    if([subtitle isKindOfClass:[NSNull class]] == NO) {
+      title = [NSString stringWithFormat:@"%@ - %@", title, subtitle];
     }
     
-    NSString *url  = [results objectForKey:@"url"];
-
-    if(url != NULL) {      
-      [self.webView  loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Live TV"
+                                                      message:title
+                                                     delegate:nil
+                                            cancelButtonTitle:@"OK"
+                                            otherButtonTitles:nil];
+    
+    if([self.liveTitle isEqualToString:title]) {
+      [message show];
+    }
+    
+    self.liveTitle = title;
+      
+    [message release];
+  } else {
+    if(results[@"url"]) {
+      [self.webView  loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:results[@"url"]]]];
     }
   }
 }
 
 - (void)ADTClientDidReceiveAd
 {
+  NSLog(@"RECEIVED AN AD");
 }
 
 - (void)ADTClientErrorDidOccur:(NSError *)error

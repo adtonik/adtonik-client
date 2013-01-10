@@ -10,9 +10,8 @@
 
 @protocol ADTRestAPIDelegate <NSObject>
 
-- (void) restAPIDidReceiveResponse:(NSDictionary *) results successfully:(BOOL) flag;
-- (void) restAPIDidErrorOccur:(id) error;
-
+- (void) restAPIDidReceiveResponse:(NSDictionary *)results successfully:(BOOL)flag;
+- (void) restAPIDidErrorOccur:(id)error;
 - (void) restAPIDidReceiveOptOut;
 
 @end

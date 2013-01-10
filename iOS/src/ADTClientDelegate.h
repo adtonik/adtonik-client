@@ -19,10 +19,9 @@
  Called by the system when results have been received from the API server.
  
  @param results NSDictionary containing meta-data of the content that was matched
- @param flag The flag indicating a sucessful match (YES), or failure (NO)
  */
 
-- (void)ADTClientDidReceiveMatch:(NSDictionary *)results matchedSuccessfully:(BOOL)flag;
+- (void)ADTClientDidReceiveMatch:(NSDictionary *)results;
 
 /**
  Called by the system when an ad is available for this device.

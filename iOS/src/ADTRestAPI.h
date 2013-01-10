@@ -16,14 +16,14 @@
 @property (getter=isLoading) BOOL loading;
 @property (nonatomic, assign) NSUInteger refreshTimer;
 
-- (id) initWithDelegate: (id<ADTRestAPIDelegate>) delegate
-               andAppId: (NSString *) appId
-           andAppSecret: (NSString *) appSecret
-                andUDID: (NSString *) udid;
+- (id) initWithDelegate:(id<ADTRestAPIDelegate>)delegate
+               andAppId:(NSString *)appId
+           andAppSecret:(NSString *)appSecret
+                andUDID:(NSString *)udid;
 
-- (NSURL *) apiURL: (NSString *) URL;
+- (NSURL *) apiURL:(NSString *)URL;
 
-- (BOOL) queryWithFingerprints: (NSSet *) fingerprints andVersion: (NSString *) acrVersion;
+- (BOOL) queryWithFingerprints:(NSSet *)fingerprints andVersion:(NSString *)acrVersion;
 
 - (void) cancel;
 

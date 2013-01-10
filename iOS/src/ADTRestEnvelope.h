@@ -11,21 +11,21 @@
 
 @interface ADTRestEnvelope : NSObject;
 
-+ (NSData *) messageWithData: (id) data
-                       state: (NSDictionary *) state
-                       appId: (NSString *) appId
-                   appSecret: (NSString *) appSecret
-                  acrVersion: (NSString *) version
-                     andUDID: (NSString *) udid;
++ (NSData *)messageWithData:(id)data
+                       state:(NSDictionary *)state
+                       appId:(NSString *)appId
+                   appSecret:(NSString *)appSecret
+                  acrVersion:(NSString *)version
+                     andUDID:(NSString *)udid;
 
 
-+ (NSString *) signMessage: (NSData *) message
-                 withAppID: (NSString *) appID
-              andAppSecret: (NSString *) appSecret;
++ (NSString *)signMessage:(NSData *)message
+                 withAppID:(NSString *)appID
+              andAppSecret:(NSString *)appSecret;
 
-+ (BOOL) validEnvelope: (NSDictionary *) envelope;
-+ (BOOL) successResponse: (NSDictionary *) envelope;
++ (BOOL)validEnvelope:(NSDictionary *)envelope;
++ (BOOL)successResponse:(NSDictionary *)envelope;
 
-+ (NSString *) envelopeVersion;
++ (NSString *)envelopeVersion;
 
 @end

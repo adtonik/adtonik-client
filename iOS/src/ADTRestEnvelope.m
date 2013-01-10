@@ -15,8 +15,8 @@
 
 @interface ADTRestEnvelope ()
 
-@property (nonatomic, copy) NSString *appId;
-@property (nonatomic, copy) NSString *appSecret;
+@property (nonatomic, copy) NSString* appId;
+@property (nonatomic, copy) NSString* appSecret;
 
 @end
 
@@ -25,7 +25,7 @@
 #pragma mark -
 #pragma mark Envelope Version
 
-+ (NSString *) envelopeVersion
++ (NSString *)envelopeVersion
 {
   return @"1.0.0";
 }
@@ -93,10 +93,7 @@
     return NO;
   }
 
-  BOOL envelopeStatus = [envelope[@"status"] isEqualToString:@"success"];
-  BOOL matchStatus = [envelope[@"match"] boolValue] == YES;
-  
-  return envelopeStatus && matchStatus;  
+  return [envelope[@"status"] isEqualToString:@"success"];
 }
 
 #pragma mark -
@@ -106,17 +103,16 @@
                 withAppID:(NSString *)appID
              andAppSecret:(NSString *)appSecret
 {
-
-  CCHmacContext    ctx;
-  unsigned char    mac[CC_SHA1_DIGEST_LENGTH];
-  char             hexmac[2 * CC_SHA1_DIGEST_LENGTH + 1];
-  char             *p;
+  char *p;
+  CCHmacContext ctx;
+  unsigned char mac[CC_SHA1_DIGEST_LENGTH];
+  char hexmac[2 * CC_SHA1_DIGEST_LENGTH + 1];
 
   const char *data = [message bytes];
 
   NSArray *keyValues = [NSArray arrayWithObjects:appID, appSecret, nil];
-  const char *key  = [[keyValues componentsJoinedByString:@":"]
-                      cStringUsingEncoding:NSASCIIStringEncoding];
+  const char *key = [[keyValues componentsJoinedByString:@":"]
+                     cStringUsingEncoding:NSASCIIStringEncoding];
 
 
   CCHmacInit(&ctx, kCCHmacAlgSHA1, key, strlen(key));
