@@ -13,7 +13,6 @@
 
 @interface ADTRestAPI () <NSURLConnectionDataDelegate>
 
-
 @property (nonatomic, copy) NSString* appId;
 @property (nonatomic, copy) NSString* appSecret;
 @property (nonatomic, copy) NSString* udid;
@@ -21,12 +20,12 @@
 @property (nonatomic, copy) NSDictionary* state;
 
 @property (nonatomic, assign) NSUInteger timeout;
-@property (nonatomic, assign) id <ADTRestAPIDelegate> delegate;
+@property (nonatomic, weak) id <ADTRestAPIDelegate> delegate;
 
-@property (nonatomic, retain) NSURLConnection* conn;
-@property (nonatomic, retain) NSMutableURLRequest* request;
-@property (nonatomic, retain) NSMutableData* data;
-@property (nonatomic, retain) NSDictionary* headers;
+@property (nonatomic, strong) NSURLConnection* conn;
+@property (nonatomic, strong) NSMutableURLRequest* request;
+@property (nonatomic, strong) NSMutableData* data;
+@property (nonatomic, strong) NSDictionary* headers;
 
 @end
 
@@ -46,7 +45,7 @@
     _delegate     = delegate;
     _appId        = [NSString stringWithString:appId];
     _appSecret    = [NSString stringWithString:appSecret];
-    _udid         = [udid retain];
+    _udid         = udid;
     _refreshTimer = ADT_DEFAULT_REFRESH_TIMER;
     _state        = [[NSDictionary alloc] init];
     _request      = [[NSMutableURLRequest alloc] initWithURL:nil
@@ -55,22 +54,6 @@
   }
 
   return self;
-}
-
-#pragma mark -
-#pragma mark Deallocate
-
-- (void) dealloc
-{
-  [_appId release];
-  [_appSecret release];
-  [_request release];
-  [_data release];
-  [_headers release];
-  [_udid release];
-  [_state release];
-
-  [super dealloc];
 }
 
 #pragma mark -
@@ -135,9 +118,8 @@
     if(statusCode >= 400) {
       [connection cancel];
 
-      NSDictionary *errorInfo = [NSDictionary dictionaryWithObject:
-        [NSString stringWithFormat:NSLocalizedString(@"Server returned status code %d", @""),
-         statusCode] forKey:NSLocalizedDescriptionKey];
+      NSDictionary *errorInfo = @{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Server returned status code %d", @""),
+         statusCode]};
 
       NSError *statusError = [NSError errorWithDomain:@"adtonik.net"
                                                  code:statusCode

@@ -13,12 +13,12 @@
 
 @interface ADTAudioRecorder () <AVAudioRecorderDelegate>
 
-@property (nonatomic, retain) NSURL *filename;
+@property (nonatomic, strong) NSURL *filename;
 @property (nonatomic, copy)   NSString *defaultCategory;
 @property (nonatomic, copy)   NSString *defaultMode;
-@property (nonatomic, retain) AVAudioRecorder  *audioRecorder;
-@property (nonatomic, assign) id<ADTAudioRecorderDelegate> delegate;
-@property (nonatomic, retain) NSDictionary* recordSettings;
+@property (nonatomic, strong) AVAudioRecorder  *audioRecorder;
+@property (nonatomic, weak) id<ADTAudioRecorderDelegate> delegate;
+@property (nonatomic, strong) NSDictionary* recordSettings;
 @property (nonatomic, assign) NSTimeInterval duration;
 
 @end
@@ -43,34 +43,19 @@
 {
   if(self = [super init]) {
 
-    _recordSettings = [[NSDictionary dictionaryWithObjectsAndKeys:
-                       [NSNumber numberWithInt:kAudioFormatLinearPCM], AVFormatIDKey,
-                       [NSNumber numberWithFloat:8000], AVSampleRateKey,
-                       [NSNumber numberWithInt:1], AVNumberOfChannelsKey,
-                       [NSNumber numberWithInt:16], AVLinearPCMBitDepthKey,
-                       [NSNumber numberWithInt:AVAudioQualityMax], AVEncoderAudioQualityKey,
-                       [NSNumber numberWithInt:AVAudioQualityMax], AVSampleRateConverterAudioQualityKey,
-                       [NSNumber numberWithBool:YES], AVLinearPCMIsFloatKey, nil] retain];
+    _recordSettings = @{AVFormatIDKey: @(kAudioFormatLinearPCM),
+                       AVSampleRateKey: @8000.0f,
+                       AVNumberOfChannelsKey: @1,
+                       AVLinearPCMBitDepthKey: @16,
+                       AVEncoderAudioQualityKey: @(AVAudioQualityMax),
+                       AVSampleRateConverterAudioQualityKey: @(AVAudioQualityMax),
+                       AVLinearPCMIsFloatKey: @YES};
 
-    _defaultCategory = [[[AVAudioSession sharedInstance] category] retain];
-    _defaultMode     = [[[AVAudioSession sharedInstance] mode] retain];
+    _defaultCategory = [[AVAudioSession sharedInstance] category];
+    _defaultMode     = [[AVAudioSession sharedInstance] mode];
   }
 
   return self;
-}
-
-#pragma mark -
-#pragma mark Deallocate
-
-- (void)dealloc
-{  
-  [_filename release];
-  [_defaultCategory release];
-  [_recordSettings release];
-  [_audioRecorder release];
-  [_defaultMode release];
-  
-  [super dealloc];
 }
 
 #pragma mark -
@@ -124,7 +109,6 @@
   }
 
   self.audioRecorder = newAudioRecorder;
-  [newAudioRecorder release];
   
   // Set as delegate to receive events upon recording error or completion..
   [self.audioRecorder setDelegate: self];
@@ -229,11 +213,11 @@
   CFUUIDRef uuid = CFUUIDCreate(NULL);
   CFStringRef uuidString = CFUUIDCreateString(NULL, uuid);
 
-  NSString *uniqueFileName = [NSString stringWithFormat:@"%@%@.caf", @"adt-", (NSString *)uuidString];
+  NSString *uniqueFileName = [NSString stringWithFormat:@"%@%@.caf", @"adt-", ( NSString *)CFBridgingRelease(uuidString)];
   NSString *recordFile = [NSTemporaryDirectory() stringByAppendingPathComponent: uniqueFileName];
 
   CFRelease(uuid);
-  CFRelease(uuidString);
+  //  CFRelease(uuidString);
 
   return recordFile;
 }
