@@ -8,15 +8,12 @@
 
 #import "ADTViewController.h"
 #import "ADTClient.h"
-#import "ADTLoadAdDelegate.h"
-#import "ADTLoadAd.h"
 
-@interface ADTViewController () <ADTClientDelegate, ADTLoadAdDelegate>
+@interface ADTViewController () <ADTClientDelegate>
 
-@property (nonatomic, strong) IBOutlet UIWebView *webView;
-@property (nonatomic, strong) ADTClient *audioACR;
+@property (nonatomic, retain) IBOutlet UIWebView *webView;
+@property (nonatomic, retain) ADTClient *audioACR;
 @property (nonatomic, copy) NSString *liveTitle;
-@property (nonatomic, strong) ADTLoadAd* loadAd;
 
 @end
 
@@ -25,18 +22,18 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  
+
   ADTClient *newAudioACR = [[ADTClient alloc] initWithDelegate:self doRefresh:YES andAppID:@"ADTDemoApp" andAppSecret:@"ADTDemoApp"];
 
   self.audioACR = newAudioACR;
+  [newAudioACR release];
   
-  self.loadAd = [[ADTLoadAd alloc] initWithDelegate:self andUDID:self.audioACR.udid];
-
   // start it up
   [self.audioACR start];
   
   UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bg.png"]];
   self.view.backgroundColor = backgroundColor;
+  [backgroundColor release];
   
   self.webView.opaque = NO;
   self.webView.backgroundColor = [UIColor clearColor];
@@ -46,10 +43,21 @@
 
 - (void)didReceiveMemoryWarning
 {
+  [_audioACR release];
+  [_webView release];
+  [_liveTitle release];
   
   [super didReceiveMemoryWarning];
 }
 
+- (void)dealloc
+{
+  [_audioACR release];
+  [_webView release];
+  [_liveTitle release];
+  
+  [super dealloc];
+}
 
 - (void) resetView
 {
@@ -70,7 +78,7 @@
 
 - (void) ADTClientDidReceiveMatch:(NSDictionary *)results
 {
-  NSNumber *liveTV = results[@"live_tv"];
+  NSNumber *liveTV = [results objectForKey:@"live_tv"];
 
   NSLog(@"%@", results);
   
@@ -94,13 +102,17 @@
     
     self.liveTitle = title;
       
+    [message release];
+  } else {
+    if(results[@"url"]) {
+      [self.webView  loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:results[@"url"]]]];
+    }
   }
 }
 
 - (void)ADTClientDidReceiveAd
 {
-  NSLog(@"LOADING AD FROM AD SERVER");
-  [self.loadAd loadAd];
+  NSLog(@"RECEIVED AN AD");
 }
 
 - (void)ADTClientErrorDidOccur:(NSError *)error
@@ -111,14 +123,6 @@
 - (void)ADTClientDidFinishSuccessfully
 {
   NSLog(@"ACR Complete!");
-}
-
-#pragma mark -
-#pragma mark Load Ad Delegates
-
-- (void)ADTLoadAdDidReceiveAd:(NSString *)markup
-{
-  [self.webView loadHTMLString:markup baseURL:[NSURL URLWithString:@"http://api.adtonik.net"]];
 }
 
 @end

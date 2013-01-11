@@ -27,7 +27,6 @@
 		ABD1AFB21587FF9700BF789E /* ADTRestAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA71587FF9700BF789E /* ADTRestAPI.m */; };
 		ABD1AFB31587FF9700BF789E /* ADTRestEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFAA1587FF9700BF789E /* ADTRestEnvelope.m */; };
 		ABD1AFB41587FF9700BF789E /* libADTlibacrWrapper-universal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD1AFAD1587FF9700BF789E /* libADTlibacrWrapper-universal.a */; };
-		ABFCFEEC169F863500FF8F87 /* ADTLoadAd.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFCFEEB169F863500FF8F87 /* ADTLoadAd.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,9 +66,6 @@
 		ABD1AFAA1587FF9700BF789E /* ADTRestEnvelope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTRestEnvelope.m; sourceTree = "<group>"; };
 		ABD1AFAC1587FF9700BF789E /* ADTlibacrWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTlibacrWrapper.h; sourceTree = "<group>"; };
 		ABD1AFAD1587FF9700BF789E /* libADTlibacrWrapper-universal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libADTlibacrWrapper-universal.a"; sourceTree = "<group>"; };
-		ABFCFEEA169F863500FF8F87 /* ADTLoadAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTLoadAd.h; sourceTree = "<group>"; };
-		ABFCFEEB169F863500FF8F87 /* ADTLoadAd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTLoadAd.m; sourceTree = "<group>"; };
-		ABFCFEED169F8EFB00FF8F87 /* ADTLoadAdDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADTLoadAdDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,9 +129,6 @@
 				AB3C088A154F96E900EEFA58 /* ADTAppDelegate.m */,
 				AB3C088B154F96E900EEFA58 /* ADTViewController.h */,
 				AB3C088C154F96E900EEFA58 /* ADTViewController.m */,
-				ABFCFEEA169F863500FF8F87 /* ADTLoadAd.h */,
-				ABFCFEEB169F863500FF8F87 /* ADTLoadAd.m */,
-				ABFCFEED169F8EFB00FF8F87 /* ADTLoadAdDelegate.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -260,7 +253,6 @@
 				ABD1AFB11587FF9700BF789E /* ADTLogging.m in Sources */,
 				ABD1AFB21587FF9700BF789E /* ADTRestAPI.m in Sources */,
 				ABD1AFB31587FF9700BF789E /* ADTRestEnvelope.m in Sources */,
-				ABFCFEEC169F863500FF8F87 /* ADTLoadAd.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,7 +328,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = armv7;
-				CLANG_ENABLE_OBJC_ARC = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -360,7 +351,6 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = armv7;
@@ -373,7 +363,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = armv7;
-				CLANG_ENABLE_OBJC_ARC = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -396,7 +385,6 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = armv7;

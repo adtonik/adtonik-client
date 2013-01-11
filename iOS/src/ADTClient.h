@@ -36,7 +36,7 @@
 
 // Delegate object that receives notifications upon api errors,
 // audio processing errors as well as when the server returns results..
-@property (nonatomic, weak) id <ADTClientDelegate> delegate;
+@property (nonatomic, assign) id <ADTClientDelegate> delegate;
 
 #pragma mark -
 #pragma mark Collecting SDK Version

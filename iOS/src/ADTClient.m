@@ -24,9 +24,9 @@
 @interface ADTClient () <ADTAudioRecorderDelegate, ADTRestAPIDelegate>
 
 @property (getter=doRefresh)    BOOL              refresh;
-@property (nonatomic, strong)   ADTAudioRecorder* audioRecorder;
-@property (nonatomic, strong)   NSOperationQueue* acrQueue;
-@property (nonatomic, strong)   ADTRestAPI*       restAPI;
+@property (nonatomic, retain)   ADTAudioRecorder* audioRecorder;
+@property (nonatomic, retain)   NSOperationQueue* acrQueue;
+@property (nonatomic, retain)   ADTRestAPI*       restAPI;
 @property (nonatomic, assign)   NSUInteger        sampleDuration;
 
 @end
@@ -64,21 +64,35 @@
   self = [super init];
 
   if(self) {
-    _delegate       = delegate;
-    _acrQueue       = [[NSOperationQueue alloc] init];
+    _delegate  = delegate;
+    _acrQueue  = [[NSOperationQueue alloc] init];
     _sampleDuration = ADT_SAMPLE_SECONDS;
-    _udid           = [self getUDID];
+    _udid      = [[self getUDID] retain];
     
     _restAPI   = [[ADTRestAPI alloc] initWithDelegate:self andAppId:appID andAppSecret:appSecret andUDID:_udid];
 
     // make sure allocations successful, bail otherwise.
     if(!_acrQueue || !_restAPI) {
       ADTLogError(@"ADTClient initWithDelegate failed..");
+      [self release];
       return nil;
     }
   }
 
   return self;
+}
+
+#pragma mark -
+#pragma mark Deallocate
+
+- (void)dealloc
+{
+  [_audioRecorder release];
+  [_acrQueue release];
+  [_restAPI release];
+  [_udid release];
+
+  [super dealloc];
 }
 
 #pragma mark -
@@ -116,6 +130,7 @@
                                                         object:nil];
 
   [self.acrQueue addOperation:acrOperation];
+  [acrOperation release];
 
   return YES;
 }
@@ -125,7 +140,7 @@
 
 - (void)startAsyncOperations
 {
-  self.audioRecorder = [[ADTAudioRecorder alloc] initWithDelegate:self];
+  self.audioRecorder = [[[ADTAudioRecorder alloc] initWithDelegate:self] autorelease];
   [self.audioRecorder record:self.sampleDuration];
 }
 
