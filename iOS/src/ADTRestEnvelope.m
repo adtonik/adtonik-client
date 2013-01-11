@@ -43,16 +43,15 @@
 
   time_t unixTime = (time_t) [[NSDate date] timeIntervalSince1970];
 
-  NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:
-                           [NSNumber numberWithLong:unixTime], @"timestamp",
-                           @"request"                        , @"type",
-                           [ADTRestEnvelope envelopeVersion] , @"envelopeVersion",
-                           kADTSDKVersion                    , @"sdkVersion",
-                           acrVersion                        , @"acrVersion",
-                           udid                              , @"udid",
-                           appId                             , @"appID",
-                           state                             , @"state",
-                           data                              , @"data", nil];
+  NSDictionary *message = @{@"timestamp": @(unixTime),
+                           @"type": @"request",
+                           @"envelopeVersion": [ADTRestEnvelope envelopeVersion],
+                           @"sdkVersion": kADTSDKVersion,
+                           @"acrVersion": acrVersion,
+                           @"udid": udid,
+                           @"appID": appId,
+                           @"state": state,
+                           @"data": data};
   
   NSError *error = nil;
   NSData *jsonData = [NSJSONSerialization dataWithJSONObject:message options:0 error:&error];
@@ -110,7 +109,7 @@
 
   const char *data = [message bytes];
 
-  NSArray *keyValues = [NSArray arrayWithObjects:appID, appSecret, nil];
+  NSArray *keyValues = @[appID, appSecret];
   const char *key = [[keyValues componentsJoinedByString:@":"]
                      cStringUsingEncoding:NSASCIIStringEncoding];
 
@@ -126,7 +125,7 @@
     p += 2;
   }
 
-  return [NSString stringWithCString:hexmac encoding:NSASCIIStringEncoding];
+  return @(hexmac);
 }
 
 @end

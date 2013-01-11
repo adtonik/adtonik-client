@@ -135,9 +135,8 @@
     if(statusCode >= 400) {
       [connection cancel];
 
-      NSDictionary *errorInfo = [NSDictionary dictionaryWithObject:
-        [NSString stringWithFormat:NSLocalizedString(@"Server returned status code %d", @""),
-         statusCode] forKey:NSLocalizedDescriptionKey];
+      NSDictionary *errorInfo = @{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Server returned status code %d", @""),
+         statusCode]};
 
       NSError *statusError = [NSError errorWithDomain:@"adtonik.net"
                                                  code:statusCode

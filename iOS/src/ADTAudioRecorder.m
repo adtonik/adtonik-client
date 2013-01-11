@@ -43,14 +43,13 @@
 {
   if(self = [super init]) {
 
-    _recordSettings = [[NSDictionary dictionaryWithObjectsAndKeys:
-                       [NSNumber numberWithInt:kAudioFormatLinearPCM], AVFormatIDKey,
-                       [NSNumber numberWithFloat:8000], AVSampleRateKey,
-                       [NSNumber numberWithInt:1], AVNumberOfChannelsKey,
-                       [NSNumber numberWithInt:16], AVLinearPCMBitDepthKey,
-                       [NSNumber numberWithInt:AVAudioQualityMax], AVEncoderAudioQualityKey,
-                       [NSNumber numberWithInt:AVAudioQualityMax], AVSampleRateConverterAudioQualityKey,
-                       [NSNumber numberWithBool:YES], AVLinearPCMIsFloatKey, nil] retain];
+    _recordSettings = [@{AVFormatIDKey: @(kAudioFormatLinearPCM),
+                       AVSampleRateKey: @8000.0f,
+                       AVNumberOfChannelsKey: @1,
+                       AVLinearPCMBitDepthKey: @16,
+                       AVEncoderAudioQualityKey: @(AVAudioQualityMax),
+                       AVSampleRateConverterAudioQualityKey: @(AVAudioQualityMax),
+                       AVLinearPCMIsFloatKey: @YES} retain];
 
     _defaultCategory = [[[AVAudioSession sharedInstance] category] retain];
     _defaultMode     = [[[AVAudioSession sharedInstance] mode] retain];

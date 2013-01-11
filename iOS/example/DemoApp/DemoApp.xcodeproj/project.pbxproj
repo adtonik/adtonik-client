@@ -21,6 +21,7 @@
 		AB3C08C7154F97C600EEFA58 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C08C6154F97C600EEFA58 /* AudioToolbox.framework */; };
 		AB3E9A1716517F5E00307E5D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3E9A1616517F5E00307E5D /* Default-568h@2x.png */; };
 		AB3F092B1694D30C00132794 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F092A1694D30C00132794 /* AdSupport.framework */; };
+		AB63F53D16A0DC6200D4E49F /* ADTLoadAd.m in Sources */ = {isa = PBXBuildFile; fileRef = AB63F53B16A0DC6200D4E49F /* ADTLoadAd.m */; };
 		ABD1AFAE1587FF9700BF789E /* ADTClient.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AF9D1587FF9700BF789E /* ADTClient.m */; };
 		ABD1AFAF1587FF9700BF789E /* ADTAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA01587FF9700BF789E /* ADTAudioRecorder.m */; };
 		ABD1AFB11587FF9700BF789E /* ADTLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA51587FF9700BF789E /* ADTLogging.m */; };
@@ -50,6 +51,9 @@
 		AB3E9A1616517F5E00307E5D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		AB3F092A1694D30C00132794 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		AB3F09341694E0C900132794 /* ADTVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTVersion.h; sourceTree = "<group>"; };
+		AB63F53A16A0DC6200D4E49F /* ADTLoadAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTLoadAd.h; sourceTree = "<group>"; };
+		AB63F53B16A0DC6200D4E49F /* ADTLoadAd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTLoadAd.m; sourceTree = "<group>"; };
+		AB63F53C16A0DC6200D4E49F /* ADTLoadAdDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTLoadAdDelegate.h; sourceTree = "<group>"; };
 		ABD1AF9C1587FF9700BF789E /* ADTClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTClient.h; sourceTree = "<group>"; };
 		ABD1AF9D1587FF9700BF789E /* ADTClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTClient.m; sourceTree = "<group>"; };
 		ABD1AF9E1587FF9700BF789E /* ADTClientDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTClientDelegate.h; sourceTree = "<group>"; };
@@ -125,6 +129,9 @@
 		AB3C0888154F96E900EEFA58 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				AB63F53A16A0DC6200D4E49F /* ADTLoadAd.h */,
+				AB63F53B16A0DC6200D4E49F /* ADTLoadAd.m */,
+				AB63F53C16A0DC6200D4E49F /* ADTLoadAdDelegate.h */,
 				AB3C0889154F96E900EEFA58 /* ADTAppDelegate.h */,
 				AB3C088A154F96E900EEFA58 /* ADTAppDelegate.m */,
 				AB3C088B154F96E900EEFA58 /* ADTViewController.h */,
@@ -253,6 +260,7 @@
 				ABD1AFB11587FF9700BF789E /* ADTLogging.m in Sources */,
 				ABD1AFB21587FF9700BF789E /* ADTRestAPI.m in Sources */,
 				ABD1AFB31587FF9700BF789E /* ADTRestEnvelope.m in Sources */,
+				AB63F53D16A0DC6200D4E49F /* ADTLoadAd.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
