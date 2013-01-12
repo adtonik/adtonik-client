@@ -354,7 +354,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/..\"",
-					"\"$(SRCROOT)/Libraries\"",
 					"\"$(SRCROOT)/../../src/libacr\"",
 				);
 				OTHER_LDFLAGS = "";
@@ -388,7 +387,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/..\"",
-					"\"$(SRCROOT)/Libraries\"",
 					"\"$(SRCROOT)/../../src/libacr\"",
 				);
 				OTHER_LDFLAGS = "";
