@@ -4,11 +4,12 @@
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Adtonik-client : AdTonik Mobile Client for iOS &amp; Android" />
+    <meta name="description" content="adtonik-mobile-sdk : AdTonik SDK for iOS" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Adtonik-client</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" src="repo.js"></script>
+    <title>adtonik-mobile-sdk</title>
   </head>
 
   <body>
@@ -16,14 +17,14 @@
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
-          <a id="forkme_banner" href="https://github.com/adtonik/adtonik-client">View on GitHub</a>
+          <a id="forkme_banner" href="https://github.com/adtonik/adtonik-mobile-sdk">View on GitHub</a>
 
-          <h1 id="project_title">Adtonik-client</h1>
-          <h2 id="project_tagline">AdTonik Mobile Client for iOS &amp; Android</h2>
+          <h1 id="project_title">adtonik-mobile-sdk</h1>
+          <h2 id="project_tagline">AdTonik SDK for iOS</h2>
 
             <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/adtonik/adtonik-client/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/adtonik/adtonik-client/tarball/master">Download this project as a tar.gz file</a>
+              <a class="zip_download_link" href="https://github.com/adtonik/adtonik-mobile-sdk/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/adtonik/adtonik-mobile-sdk/tarball/master">Download this project as a tar.gz file</a>
             </section>
         </header>
     </div>
@@ -31,44 +32,146 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>Welcome to GitHub Pages.</h3>
+        <h1>AdTonik Mobile SDK</h1>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>The AdTonik Mobile SDK currently implements our audio automated content recognition technology. Future functionality
+will include a mobile ad sdk client which can act as a mediation layer as well as directly pull ads from the AdTonik ad
+server.</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<h2>Open Source SDK</h2>
+
+<p>In the interest of building a developer friendly company and fostering trust with partners, we open sourced our
+mobile SDK. We are interested in integrating our SDK in various types of applications such as games, productivity apps,
+etc. Due to the fact that we depend on how the application utilizes audio, it seemed best to release the source so the
+SDK could be best adapted to the application's environment. We also welcome any improvements or bug fixes. Feel free to
+create a pull request on the github project.</p>
+
+<h2>API Documentation</h2>
+
+<p>You can view the API documents at <a href="http://adtonik.net/docs">http://adtonik.net/docs</a></p>
+
+<h2>Integration</h2>
+
+<p>See the examples/ directory to get an idea of how simple it is to integrate our SDK in an existing application.</p>
+
+<div id='code'>
+</div>
+
+<script>
+  $("#code").repo({user:'adtonik', name:'adtonik-mobile-sdk', branch:'master'});
+</script>
+
+<h3>DemoApp</h3>
+
+<p>This application shows how to integrate the adtonik-mobile-sdk in a single window application. The application logic itself is just a placeholder and I simply took a screenshot of a weather application and set it as the background. The top of the view contains a UIWebView which renders an HTML banner ad when an audio ACR result is received from the API server.</p>
+
+<p><strong>Setting up ADTAudioACR object</strong></p>
+
+<p>Open the main view controller (ADTViewController) for the DemoApp. Note the property audioACR of the type ADTAudioACR.</p>
+
+<p><strong>ADTViewController.h</strong></p>
+
+<pre><code>@interface ADTViewController : UIViewController &lt;ADTAudioACRDelegate&gt; {
+  ADTAudioACR *audioACR_;
+}
+
+@property (nonatomic, retain) ADTAudioACR *audioACR;
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p>Now open ADTViewController.m and see how audioACR is initialized in when the view is loaded.</p>
 
-<h3>Designer Templates</h3>
+<p><strong>ADTViewController.m</strong></p>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<pre><code>- (void)viewDidLoad
+{
+  …
 
-<h3>Rather Drive Stick?</h3>
+  ADTAudioACR *newAudioACR = [[ADTAudioACR alloc] initWithDelegate:self refresh:YES];
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+  self.audioACR = newAudioACR;
+  [newAudioACR release];
 
-<h3>Authors and Contributors</h3>
+  // start it up
+  [self.audioACR start];
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+  ...
+}
+</code></pre>
 
-<h3>Support or Contact</h3>
+<p>All we are doing here is initializing a new ADTAudioACR object and setting the delegate to the ADTViewController object. It is mandatory to pass in a ADTAudioACRDelegate object. This delegate has methods that specify the appID and appSecret that is assigned to you when you register your application on the AdTonik site.</p>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<p>There are two ways at the current time to run the ACR process. The first is to call initWithDelegate with the refresh flag set to YES. This means that after every cycle of turning on the microphone, taking an audio sample, processing the audio and querying the api server for results, it will be re-run. Even if an error is experienced and the error delegate methods are called, if it is possible to continue despite the error, it will continue to run. If you do choose to set refresh to YES, note that when you are truly finished running the ACR process, you can simply call [audioACR stop] at any time.</p>
+
+<p>The second way is by setting the refresh flag to NO. When this is the case, the ACR process will happen once. After the delegate methods are called upon receiving results or experiencing an error, the ACR process will be stopped. If you would like to manually turn it back on, you can call [audioACR start] to fire it back up.</p>
+
+<h4>Delegate Methods</h4>
+
+<p>The ADTAudioACRDelegate object is very important. You must implement the delegate protocol in one of your classes in order to receive events whenever an error occurs or when results are received. The protocol also implements two important methods acrAppID and acrAppSecret which return an NSString containing the application ID and application secret that is assigned to you when your application was registered at adtonik.com.</p>
+
+<p>Look at DemoApp's ADTViewController class which implements the ADTAudioACRDelegate protocol.</p>
+
+<pre><code>- (NSString *) acrAppId {
+  return @"appID"; // replace with the appID value assigned to you by adtonik
+}
+
+- (NSString *) acrAppSecret {
+  return @"appSecret"; // replace with the appSecret value assigned to you by adtonik
+}
+
+- (void) acrAPIReceivedResults: (NSDictionary *) results successfully:(BOOL) flag {
+  if(flag == YES) {
+    NSString *url  = [results objectForKey:@"url"];
+
+    if(url != NULL) {
+      [webView_  loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
+    }
+  }
+}
+
+- (void) acrAPIErrorDidOccur: (NSString *) error {
+  NSLog(@"Encountered API ERROR %@", error);
+}
+
+- (void) acrAudioProcessingError: (NSString *) error {
+  NSLog(@"Encountered audio processing error %@", error);
+}
+</code></pre>
+
+<p>There are three methods that are required to be implemented: acrAppID, acrAppSecret and acrAPIReceivedResults:successfully:. The first two methods simply return an NSString object containing the credentials assigned to you when your application was registered at adtonik.com.</p>
+
+<p>The method acrAPIReceivedResults:successfully: is called when the API server responds to your request. The API server returns a JSON hash of metadata related to the content. Depending on whether the content is a commercial, television show, movie or song, the metadata can be different. We are standardizing on the required values that will be contained in the NSDictionary, but a few things can be expected: name, url, description. In this demo application, I am only interested in pulling out the URL containing a banner image which can be rendered in the UIWebView. As shown above, if the server was able to find a match, it calls the delegate method with the success flag set to YES. If the server responds with a match, I pull out the URL field from the dictionary and render it in the webview.</p>
+
+<p>This concludes the description of how the DemoApp is designed. If you have any other questions, feel free to contact me directly.</p>
+
+<p><strong>Marshall Beddoe</strong></p>
+
+<p><strong><a href="mailto:marshall@adtonik.com">marshall@adtonik.com</a></strong></p>
+
       </section>
     </div>
 
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p class="copyright">Adtonik-client maintained by <a href="https://github.com/adtonik">adtonik</a></p>
+        <p class="copyright">adtonik-mobile-sdk maintained by <a href="https://github.com/adtonik">adtonik</a></p>
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
 
-    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-32626440-1']);
+  _gaq.push(['_setDomainName', 'adtonik.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 
   </body>
 </html>

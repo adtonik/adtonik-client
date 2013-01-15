@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/ADTAudioACR.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/ADTAudioACR</TokenIdentifier>
+			<Abstract type="html">An instance of the ADTAudioACR class discovers what a user is watching on television using
+audio automated content recognition technology. This works by turning on the microphone and taking
+a sample, processing the raw audio to pull out fingerprints and then querying the ACR api server
+to receive the results.</Abstract>
+			<DeclaredIn>ADTAudioACR.h</DeclaredIn>
+			
+			<NodeRef refid="1"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ADTAudioACR/initWithDelegate:</TokenIdentifier>
+			<Abstract type="html">Initializes the audio ACR object</Abstract>
+			<DeclaredIn>ADTAudioACR.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithDelegate:(id&lt;ADTAudioACRDelegate&gt;)delegate</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>delegate</Name>
+					<Abstract type="html">The ADTAudioACRDelegate object</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">Returns initialized instance or nil if initialization fails.</Abstract></ReturnValue>
+			<Anchor>//api/name/initWithDelegate:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ADTAudioACR/initWithDelegate:refresh:</TokenIdentifier>
+			<Abstract type="html">Initializes the audio ACR object</Abstract>
+			<DeclaredIn>ADTAudioACR.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithDelegate:(id&lt;ADTAudioACRDelegate&gt;)delegate refresh:(BOOL)refreshFlag</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>delegate</Name>
+					<Abstract type="html">The ADTAudioACRDelegate object</Abstract>
+				</Parameter><Parameter>
+					<Name>refreshFlag</Name>
+					<Abstract type="html">Set to YES to continue to run in background</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">Returns initialized instance or nil if initialization fails.</Abstract></ReturnValue>
+			<Anchor>//api/name/initWithDelegate:refresh:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ADTAudioACR/start</TokenIdentifier>
+			<Abstract type="html">Call start to begin ACR process.</Abstract>
+			<DeclaredIn>ADTAudioACR.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)start</Declaration>
+			
+			<ReturnValue><Abstract type="html">YES if start was successful</Abstract></ReturnValue>
+			<Anchor>//api/name/start</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ADTAudioACR/stop</TokenIdentifier>
+			<Abstract type="html">Call stop to end ACR process.</Abstract>
+			<DeclaredIn>ADTAudioACR.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)stop</Declaration>
+			
+			<ReturnValue><Abstract type="html">YES if stop was successful</Abstract></ReturnValue>
+			<Anchor>//api/name/stop</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ADTAudioACR/dealloc</TokenIdentifier>
+			<Abstract type="html">Deallocate ACR object and cleanup.</Abstract>
+			<DeclaredIn>ADTAudioACR.h</DeclaredIn>			
+			
+			<Declaration>- (void)dealloc</Declaration>
+			
+			
+			<Anchor>//api/name/dealloc</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

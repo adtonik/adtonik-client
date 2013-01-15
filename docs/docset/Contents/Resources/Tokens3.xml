@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/ADTAudioACRDelegate.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/ADTAudioACRDelegate</TokenIdentifier>
+			<Abstract type="html">The delegate of an ADTAudioACR object must adopt the ADTAudioACRDelegate protocol.
+These methods allow the delegate to receive ACR results and be notified upon errors.</Abstract>
+			<DeclaredIn>ADTAudioACRDelegate.h</DeclaredIn>
+			
+			<NodeRef refid="3"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/ADTAudioACRDelegate/acrAppId</TokenIdentifier>
+			<Abstract type="html">Must return an NSString containing the application ID assigned to you from AdTonik.</Abstract>
+			<DeclaredIn>ADTAudioACRDelegate.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)acrAppId</Declaration>
+			
+			
+			<Anchor>//api/name/acrAppId</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/ADTAudioACRDelegate/acrAppSecret</TokenIdentifier>
+			<Abstract type="html">Must return an NSString containing the application secret assigned to you from AdTonik.</Abstract>
+			<DeclaredIn>ADTAudioACRDelegate.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)acrAppSecret</Declaration>
+			
+			
+			<Anchor>//api/name/acrAppSecret</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/ADTAudioACRDelegate/acrAPIReceivedResults:successfully:</TokenIdentifier>
+			<Abstract type="html">Called by the system when results have been received from the API server.</Abstract>
+			<DeclaredIn>ADTAudioACRDelegate.h</DeclaredIn>			
+			
+			<Declaration>- (void)acrAPIReceivedResults:(NSDictionary *)results successfully:(BOOL)flag</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>results</Name>
+					<Abstract type="html">NSDictionary containing meta-data of the content that was matched</Abstract>
+				</Parameter><Parameter>
+					<Name>flag</Name>
+					<Abstract type="html">The flag indicating a sucessful match (YES), or failure (NO)</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/acrAPIReceivedResults:successfully:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/ADTAudioACRDelegate/acrUDID</TokenIdentifier>
+			<Abstract type="html">Optional method to override the UDID method. UDID must match the UDID the Ad SDK uses.
+If you do not specify this method, we use the IFA on iOS 6 and sha1 udid for iOS &lt; 6.</Abstract>
+			<DeclaredIn>ADTAudioACRDelegate.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)acrUDID</Declaration>
+			
+			
+			<Anchor>//api/name/acrUDID</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/ADTAudioACRDelegate/acrAPIErrorDidOccur:</TokenIdentifier>
+			<Abstract type="html">Called by the system when an API error occurs.</Abstract>
+			<DeclaredIn>ADTAudioACRDelegate.h</DeclaredIn>			
+			
+			<Declaration>- (void)acrAPIErrorDidOccur:(NSString *)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>error</Name>
+					<Abstract type="html">NSString containing the error message</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/acrAPIErrorDidOccur:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/ADTAudioACRDelegate/acrAudioProcessingError:</TokenIdentifier>
+			<Abstract type="html">Called by the system when a recording error occurs.</Abstract>
+			<DeclaredIn>ADTAudioACRDelegate.h</DeclaredIn>			
+			
+			<Declaration>- (void)acrAudioProcessingError:(NSString *)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>error</Name>
+					<Abstract type="html">NSString containing the error message</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/acrAudioProcessingError:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

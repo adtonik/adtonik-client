@@ -1,0 +1,4 @@
+Documentation set was installed to Xcode!
+
+Path: /Users/marshall/Library/Developer/Shared/Documentation/DocSets/com.adtonik.AdTonik-SDK.docset
+Time: 2013-01-02 21:28:05 +0000
