@@ -26,7 +26,7 @@ Open the main view controller (ADTViewController) for the DemoApp. Note the prop
 __ADTViewController.h__
 
 @interface ADTViewController : UIViewController <ADTAudioACRDelegate> {
-  ADTAudioACR *audioACR_;
+  ADTAudioACR *_audioACR;
 }
 
 @property (nonatomic, retain) ADTAudioACR *audioACR;
