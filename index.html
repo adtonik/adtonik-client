@@ -4,11 +4,10 @@
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="adtonik-client : AdTonik SDK for iOS" />
+    <meta name="description" content="adtonik-client : AdTonik Mobile Client for iOS &amp; Android" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script type="text/javascript" src="repo.js"></script>
+
     <title>adtonik-client</title>
   </head>
 
@@ -20,7 +19,7 @@
           <a id="forkme_banner" href="https://github.com/adtonik/adtonik-client">View on GitHub</a>
 
           <h1 id="project_title">adtonik-client</h1>
-          <h2 id="project_tagline">AdTonik SDK for iOS</h2>
+          <h2 id="project_tagline">AdTonik Mobile Client for iOS &amp; Android</h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/adtonik/adtonik-client/zipball/master">Download this project as a .zip file</a>
@@ -38,32 +37,20 @@
 will include a mobile ad sdk client which can act as a mediation layer as well as directly pull ads from the AdTonik ad
 server.</p>
 
-<h2>Open Source SDK</h2>
-
-<p>In the interest of building a developer friendly company and fostering trust with partners, we open sourced our
-mobile SDK. We are interested in integrating our SDK in various types of applications such as games, productivity apps,
-etc. Due to the fact that we depend on how the application utilizes audio, it seemed best to release the source so the
-SDK could be best adapted to the application's environment. We also welcome any improvements or bug fixes. Feel free to
-create a pull request on the github project.</p>
-
 <h2>API Documentation</h2>
 
 <p>You can view the API documents at <a href="http://adtonik.net/docs">http://adtonik.net/docs</a></p>
 
 <h2>Integration</h2>
 
+<p>Go to <a href="http://control.adtonik.net">http://control.adtonik.net</a> to register your application and generate an App ID
+and App Secret which will be used in your ADTAudioACRDelegate.</p>
+
 <p>See the examples/ directory to get an idea of how simple it is to integrate our SDK in an existing application.</p>
-
-<div id='code'>
-</div>
-
-<script>
-  $("#code").repo({user:'adtonik', name:'adtonik-client', branch:'master'});
-</script>
 
 <h3>DemoApp</h3>
 
-<p>This application shows how to integrate the adtonik-client in a single window application. The application logic itself is just a placeholder and I simply took a screenshot of a weather application and set it as the background. The top of the view contains a UIWebView which renders an HTML banner ad when an audio ACR result is received from the API server.</p>
+<p>This application shows how to integrate the adtonik-mobile-sdk in a single window application. The application logic itself is just a placeholder and I simply took a screenshot of a weather application and set it as the background. The top of the view contains a UIWebView which renders an HTML banner ad when an audio ACR result is received from the API server.</p>
 
 <p><strong>Setting up ADTAudioACR object</strong></p>
 
@@ -71,34 +58,34 @@ create a pull request on the github project.</p>
 
 <p><strong>ADTViewController.h</strong></p>
 
-<pre><code>@interface ADTViewController : UIViewController &lt;ADTAudioACRDelegate&gt; {
-  ADTAudioACR *audioACR_;
-}
+<p><a href="https://github.com/interface" class="user-mention">@interface</a> ADTViewController : UIViewController  {
+  ADTAudioACR *_audioACR;
+}</p>
 
-@property (nonatomic, retain) ADTAudioACR *audioACR;
-</code></pre>
+<p><a href="https://github.com/property" class="user-mention">@property</a> (nonatomic, retain) ADTAudioACR *audioACR;</p>
 
 <p>Now open ADTViewController.m and see how audioACR is initialized in when the view is loaded.</p>
 
 <p><strong>ADTViewController.m</strong></p>
 
-<pre><code>- (void)viewDidLoad
+<ul>
+<li>
+<p>(void)viewDidLoad
 {
-  …
+…</p>
 
-  ADTAudioACR *newAudioACR = [[ADTAudioACR alloc] initWithDelegate:self refresh:YES];
+<p>ADTAudioACR *newAudioACR = [[ADTAudioACR alloc] initWithDelegate:self refresh:YES];</p>
 
-  self.audioACR = newAudioACR;
-  [newAudioACR release];
+<p>self.audioACR = newAudioACR;
+[newAudioACR release];</p>
 
-  // start it up
-  [self.audioACR start];
+<p>// start it up
+[self.audioACR start];</p>
 
-  ...
-}
-</code></pre>
-
-<p>All we are doing here is initializing a new ADTAudioACR object and setting the delegate to the ADTViewController object. It is mandatory to pass in a ADTAudioACRDelegate object. This delegate has methods that specify the appID and appSecret that is assigned to you when you register your application on the AdTonik site.</p>
+<p>...
+}</p>
+</li>
+</ul><p>All we are doing here is initializing a new ADTAudioACR object and setting the delegate to the ADTViewController object. It is mandatory to pass in a ADTAudioACRDelegate object. This delegate has methods that specify the appID and appSecret that is assigned to you when you register your application on the AdTonik site.</p>
 
 <p>There are two ways at the current time to run the ACR process. The first is to call initWithDelegate with the refresh flag set to YES. This means that after every cycle of turning on the microphone, taking an audio sample, processing the audio and querying the api server for results, it will be re-run. Even if an error is experienced and the error delegate methods are called, if it is possible to continue despite the error, it will continue to run. If you do choose to set refresh to YES, note that when you are truly finished running the ACR process, you can simply call [audioACR stop] at any time.</p>
 
@@ -110,34 +97,31 @@ create a pull request on the github project.</p>
 
 <p>Look at DemoApp's ADTViewController class which implements the ADTAudioACRDelegate protocol.</p>
 
-<pre><code>- (NSString *) acrAppId {
-  return @"appID"; // replace with the appID value assigned to you by adtonik
+<ul>
+<li><p>(NSString *) acrAppId {
+return @"appID"; // replace with the appID value assigned to you by adtonik
+}</p></li>
+<li><p>(NSString *) acrAppSecret {
+return @"appSecret"; // replace with the appSecret value assigned to you by adtonik
+}</p></li>
+<li>
+<p>(void) acrAPIReceivedResults: (NSDictionary *) results successfully:(BOOL) flag {
+if(flag == YES) {
+NSString *url  = [results objectForKey:@"url"];</p>
+
+<p>if(url != NULL) {
+  [webView_  loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
 }
-
-- (NSString *) acrAppSecret {
-  return @"appSecret"; // replace with the appSecret value assigned to you by adtonik
 }
-
-- (void) acrAPIReceivedResults: (NSDictionary *) results successfully:(BOOL) flag {
-  if(flag == YES) {
-    NSString *url  = [results objectForKey:@"url"];
-
-    if(url != NULL) {
-      [webView_  loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
-    }
-  }
-}
-
-- (void) acrAPIErrorDidOccur: (NSString *) error {
-  NSLog(@"Encountered API ERROR %@", error);
-}
-
-- (void) acrAudioProcessingError: (NSString *) error {
-  NSLog(@"Encountered audio processing error %@", error);
-}
-</code></pre>
-
-<p>There are three methods that are required to be implemented: acrAppID, acrAppSecret and acrAPIReceivedResults:successfully:. The first two methods simply return an NSString object containing the credentials assigned to you when your application was registered at adtonik.com.</p>
+}</p>
+</li>
+<li><p>(void) acrAPIErrorDidOccur: (NSString *) error {
+NSLog(@"Encountered API ERROR %@", error);
+}</p></li>
+<li><p>(void) acrAudioProcessingError: (NSString *) error {
+NSLog(@"Encountered audio processing error %@", error);
+}</p></li>
+</ul><p>There are three methods that are required to be implemented: acrAppID, acrAppSecret and acrAPIReceivedResults:successfully:. The first two methods simply return an NSString object containing the credentials assigned to you when your application was registered at adtonik.com.</p>
 
 <p>The method acrAPIReceivedResults:successfully: is called when the API server responds to your request. The API server returns a JSON hash of metadata related to the content. Depending on whether the content is a commercial, television show, movie or song, the metadata can be different. We are standardizing on the required values that will be contained in the NSDictionary, but a few things can be expected: name, url, description. In this demo application, I am only interested in pulling out the URL containing a banner image which can be rendered in the UIWebView. As shown above, if the server was able to find a match, it calls the delegate method with the success flag set to YES. If the server responds with a match, I pull out the URL field from the dictionary and render it in the webview.</p>
 
@@ -147,6 +131,7 @@ create a pull request on the github project.</p>
 
 <p><strong><a href="mailto:marshall@adtonik.com">marshall@adtonik.com</a></strong></p>
 
+<p><strong>(415) 505-4203</strong></p>
       </section>
     </div>
 
@@ -158,20 +143,7 @@ create a pull request on the github project.</p>
       </footer>
     </div>
 
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-32626440-1']);
-  _gaq.push(['_setDomainName', 'adtonik.net']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
+    
 
   </body>
 </html>
