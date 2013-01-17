@@ -252,15 +252,8 @@ so it can be put to sleep if our algorithm believes the user is not in front of 
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>By default, the refreshFlag is set to NO. This means after making the delegate callbacks, the acr
-process will be stopped. You may manually call start again if desired or instead initialize object
+process will be stopped. You may manually call <a href="#//api/name/start">start</a> again if desired or instead initialize object
 with refreshFlag to YES.</p>
-
-<ul>
-<li>[ADTClientDelegate acrAPIReceivedResults:successfully:] is called upon receiving results from the api server</li>
-<li>[ADTClientDelegate acrAPIErrorDidOccur:] is called when there is an API server error</li>
-<li>[ADTClientDelegate acrAudioProcessingError:] is called when there is a recording error</li>
-</ul>
-
 	</div>
 	
 	
@@ -328,16 +321,6 @@ with refreshFlag to YES.</p>
 	
 	
 	
-	
-	<div class="method-subsection discussion-section">
-		<h4 class="method-subtitle">Discussion</h4>
-		<ul>
-<li>[ADTClientDelegate acrAPIReceivedResults:successfully:] is called upon receiving results from the api server</li>
-<li>[ADTClientDelegate acrAPIErrorDidOccur:] is called when there is an API server error</li>
-<li>[ADTClientDelegate acrAudioProcessingError:] is called when there is a recording error</li>
-</ul>
-
-	</div>
 	
 	
 	
