@@ -58,10 +58,6 @@
  process will be stopped. You may manually call start again if desired or instead initialize object
  with refreshFlag to YES.
 
- - [ADTClientDelegate acrAPIReceivedResults:successfully:] is called upon receiving results from the api server
- - [ADTClientDelegate acrAPIErrorDidOccur:] is called when there is an API server error
- - [ADTClientDelegate acrAudioProcessingError:] is called when there is a recording error
-
  @param delegate The ADTClientDelegate object
  @param appID The AdTonik assigned appID
  @param appSecret The AdTonik assigned appSecret
@@ -75,10 +71,6 @@
 
 /**
  Initializes the audio ACR object
-
- - [ADTClientDelegate acrAPIReceivedResults:successfully:] is called upon receiving results from the api server
- - [ADTClientDelegate acrAPIErrorDidOccur:] is called when there is an API server error
- - [ADTClientDelegate acrAudioProcessingError:] is called when there is a recording error
 
  @param delegate The ADTClientDelegate object
  @param refreshFlag Set to YES to continue to run in background
