@@ -6,7 +6,7 @@ server.
 
 ## API Documentation
 
-You can view the API documents at [http://dev.adtonik.net/docs](http://adtonik.net/docs)
+You can view the API documents at [http://dev.adtonik.net/docs](http://dev.adtonik.net/docs)
 
 ## Integration
 
@@ -74,7 +74,7 @@ Look at DemoApp's ADTViewController class which implements the ADTClientDelegate
     {
       NSLog(@"ADTClient error occurred: %@", error);
     }
-    
+
     - (void)ADTClientDidFinishSuccessfully
     {
       NSLog(@"ADTClient Complete!");
@@ -82,7 +82,7 @@ Look at DemoApp's ADTViewController class which implements the ADTClientDelegate
 
 The method `ADTClientDidReceiveMatch` is called when ADTClient has recognized television content. The method `ADTClientDidReceiveAd` is called when an ad has been prepared for this device. This method is typically the one you would initiate an ad to be rendered in the view using the ad SDK your app uses.
 
-The `ADTClientErrorDidOccur` method is called upon an API or audio processing error. Lastly, the `ADTClientDidFinishSuccessfully` method is called upon completion. 
+The `ADTClientErrorDidOccur` method is called upon an API or audio processing error. Lastly, the `ADTClientDidFinishSuccessfully` method is called upon completion.
 
 ##### Overriding the Device ID
 
