@@ -6,7 +6,7 @@ server.
 
 ## API Documentation
 
-You can view the API documents at [http://adtonik.net/docs](http://adtonik.net/docs)
+You can view the API documents at [http://dev.adtonik.net/docs](http://adtonik.net/docs)
 
 ## Integration
 
@@ -21,36 +21,32 @@ This application shows how to integrate the adtonik-mobile-sdk in a single windo
 
 **Setting up ADTAudioACR object**
 
-Open the main view controller (ADTViewController) for the DemoApp. Note the property audioACR of the type ADTAudioACR.
+Open the main view controller (ADTViewController) for the DemoApp. Note the property audioACR of the type ADTClient.
 
-__ADTViewController.h__
+    __ADTViewController.h__
 
-@interface ADTViewController : UIViewController <ADTAudioACRDelegate> {
-  ADTAudioACR *_audioACR;
-}
+    @interface ADTViewController : UIViewController <ADTClientDelegate> {
+      ADTClient *_audioACR;
+    }
 
-@property (nonatomic, retain) ADTAudioACR *audioACR;
+    @property (nonatomic, retain) ADTClient *audioACR;
 
 Now open ADTViewController.m and see how audioACR is initialized in when the view is loaded.
 
 __ADTViewController.m__
 
-- (void)viewDidLoad
-{
-  …
+    - (void)viewDidLoad
+    {
+      ADTClient *newAudioACR = [[ADTClient alloc] initWithDelegate:self doRefresh:YES andAppID:APP_ID andAppSecret:APP_SECRET];
 
-    ADTAudioACR *newAudioACR = [[ADTAudioACR alloc] initWithDelegate:self refresh:YES];
+      self.audioACR = newAudioACR;
+      [newAudioACR release];
 
-  self.audioACR = newAudioACR;
-  [newAudioACR release];
+      // start it up
+      [self.audioACR start];
+    }
 
-  // start it up
-  [self.audioACR start];
-
-  ...
-}
-
-All we are doing here is initializing a new ADTAudioACR object and setting the delegate to the ADTViewController object. It is mandatory to pass in a ADTAudioACRDelegate object. This delegate has methods that specify the appID and appSecret that is assigned to you when you register your application on the AdTonik site.
+Here we initialize a new ADTClient object and set the delegate to self. It is mandatory to pass in a ADTClientDelegate object. Pass the AdTonik assigned APP_ID and APP_SECRET to the ADTClient constructor.
 
 There are two ways at the current time to run the ACR process. The first is to call initWithDelegate with the refresh flag set to YES. This means that after every cycle of turning on the microphone, taking an audio sample, processing the audio and querying the api server for results, it will be re-run. Even if an error is experienced and the error delegate methods are called, if it is possible to continue despite the error, it will continue to run. If you do choose to set refresh to YES, note that when you are truly finished running the ACR process, you can simply call [audioACR stop] at any time.
 
@@ -58,44 +54,42 @@ The second way is by setting the refresh flag to NO. When this is the case, the 
 
 #### Delegate Methods
 
-The ADTAudioACRDelegate object is very important. You must implement the delegate protocol in one of your classes in order to receive events whenever an error occurs or when results are received. The protocol also implements two important methods acrAppID and acrAppSecret which return an NSString containing the application ID and application secret that is assigned to you when your application was registered at adtonik.com.
+You must implement the delegate protocol in one of your classes in order to receive events from ADTClient.
 
-Look at DemoApp's ADTViewController class which implements the ADTAudioACRDelegate protocol.
+Look at DemoApp's ADTViewController class which implements the ADTClientDelegate protocol.
 
-- (NSString *) acrAppId {
-  return @"appID"; // replace with the appID value assigned to you by adtonik
-}
-
-- (NSString *) acrAppSecret {
-  return @"appSecret"; // replace with the appSecret value assigned to you by adtonik
-}
-
-- (void) acrAPIReceivedResults: (NSDictionary *) results successfully:(BOOL) flag {
-  if(flag == YES) {
-    NSString *url  = [results objectForKey:@"url"];
-
-    if(url != NULL) {
-      [webView_  loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
+    // Mandatory delegate methods
+    - (void) ADTClientDidReceiveMatch:(NSDictionary *)results
+    {
+      NSLog(@"Received results %@", results);
     }
-  }
-}
 
-- (void) acrAPIErrorDidOccur: (NSString *) error {
-  NSLog(@"Encountered API ERROR %@", error);
-}
+    - (void)ADTClientDidReceiveAd
+    {
+      NSLog(@"AdTonik has ad for device");
+    }
 
-- (void) acrAudioProcessingError: (NSString *) error {
-  NSLog(@"Encountered audio processing error %@", error);
-}
+    // Optional delegate methods
+    - (void)ADTClientErrorDidOccur:(NSError *)error
+    {
+      NSLog(@"ADTClient error occurred: %@", error);
+    }
+    
+    - (void)ADTClientDidFinishSuccessfully
+    {
+      NSLog(@"ADTClient Complete!");
+    }
 
-There are three methods that are required to be implemented: acrAppID, acrAppSecret and acrAPIReceivedResults:successfully:. The first two methods simply return an NSString object containing the credentials assigned to you when your application was registered at adtonik.com.
+The method `ADTClientDidReceiveMatch` is called when ADTClient has recognized television content. The method `ADTClientDidReceiveAd` is called when an ad has been prepared for this device. This method is typically the one you would initiate an ad to be rendered in the view using the ad SDK your app uses.
 
-The method acrAPIReceivedResults:successfully: is called when the API server responds to your request. The API server returns a JSON hash of metadata related to the content. Depending on whether the content is a commercial, television show, movie or song, the metadata can be different. We are standardizing on the required values that will be contained in the NSDictionary, but a few things can be expected: name, url, description. In this demo application, I am only interested in pulling out the URL containing a banner image which can be rendered in the UIWebView. As shown above, if the server was able to find a match, it calls the delegate method with the success flag set to YES. If the server responds with a match, I pull out the URL field from the dictionary and render it in the webview.
+The `ADTClientErrorDidOccur` method is called upon an API or audio processing error. Lastly, the `ADTClientDidFinishSuccessfully` method is called upon completion. 
 
-This concludes the description of how the DemoApp is designed. If you have any other questions, feel free to contact me directly.
+##### Overriding the Device ID
 
-**Marshall Beddoe**
+AdTonik enables re-targeting television related advertisements to the mobile device by keeping track of what TV content this device has matched. To properly serve targeted advertisements, the device ID must be the same as the device ID used in the ad SDK. AdTonik uses a SHA1 hashed Identifier For Advertising (IFA) in iOS 6 and a SHA1 hashed deviceIdentifier for < iOS 6. These are industry standards, however if you do need to override the device ID generation, implement the `ADTClientUDID` method to return the same device ID as your ad SDK.
 
-**marshall@adtonik.com**
+    - (NSString *)ADTClientUDID;
 
-**(415) 505-4203**
+#### Questions
+
+Feel free to contact me directly at marshall@adtonik.com.
