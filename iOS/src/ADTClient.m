@@ -155,6 +155,9 @@
 
     self.running = NO;
 
+    if([self.delegate respondsToSelector:@selector(ADTClientDidFinishSuccessfully)])
+      [self.delegate ADTClientDidFinishSuccessfully];
+
     return YES;
   }
 
