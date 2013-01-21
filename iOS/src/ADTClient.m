@@ -171,15 +171,8 @@
 {
   self.audioRecorder = nil;
 
-  if(self.isRunning == NO) {
-    if([self.delegate respondsToSelector:@selector(ADTClientDidFinishSuccessfully)])
-      [self.delegate ADTClientDidFinishSuccessfully];
-    
-    return;
-  }
-  
   // Refresh process if necessary
-  if([self doRefresh]) {
+  if([self doRefresh] && self.isRunning == YES) {
     [self performSelectorInBackground:@selector(startTimer) withObject:nil];
   } else {
     self.running = NO;
