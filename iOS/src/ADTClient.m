@@ -144,7 +144,8 @@
   [self.audioRecorder record:self.sampleDuration];
 }
 
-- (BOOL) stop {
+- (BOOL) stop
+{
   if(self.isRunning) {
     if(self.audioRecorder.isRecording)
       [self.audioRecorder stop];
@@ -153,8 +154,6 @@
       [self.restAPI cancel];
 
     self.running = NO;
-
-    self.audioRecorder = nil; // deref for autorelease
 
     return YES;
   }
@@ -165,9 +164,17 @@
 #pragma mark -
 #pragma mark Called when ACR process completes
 
-- (void) finishedRun {
+- (void) finishedRun
+{
   self.audioRecorder = nil;
 
+  if(self.isRunning == NO) {
+    if([self.delegate respondsToSelector:@selector(ADTClientDidFinishSuccessfully)])
+      [self.delegate ADTClientDidFinishSuccessfully];
+    
+    return;
+  }
+  
   // Refresh process if necessary
   if([self doRefresh]) {
     [self performSelectorInBackground:@selector(startTimer) withObject:nil];
@@ -183,7 +190,8 @@
 #pragma mark Schedules ACR process to run
 
 // This must be started in a background thread or call stack will grow recursively
-- (void) startTimer {
+- (void) startTimer
+{
   NSRunLoop* runLoop = [NSRunLoop currentRunLoop];
   NSTimer *refreshTimer;
 
@@ -203,7 +211,8 @@
 #pragma mark -
 #pragma mark Run ACR algorithm on fingerprint file
 
-- (void) runAlgorithm:(NSString *) filename {
+- (void) runAlgorithm:(NSString *) filename
+{
   NSSet *fingerprints = [ADTlibacrWrapper getFingerprintsForFile:filename];
 
   // It is now our responsibility to delete the file
@@ -220,7 +229,8 @@
 #pragma mark -
 #pragma mark Query API server with fingerprint set
 
-- (void) queryAPIServer:(NSSet *) fingerprints {
+- (void) queryAPIServer:(NSSet *) fingerprints
+{
   NSString *acrVersion = [ADTlibacrWrapper getACRVersion];
 
   if(!fingerprints || [fingerprints count] == 0) {
@@ -247,7 +257,8 @@
 #pragma mark -
 #pragma mark Lookup UDID for device
 
-NSString *ADTSHA1Digest(NSString *string) {
+NSString *ADTSHA1Digest(NSString *string)
+{
   unsigned char digest[CC_SHA1_DIGEST_LENGTH];
   NSData *data = [string dataUsingEncoding:NSASCIIStringEncoding];
   CC_SHA1([data bytes], [data length], digest);
@@ -260,7 +271,8 @@ NSString *ADTSHA1Digest(NSString *string) {
   return output;
 }
 
-- (NSString *) getUDID {
+- (NSString *) getUDID
+{
   NSString *identifier = nil;
   
   if([self.delegate respondsToSelector:@selector(ADTClientUDID)]) {

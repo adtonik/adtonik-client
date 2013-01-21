@@ -151,6 +151,9 @@
 
 - (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag
 {
+  if(self.recording == NO)
+    return;
+  
   self.recording = NO;
 
   if(flag == YES) {
@@ -171,6 +174,9 @@
 
 - (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError *)error
 {
+  if(self.recording == NO)
+    return;
+
   self.recording = NO;
 
   ADTLogInfo(@"An encoder error occurred while recording audio %@", error);

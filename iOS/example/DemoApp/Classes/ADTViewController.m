@@ -25,28 +25,28 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  
+
   ADTClient *newAudioACR = [[ADTClient alloc] initWithDelegate:self doRefresh:YES andAppID:@"ADTDemoApp" andAppSecret:@"ADTDemoApp"];
 
   self.audioACR = newAudioACR;
-  
+
   self.loadAd = [[ADTLoadAd alloc] initWithDelegate:self andUDID:self.audioACR.udid];
 
   // start it up
   [self.audioACR start];
-  
+
   UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bg.png"]];
   self.view.backgroundColor = backgroundColor;
-  
+
   self.webView.opaque = NO;
   self.webView.backgroundColor = [UIColor clearColor];
-  
+
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetView) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning
 {
-  
+
   [super didReceiveMemoryWarning];
 }
 
@@ -73,27 +73,27 @@
   NSNumber *liveTV = results[@"live_tv"];
 
   NSLog(@"%@", results);
-  
+
   if([liveTV intValue] == 1) {
     NSString *title = results[@"title"];
     NSString *subtitle = results[@"subtitle"];
-    
+
     if([subtitle isKindOfClass:[NSNull class]] == NO) {
       title = [NSString stringWithFormat:@"%@ - %@", title, subtitle];
     }
-    
+
     UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Live TV"
                                                       message:title
                                                      delegate:nil
                                             cancelButtonTitle:@"OK"
                                             otherButtonTitles:nil];
-    
+
     if([self.liveTitle isEqualToString:title]) {
       [message show];
     }
-    
+
     self.liveTitle = title;
-      
+
   }
 }
 
