@@ -13,30 +13,51 @@
 
 @interface ADTViewController () <ADTClientDelegate, ADTLoadAdDelegate>
 
-@property (nonatomic, strong) IBOutlet UIWebView *webView;
-@property (nonatomic, strong) ADTClient *audioACR;
+@property (nonatomic, retain) IBOutlet UIWebView *webView;
+@property (nonatomic, retain) ADTClient *audioACR;
 @property (nonatomic, copy) NSString *liveTitle;
-@property (nonatomic, strong) ADTLoadAd* loadAd;
+@property (nonatomic, retain) ADTLoadAd* loadAd;
+@property (nonatomic, retain) IBOutlet UIButton *stop;
 
 @end
 
 @implementation ADTViewController
+
+- (IBAction)doStop:(id)sender
+{
+  if(self.audioACR.isRunning)
+    [self.audioACR stop];
+  else
+    [self.audioACR start];
+}
+
+- (void)dealloc
+{
+  [_audioACR release];
+  [_webView release];
+  [_loadAd release];
+  [_liveTitle release];
+  [_stop release];
+
+  [super dealloc];
+}
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
 
   ADTClient *newAudioACR = [[ADTClient alloc] initWithDelegate:self doRefresh:YES andAppID:@"ADTDemoApp" andAppSecret:@"ADTDemoApp"];
-
   self.audioACR = newAudioACR;
+  [newAudioACR release];
 
-  self.loadAd = [[ADTLoadAd alloc] initWithDelegate:self andUDID:self.audioACR.udid];
+  //  self.loadAd = [[ADTLoadAd alloc] initWithDelegate:self andUDID:self.audioACR.udid];
 
   // start it up
   [self.audioACR start];
 
   UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bg.png"]];
   self.view.backgroundColor = backgroundColor;
+  [backgroundColor release];
 
   self.webView.opaque = NO;
   self.webView.backgroundColor = [UIColor clearColor];
@@ -46,7 +67,6 @@
 
 - (void)didReceiveMemoryWarning
 {
-
   [super didReceiveMemoryWarning];
 }
 
@@ -94,6 +114,7 @@
 
     self.liveTitle = title;
 
+    [message release];
   }
 }
 
