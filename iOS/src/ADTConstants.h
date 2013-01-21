@@ -25,7 +25,7 @@ static NSString *kADTSDKVersion = ADT_BUILD_TAG;
 static NSString *const kADTClientErrorDomain = @"com.adtonik.adtclient";
 
 // Error codes
-NSInteger const kADTError = 1;
-NSInteger const kADTAudioError = 2;
-NSInteger const kADTAudioNoFingerprints = 3;
-NSInteger const kADTAPIError = 4;
+static NSInteger const kADTError = 1;
+static NSInteger const kADTAudioError = 2;
+static NSInteger const kADTAudioNoFingerprints = 3;
+static NSInteger const kADTAPIError = 4;
