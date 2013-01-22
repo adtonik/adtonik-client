@@ -13,23 +13,14 @@
 
 @interface ADTViewController () <ADTClientDelegate, ADTLoadAdDelegate>
 
-@property (nonatomic, retain) IBOutlet UIWebView *webView;
-@property (nonatomic, retain) ADTClient *audioACR;
-@property (nonatomic, copy) NSString *liveTitle;
+@property (nonatomic, retain) ADTClient* audioACR;
+@property (nonatomic, copy)   NSString*  liveTitle;
 @property (nonatomic, retain) ADTLoadAd* loadAd;
-@property (nonatomic, retain) IBOutlet UIButton *stop;
+@property (nonatomic, retain) IBOutlet UIWebView* webView;
 
 @end
 
 @implementation ADTViewController
-
-- (IBAction)doStop:(id)sender
-{
-  if(self.audioACR.isRunning)
-    [self.audioACR stop];
-  else
-    [self.audioACR start];
-}
 
 - (void)dealloc
 {
@@ -37,7 +28,6 @@
   [_webView release];
   [_loadAd release];
   [_liveTitle release];
-  [_stop release];
 
   [super dealloc];
 }
