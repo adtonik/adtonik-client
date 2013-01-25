@@ -60,8 +60,7 @@
   [super didReceiveMemoryWarning];
 }
 
-
-- (void) resetView
+- (void)resetView
 {
   [self.webView loadHTMLString:@"" baseURL:nil];
 }
