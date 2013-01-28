@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AB09EF9E158C44BD00ADDE88 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = AB09EF9D158C44BD00ADDE88 /* bg.png */; };
+		AB0B237916B7143100F8F69C /* ADTAudioACR-universal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB0B237816B7143100F8F69C /* ADTAudioACR-universal.a */; };
 		AB3C0869154F96C700EEFA58 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C0868154F96C700EEFA58 /* UIKit.framework */; };
 		AB3C086B154F96C700EEFA58 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C086A154F96C700EEFA58 /* Foundation.framework */; };
 		AB3C086D154F96C700EEFA58 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C086C154F96C700EEFA58 /* CoreGraphics.framework */; };
@@ -26,13 +27,13 @@
 		ABD1AFB11587FF9700BF789E /* ADTLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA51587FF9700BF789E /* ADTLogging.m */; };
 		ABD1AFB21587FF9700BF789E /* ADTRestAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA71587FF9700BF789E /* ADTRestAPI.m */; };
 		ABD1AFB31587FF9700BF789E /* ADTRestEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFAA1587FF9700BF789E /* ADTRestEnvelope.m */; };
-		ABD1AFB41587FF9700BF789E /* libADTlibacrWrapper-universal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD1AFAD1587FF9700BF789E /* libADTlibacrWrapper-universal.a */; };
 		ABF79D8516B33F4700FF7EB7 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F092A1694D30C00132794 /* AdSupport.framework */; };
 		ABF79D8816B3418100FF7EB7 /* ADTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF79D8716B3418100FF7EB7 /* ADTUtils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		AB09EF9D158C44BD00ADDE88 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		AB0B237816B7143100F8F69C /* ADTAudioACR-universal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "ADTAudioACR-universal.a"; sourceTree = "<group>"; };
 		AB3C0864154F96C700EEFA58 /* DemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB3C0868154F96C700EEFA58 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AB3C086A154F96C700EEFA58 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -69,7 +70,6 @@
 		ABD1AFA81587FF9700BF789E /* ADTRestAPIDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTRestAPIDelegate.h; sourceTree = "<group>"; };
 		ABD1AFA91587FF9700BF789E /* ADTRestEnvelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTRestEnvelope.h; sourceTree = "<group>"; };
 		ABD1AFAA1587FF9700BF789E /* ADTRestEnvelope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTRestEnvelope.m; sourceTree = "<group>"; };
-		ABD1AFAD1587FF9700BF789E /* libADTlibacrWrapper-universal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libADTlibacrWrapper-universal.a"; sourceTree = "<group>"; };
 		ABF79D8616B3418100FF7EB7 /* ADTUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTUtils.h; sourceTree = "<group>"; };
 		ABF79D8716B3418100FF7EB7 /* ADTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTUtils.m; sourceTree = "<group>"; };
 		ABF79DFB16B367E800FF7EB7 /* ADTAudioACR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTAudioACR.h; sourceTree = "<group>"; };
@@ -87,7 +87,7 @@
 				AB3C0869154F96C700EEFA58 /* UIKit.framework in Frameworks */,
 				AB3C086B154F96C700EEFA58 /* Foundation.framework in Frameworks */,
 				AB3C086D154F96C700EEFA58 /* CoreGraphics.framework in Frameworks */,
-				ABD1AFB41587FF9700BF789E /* libADTlibacrWrapper-universal.a in Frameworks */,
+				AB0B237916B7143100F8F69C /* ADTAudioACR-universal.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,8 +185,8 @@
 		ABD1AFAB1587FF9700BF789E /* libacr */ = {
 			isa = PBXGroup;
 			children = (
+				AB0B237816B7143100F8F69C /* ADTAudioACR-universal.a */,
 				ABF79DFB16B367E800FF7EB7 /* ADTAudioACR.h */,
-				ABD1AFAD1587FF9700BF789E /* libADTlibacrWrapper-universal.a */,
 			);
 			path = libacr;
 			sourceTree = "<group>";
