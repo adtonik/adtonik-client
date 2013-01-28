@@ -11,10 +11,10 @@
 @interface ADTLoadAd () <NSURLConnectionDataDelegate>
 
 @property (nonatomic, copy)   NSString* udid;
-@property (nonatomic, assign) id delegate;
-@property (nonatomic, retain) NSURLConnection* conn;
-@property (nonatomic, retain) NSURLRequest* request;
-@property (nonatomic, retain) NSMutableData* data;
+@property (nonatomic, weak)   id delegate;
+@property (nonatomic, strong) NSURLConnection* conn;
+@property (nonatomic, strong) NSURLRequest* request;
+@property (nonatomic, strong) NSMutableData* data;
 
 @end
 
@@ -44,14 +44,13 @@
 {
   self.loading = YES;
   self.conn = [NSURLConnection connectionWithRequest:self.request delegate:self];
-  
-  
 }
 
 #pragma mark -
 #pragma mark NSURLConnectionData Delegate Methods
 
-- (void) connection:(NSURLConnection *) connection didReceiveResponse:(NSURLResponse *)response {
+- (void) connection:(NSURLConnection *) connection didReceiveResponse:(NSURLResponse *)response
+{
   if([response respondsToSelector:@selector(statusCode)]) {
     int statusCode = [((NSHTTPURLResponse *) response) statusCode];
     
@@ -75,24 +74,24 @@
   self.data = [NSMutableData data];
 }
 
-- (void) connection:(NSURLConnection *) connection didReceiveData:(NSData *) data {
+- (void) connection:(NSURLConnection *) connection didReceiveData:(NSData *) data
+{
   [self.data appendData:data];
 }
 
-- (void) connection:(NSURLConnection *) connection didFailWithError:(NSError *) error {  
+- (void) connection:(NSURLConnection *) connection didFailWithError:(NSError *) error
+{
   self.loading = NO;
   
   NSLog(@"request failed %@", error);
-  
-  //  if([self.delegate respondsToSelector:@selector(loadAdErrorDidOccur:)])
-  //  [self.delegate loadAdErrorDidOccur:error];
 }
 
-- (void) connectionDidFinishLoading:(NSURLConnection *) connection {
+- (void) connectionDidFinishLoading:(NSURLConnection *) connection
+{
   self.loading = NO;
   
   NSString *response = [NSString stringWithCString:[self.data bytes] encoding:NSUTF8StringEncoding];
-
+  
   if(response && response.length > 0) {
     if([self.delegate respondsToSelector:@selector(ADTLoadAdDidReceiveAd:)])
       [self.delegate ADTLoadAdDidReceiveAd:response];

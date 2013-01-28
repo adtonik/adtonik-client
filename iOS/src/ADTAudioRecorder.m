@@ -13,12 +13,12 @@
 
 @interface ADTAudioRecorder () <AVAudioRecorderDelegate>
 
-@property (nonatomic, retain) NSURL *filename;
+@property (nonatomic, strong) NSURL *filename;
 @property (nonatomic, copy)   NSString *defaultCategory;
 @property (nonatomic, copy)   NSString *defaultMode;
-@property (nonatomic, retain) AVAudioRecorder  *audioRecorder;
-@property (nonatomic, assign) id<ADTAudioRecorderDelegate> delegate;
-@property (nonatomic, retain) NSDictionary* recordSettings;
+@property (nonatomic, strong) AVAudioRecorder  *audioRecorder;
+@property (nonatomic, weak) id<ADTAudioRecorderDelegate> delegate;
+@property (nonatomic, strong) NSDictionary* recordSettings;
 @property (nonatomic, assign) NSTimeInterval duration;
 
 @end
@@ -43,16 +43,16 @@
 {
   if(self = [super init]) {
 
-    _recordSettings = [@{AVFormatIDKey: @(kAudioFormatLinearPCM),
+    _recordSettings = @{AVFormatIDKey: @(kAudioFormatLinearPCM),
                        AVSampleRateKey: @8000.0f,
                        AVNumberOfChannelsKey: @1,
                        AVLinearPCMBitDepthKey: @16,
                        AVEncoderAudioQualityKey: @(AVAudioQualityMax),
                        AVSampleRateConverterAudioQualityKey: @(AVAudioQualityMax),
-                       AVLinearPCMIsFloatKey: @YES} retain];
+                       AVLinearPCMIsFloatKey: @YES};
 
-    _defaultCategory = [[[AVAudioSession sharedInstance] category] retain];
-    _defaultMode     = [[[AVAudioSession sharedInstance] mode] retain];
+    _defaultCategory = [[AVAudioSession sharedInstance] category];
+    _defaultMode     = [[AVAudioSession sharedInstance] mode];
   }
 
   return self;
@@ -61,16 +61,6 @@
 #pragma mark -
 #pragma mark Deallocate
 
-- (void)dealloc
-{  
-  [_filename release];
-  [_defaultCategory release];
-  [_recordSettings release];
-  [_audioRecorder release];
-  [_defaultMode release];
-  
-  [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Controlling Recording
@@ -123,7 +113,6 @@
   }
 
   self.audioRecorder = newAudioRecorder;
-  [newAudioRecorder release];
   
   // Set as delegate to receive events upon recording error or completion..
   [self.audioRecorder setDelegate: self];
@@ -234,7 +223,7 @@
   CFUUIDRef uuid = CFUUIDCreate(NULL);
   CFStringRef uuidString = CFUUIDCreateString(NULL, uuid);
 
-  NSString *uniqueFileName = [NSString stringWithFormat:@"%@%@.caf", @"adt-", (NSString *)uuidString];
+  NSString *uniqueFileName = [NSString stringWithFormat:@"%@%@.caf", @"adt-", (__bridge NSString *)uuidString];
   NSString *recordFile = [NSTemporaryDirectory() stringByAppendingPathComponent: uniqueFileName];
 
   CFRelease(uuid);

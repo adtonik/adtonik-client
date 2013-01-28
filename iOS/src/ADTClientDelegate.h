@@ -35,10 +35,10 @@
 - (void)ADTClientDidReceiveAd;
 
 /**
- Optional method to override the UDID method. UDID must match the UDID the Ad SDK uses.
- If you do not specify this method, we use the IFA on iOS 6 and sha1 udid for iOS < 6.
+ Optional method to override the AdvertiserIdentifier method. IFA must match the IFA your chosen Ad SDK uses.
+ If you do not specify this method, if available we use the IFA (iOS 6+), otherwise the SHA1 hashed deviceIdentifier
  */
-- (NSString *)ADTClientUDID;
+- (NSString *)ADTAdvertiserIdentifier;
 
 /**
  Called by the system when ACR is completed.

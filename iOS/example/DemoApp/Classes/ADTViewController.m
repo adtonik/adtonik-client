@@ -13,41 +13,29 @@
 
 @interface ADTViewController () <ADTClientDelegate, ADTLoadAdDelegate>
 
-@property (nonatomic, retain) ADTClient* audioACR;
+@property (nonatomic, strong) ADTClient* adtonik;
 @property (nonatomic, copy)   NSString*  liveTitle;
-@property (nonatomic, retain) ADTLoadAd* loadAd;
-@property (nonatomic, retain) IBOutlet UIWebView* webView;
+@property (nonatomic, strong) ADTLoadAd* loadAd;
+@property (nonatomic, strong) IBOutlet UIWebView* webView;
 
 @end
 
 @implementation ADTViewController
 
-- (void)dealloc
-{
-  [_audioACR release];
-  [_webView release];
-  [_loadAd release];
-  [_liveTitle release];
-
-  [super dealloc];
-}
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
 
-  ADTClient *newAudioACR = [[ADTClient alloc] initWithDelegate:self doRefresh:YES andAppID:@"ADTDemoApp" andAppSecret:@"ADTDemoApp"];
-  self.audioACR = newAudioACR;
-  [newAudioACR release];
+  self.adtonik = [[ADTClient alloc] initWithDelegate:self doRefresh:YES andAppID:@"ADTDemoApp" andAppSecret:@"ADTDemoApp"];
 
-  //  self.loadAd = [[ADTLoadAd alloc] initWithDelegate:self andUDID:self.audioACR.udid];
+  self.loadAd = [[ADTLoadAd alloc] initWithDelegate:self andUDID:self.adtonik.ifa];
 
   // start it up
-  [self.audioACR start];
+  [self.adtonik start];
 
   UIColor *backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bg.png"]];
   self.view.backgroundColor = backgroundColor;
-  [backgroundColor release];
 
   self.webView.opaque = NO;
   self.webView.backgroundColor = [UIColor clearColor];
@@ -103,7 +91,6 @@
 
     self.liveTitle = title;
 
-    [message release];
   }
 }
 

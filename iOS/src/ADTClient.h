@@ -31,18 +31,21 @@
 // Returns true if the ACR process is running.
 @property (getter=isRunning) BOOL running;
 
-// Returns the UDID
-@property (nonatomic, copy) NSString* udid;
+// Returns the Identifier for Advertising
+@property (nonatomic, copy) NSString* ifa;
+
+// Returns the last error that occurred
+@property (nonatomic, copy, getter=lastError) NSError* error;
 
 // Delegate object that receives notifications upon api errors,
 // audio processing errors as well as when the server returns results..
-@property (nonatomic, assign) id <ADTClientDelegate> delegate;
+@property (nonatomic, weak) id <ADTClientDelegate> delegate;
 
 #pragma mark -
 #pragma mark Collecting SDK Version
 
 // Returns the version of the SDK
-+ (NSString *) sdkVersion;
++ (NSString *)sdkVersion;
 
 #pragma mark -
 #pragma mark Initializers
@@ -50,24 +53,6 @@
 ///---------------------------------------------------------------------------------------
 /// @name Initializing an ADTClient Object
 ///---------------------------------------------------------------------------------------
-
-/**
- Initializes the adtonik client object
-
- By default, the refreshFlag is set to NO. This means after making the delegate callbacks, the acr
- process will be stopped. You may manually call start again if desired or instead initialize object
- with refreshFlag to YES.
-
- @param delegate The ADTClientDelegate object
- @param appID The AdTonik assigned appID
- @param appSecret The AdTonik assigned appSecret
- 
- @return Returns initialized instance or `nil` if initialization fails.
- */
-
-- (id)initWithDelegate:(id<ADTClientDelegate>)delegate
-              andAppID:(NSString *)appID
-          andAppSecret:(NSString *)appSecret;
 
 /**
  Initializes the audio ACR object
@@ -81,7 +66,7 @@
  */
 
 - (id)initWithDelegate:(id<ADTClientDelegate>)delegate
-             doRefresh: (BOOL) refreshFlag
+             doRefresh:(BOOL)refreshFlag
               andAppID:(NSString *)appID
           andAppSecret:(NSString *)appSecret;
 

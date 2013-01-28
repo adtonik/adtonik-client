@@ -20,7 +20,6 @@
 		AB3C08C1154F973300EEFA58 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C08C0154F973300EEFA58 /* Accelerate.framework */; };
 		AB3C08C7154F97C600EEFA58 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C08C6154F97C600EEFA58 /* AudioToolbox.framework */; };
 		AB3E9A1716517F5E00307E5D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3E9A1616517F5E00307E5D /* Default-568h@2x.png */; };
-		AB3F092B1694D30C00132794 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F092A1694D30C00132794 /* AdSupport.framework */; };
 		AB63F53D16A0DC6200D4E49F /* ADTLoadAd.m in Sources */ = {isa = PBXBuildFile; fileRef = AB63F53B16A0DC6200D4E49F /* ADTLoadAd.m */; };
 		ABD1AFAE1587FF9700BF789E /* ADTClient.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AF9D1587FF9700BF789E /* ADTClient.m */; };
 		ABD1AFAF1587FF9700BF789E /* ADTAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA01587FF9700BF789E /* ADTAudioRecorder.m */; };
@@ -28,6 +27,8 @@
 		ABD1AFB21587FF9700BF789E /* ADTRestAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA71587FF9700BF789E /* ADTRestAPI.m */; };
 		ABD1AFB31587FF9700BF789E /* ADTRestEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFAA1587FF9700BF789E /* ADTRestEnvelope.m */; };
 		ABD1AFB41587FF9700BF789E /* libADTlibacrWrapper-universal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD1AFAD1587FF9700BF789E /* libADTlibacrWrapper-universal.a */; };
+		ABF79D8516B33F4700FF7EB7 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F092A1694D30C00132794 /* AdSupport.framework */; };
+		ABF79D8816B3418100FF7EB7 /* ADTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF79D8716B3418100FF7EB7 /* ADTUtils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,8 +69,10 @@
 		ABD1AFA81587FF9700BF789E /* ADTRestAPIDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTRestAPIDelegate.h; sourceTree = "<group>"; };
 		ABD1AFA91587FF9700BF789E /* ADTRestEnvelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTRestEnvelope.h; sourceTree = "<group>"; };
 		ABD1AFAA1587FF9700BF789E /* ADTRestEnvelope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTRestEnvelope.m; sourceTree = "<group>"; };
-		ABD1AFAC1587FF9700BF789E /* ADTlibacrWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTlibacrWrapper.h; sourceTree = "<group>"; };
 		ABD1AFAD1587FF9700BF789E /* libADTlibacrWrapper-universal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libADTlibacrWrapper-universal.a"; sourceTree = "<group>"; };
+		ABF79D8616B3418100FF7EB7 /* ADTUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTUtils.h; sourceTree = "<group>"; };
+		ABF79D8716B3418100FF7EB7 /* ADTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTUtils.m; sourceTree = "<group>"; };
+		ABF79DFB16B367E800FF7EB7 /* ADTAudioACR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTAudioACR.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB3F092B1694D30C00132794 /* AdSupport.framework in Frameworks */,
+				ABF79D8516B33F4700FF7EB7 /* AdSupport.framework in Frameworks */,
 				AB3C08C7154F97C600EEFA58 /* AudioToolbox.framework in Frameworks */,
 				AB3C08C1154F973300EEFA58 /* Accelerate.framework in Frameworks */,
 				AB3C08BF154F972D00EEFA58 /* AVFoundation.framework in Frameworks */,
@@ -156,6 +159,8 @@
 		ABD1AF9B1587FF9700BF789E /* AdTonikSDK */ = {
 			isa = PBXGroup;
 			children = (
+				ABF79D8616B3418100FF7EB7 /* ADTUtils.h */,
+				ABF79D8716B3418100FF7EB7 /* ADTUtils.m */,
 				AB3F09341694E0C900132794 /* ADTVersion.h */,
 				ABD1AF9C1587FF9700BF789E /* ADTClient.h */,
 				ABD1AF9D1587FF9700BF789E /* ADTClient.m */,
@@ -180,7 +185,7 @@
 		ABD1AFAB1587FF9700BF789E /* libacr */ = {
 			isa = PBXGroup;
 			children = (
-				ABD1AFAC1587FF9700BF789E /* ADTlibacrWrapper.h */,
+				ABF79DFB16B367E800FF7EB7 /* ADTAudioACR.h */,
 				ABD1AFAD1587FF9700BF789E /* libADTlibacrWrapper-universal.a */,
 			);
 			path = libacr;
@@ -261,6 +266,7 @@
 				ABD1AFB21587FF9700BF789E /* ADTRestAPI.m in Sources */,
 				ABD1AFB31587FF9700BF789E /* ADTRestEnvelope.m in Sources */,
 				AB63F53D16A0DC6200D4E49F /* ADTLoadAd.m in Sources */,
+				ABF79D8816B3418100FF7EB7 /* ADTUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +344,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -373,6 +380,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 					"$(SDKROOT)/Developer/Library/Frameworks",
