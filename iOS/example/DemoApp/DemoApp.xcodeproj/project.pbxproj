@@ -8,7 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		AB09EF9E158C44BD00ADDE88 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = AB09EF9D158C44BD00ADDE88 /* bg.png */; };
-		AB0B237916B7143100F8F69C /* ADTAudioACR-universal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB0B237816B7143100F8F69C /* ADTAudioACR-universal.a */; };
+		AB0B23A416B8973C00F8F69C /* libADTAudioACR-universal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB0B23A316B8973C00F8F69C /* libADTAudioACR-universal.a */; };
+		AB0B23B416B897CF00F8F69C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C086A154F96C700EEFA58 /* Foundation.framework */; };
+		AB0B23BF16B897E000F8F69C /* ADTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF79D8716B3418100FF7EB7 /* ADTUtils.m */; };
+		AB0B23C016B897E000F8F69C /* ADTClient.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AF9D1587FF9700BF789E /* ADTClient.m */; };
+		AB0B23C116B897E000F8F69C /* ADTAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA01587FF9700BF789E /* ADTAudioRecorder.m */; };
+		AB0B23C216B897E000F8F69C /* ADTLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA51587FF9700BF789E /* ADTLogging.m */; };
+		AB0B23C316B897E000F8F69C /* ADTRestAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA71587FF9700BF789E /* ADTRestAPI.m */; };
+		AB0B23C416B897E000F8F69C /* ADTRestEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFAA1587FF9700BF789E /* ADTRestEnvelope.m */; };
+		AB0B23CD16B8989400F8F69C /* ADTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF79D8716B3418100FF7EB7 /* ADTUtils.m */; };
+		AB0B23CE16B8989400F8F69C /* ADTClient.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AF9D1587FF9700BF789E /* ADTClient.m */; };
+		AB0B23CF16B8989400F8F69C /* ADTAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA01587FF9700BF789E /* ADTAudioRecorder.m */; };
+		AB0B23D016B8989400F8F69C /* ADTLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA51587FF9700BF789E /* ADTLogging.m */; };
+		AB0B23D116B8989400F8F69C /* ADTRestAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA71587FF9700BF789E /* ADTRestAPI.m */; };
+		AB0B23D216B8989400F8F69C /* ADTRestEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFAA1587FF9700BF789E /* ADTRestEnvelope.m */; };
 		AB3C0869154F96C700EEFA58 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C0868154F96C700EEFA58 /* UIKit.framework */; };
 		AB3C086B154F96C700EEFA58 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C086A154F96C700EEFA58 /* Foundation.framework */; };
 		AB3C086D154F96C700EEFA58 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C086C154F96C700EEFA58 /* CoreGraphics.framework */; };
@@ -22,18 +35,25 @@
 		AB3C08C7154F97C600EEFA58 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C08C6154F97C600EEFA58 /* AudioToolbox.framework */; };
 		AB3E9A1716517F5E00307E5D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3E9A1616517F5E00307E5D /* Default-568h@2x.png */; };
 		AB63F53D16A0DC6200D4E49F /* ADTLoadAd.m in Sources */ = {isa = PBXBuildFile; fileRef = AB63F53B16A0DC6200D4E49F /* ADTLoadAd.m */; };
-		ABD1AFAE1587FF9700BF789E /* ADTClient.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AF9D1587FF9700BF789E /* ADTClient.m */; };
-		ABD1AFAF1587FF9700BF789E /* ADTAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA01587FF9700BF789E /* ADTAudioRecorder.m */; };
-		ABD1AFB11587FF9700BF789E /* ADTLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA51587FF9700BF789E /* ADTLogging.m */; };
-		ABD1AFB21587FF9700BF789E /* ADTRestAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA71587FF9700BF789E /* ADTRestAPI.m */; };
-		ABD1AFB31587FF9700BF789E /* ADTRestEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFAA1587FF9700BF789E /* ADTRestEnvelope.m */; };
 		ABF79D8516B33F4700FF7EB7 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F092A1694D30C00132794 /* AdSupport.framework */; };
-		ABF79D8816B3418100FF7EB7 /* ADTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF79D8716B3418100FF7EB7 /* ADTUtils.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AB0B23B116B897CF00F8F69C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		AB09EF9D158C44BD00ADDE88 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
-		AB0B237816B7143100F8F69C /* ADTAudioACR-universal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "ADTAudioACR-universal.a"; sourceTree = "<group>"; };
+		AB0B23A316B8973C00F8F69C /* libADTAudioACR-universal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libADTAudioACR-universal.a"; sourceTree = "<group>"; };
+		AB0B23B316B897CF00F8F69C /* libADTClient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libADTClient.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB3C0864154F96C700EEFA58 /* DemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB3C0868154F96C700EEFA58 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AB3C086A154F96C700EEFA58 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -76,6 +96,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AB0B23B016B897CF00F8F69C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB0B23B416B897CF00F8F69C /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AB3C0861154F96C700EEFA58 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -87,7 +115,7 @@
 				AB3C0869154F96C700EEFA58 /* UIKit.framework in Frameworks */,
 				AB3C086B154F96C700EEFA58 /* Foundation.framework in Frameworks */,
 				AB3C086D154F96C700EEFA58 /* CoreGraphics.framework in Frameworks */,
-				AB0B237916B7143100F8F69C /* ADTAudioACR-universal.a in Frameworks */,
+				AB0B23A416B8973C00F8F69C /* libADTAudioACR-universal.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				AB3C0864154F96C700EEFA58 /* DemoApp.app */,
+				AB0B23B316B897CF00F8F69C /* libADTClient.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -185,7 +214,7 @@
 		ABD1AFAB1587FF9700BF789E /* libacr */ = {
 			isa = PBXGroup;
 			children = (
-				AB0B237816B7143100F8F69C /* ADTAudioACR-universal.a */,
+				AB0B23A316B8973C00F8F69C /* libADTAudioACR-universal.a */,
 				ABF79DFB16B367E800FF7EB7 /* ADTAudioACR.h */,
 			);
 			path = libacr;
@@ -194,6 +223,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		AB0B23B216B897CF00F8F69C /* ADTClient */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AB0B23BC16B897CF00F8F69C /* Build configuration list for PBXNativeTarget "ADTClient" */;
+			buildPhases = (
+				AB0B23AF16B897CF00F8F69C /* Sources */,
+				AB0B23B016B897CF00F8F69C /* Frameworks */,
+				AB0B23B116B897CF00F8F69C /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ADTClient;
+			productName = ADTClient;
+			productReference = AB0B23B316B897CF00F8F69C /* libADTClient.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		AB3C0863154F96C700EEFA58 /* DemoApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AB3C0885154F96C700EEFA58 /* Build configuration list for PBXNativeTarget "DemoApp" */;
@@ -234,6 +280,7 @@
 			projectRoot = "";
 			targets = (
 				AB3C0863154F96C700EEFA58 /* DemoApp */,
+				AB0B23B216B897CF00F8F69C /* ADTClient */,
 			);
 		};
 /* End PBXProject section */
@@ -253,20 +300,33 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AB0B23AF16B897CF00F8F69C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB0B23BF16B897E000F8F69C /* ADTUtils.m in Sources */,
+				AB0B23C016B897E000F8F69C /* ADTClient.m in Sources */,
+				AB0B23C116B897E000F8F69C /* ADTAudioRecorder.m in Sources */,
+				AB0B23C216B897E000F8F69C /* ADTLogging.m in Sources */,
+				AB0B23C316B897E000F8F69C /* ADTRestAPI.m in Sources */,
+				AB0B23C416B897E000F8F69C /* ADTRestEnvelope.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AB3C0860154F96C700EEFA58 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB0B23CD16B8989400F8F69C /* ADTUtils.m in Sources */,
+				AB0B23CE16B8989400F8F69C /* ADTClient.m in Sources */,
+				AB0B23CF16B8989400F8F69C /* ADTAudioRecorder.m in Sources */,
+				AB0B23D016B8989400F8F69C /* ADTLogging.m in Sources */,
+				AB0B23D116B8989400F8F69C /* ADTRestAPI.m in Sources */,
+				AB0B23D216B8989400F8F69C /* ADTRestEnvelope.m in Sources */,
 				AB3C0896154F96E900EEFA58 /* ADTAppDelegate.m in Sources */,
 				AB3C0897154F96E900EEFA58 /* ADTViewController.m in Sources */,
 				AB3C089C154F96E900EEFA58 /* main.m in Sources */,
-				ABD1AFAE1587FF9700BF789E /* ADTClient.m in Sources */,
-				ABD1AFAF1587FF9700BF789E /* ADTAudioRecorder.m in Sources */,
-				ABD1AFB11587FF9700BF789E /* ADTLogging.m in Sources */,
-				ABD1AFB21587FF9700BF789E /* ADTRestAPI.m in Sources */,
-				ABD1AFB31587FF9700BF789E /* ADTRestEnvelope.m in Sources */,
 				AB63F53D16A0DC6200D4E49F /* ADTLoadAd.m in Sources */,
-				ABF79D8816B3418100FF7EB7 /* ADTUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +352,43 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		AB0B23BD16B897CF00F8F69C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DSTROOT = /tmp/ADTClient.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		AB0B23BE16B897CF00F8F69C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DSTROOT = /tmp/ADTClient.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		AB3C0883154F96C700EEFA58 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -413,6 +510,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AB0B23BC16B897CF00F8F69C /* Build configuration list for PBXNativeTarget "ADTClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB0B23BD16B897CF00F8F69C /* Debug */,
+				AB0B23BE16B897CF00F8F69C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		AB3C085E154F96C700EEFA58 /* Build configuration list for PBXProject "DemoApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
