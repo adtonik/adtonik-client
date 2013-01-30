@@ -8,20 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		AB09EF9E158C44BD00ADDE88 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = AB09EF9D158C44BD00ADDE88 /* bg.png */; };
-		AB0B23A416B8973C00F8F69C /* libADTAudioACR-universal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB0B23A316B8973C00F8F69C /* libADTAudioACR-universal.a */; };
-		AB0B23B416B897CF00F8F69C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C086A154F96C700EEFA58 /* Foundation.framework */; };
 		AB0B23BF16B897E000F8F69C /* ADTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF79D8716B3418100FF7EB7 /* ADTUtils.m */; };
 		AB0B23C016B897E000F8F69C /* ADTClient.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AF9D1587FF9700BF789E /* ADTClient.m */; };
 		AB0B23C116B897E000F8F69C /* ADTAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA01587FF9700BF789E /* ADTAudioRecorder.m */; };
 		AB0B23C216B897E000F8F69C /* ADTLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA51587FF9700BF789E /* ADTLogging.m */; };
 		AB0B23C316B897E000F8F69C /* ADTRestAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA71587FF9700BF789E /* ADTRestAPI.m */; };
 		AB0B23C416B897E000F8F69C /* ADTRestEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFAA1587FF9700BF789E /* ADTRestEnvelope.m */; };
-		AB0B23CD16B8989400F8F69C /* ADTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF79D8716B3418100FF7EB7 /* ADTUtils.m */; };
-		AB0B23CE16B8989400F8F69C /* ADTClient.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AF9D1587FF9700BF789E /* ADTClient.m */; };
-		AB0B23CF16B8989400F8F69C /* ADTAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA01587FF9700BF789E /* ADTAudioRecorder.m */; };
-		AB0B23D016B8989400F8F69C /* ADTLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA51587FF9700BF789E /* ADTLogging.m */; };
-		AB0B23D116B8989400F8F69C /* ADTRestAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFA71587FF9700BF789E /* ADTRestAPI.m */; };
-		AB0B23D216B8989400F8F69C /* ADTRestEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AFAA1587FF9700BF789E /* ADTRestEnvelope.m */; };
+		AB0B23D516B8996F00F8F69C /* libADTClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB0B23B316B897CF00F8F69C /* libADTClient.a */; };
+		AB0B23D616B899B400F8F69C /* libADTAudioACR-universal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB0B23A316B8973C00F8F69C /* libADTAudioACR-universal.a */; };
+		AB0B23D816B899EE00F8F69C /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C08C0154F973300EEFA58 /* Accelerate.framework */; };
+		AB0B23D916B899F300F8F69C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C08C6154F97C600EEFA58 /* AudioToolbox.framework */; };
+		AB0B23DA16B899F900F8F69C /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F092A1694D30C00132794 /* AdSupport.framework */; };
 		AB3C0869154F96C700EEFA58 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C0868154F96C700EEFA58 /* UIKit.framework */; };
 		AB3C086B154F96C700EEFA58 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C086A154F96C700EEFA58 /* Foundation.framework */; };
 		AB3C086D154F96C700EEFA58 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C086C154F96C700EEFA58 /* CoreGraphics.framework */; };
@@ -31,12 +28,19 @@
 		AB3C089B154F96E900EEFA58 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB3C0893154F96E900EEFA58 /* MainStoryboard_iPhone.storyboard */; };
 		AB3C089C154F96E900EEFA58 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3C0895154F96E900EEFA58 /* main.m */; };
 		AB3C08BF154F972D00EEFA58 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C08BE154F972D00EEFA58 /* AVFoundation.framework */; };
-		AB3C08C1154F973300EEFA58 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C08C0154F973300EEFA58 /* Accelerate.framework */; };
-		AB3C08C7154F97C600EEFA58 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C08C6154F97C600EEFA58 /* AudioToolbox.framework */; };
 		AB3E9A1716517F5E00307E5D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3E9A1616517F5E00307E5D /* Default-568h@2x.png */; };
 		AB63F53D16A0DC6200D4E49F /* ADTLoadAd.m in Sources */ = {isa = PBXBuildFile; fileRef = AB63F53B16A0DC6200D4E49F /* ADTLoadAd.m */; };
-		ABF79D8516B33F4700FF7EB7 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F092A1694D30C00132794 /* AdSupport.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AB0B23DB16B89A1100F8F69C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB3C085B154F96C700EEFA58 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AB0B23B216B897CF00F8F69C;
+			remoteInfo = ADTClient;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		AB0B23B116B897CF00F8F69C /* CopyFiles */ = {
@@ -100,7 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB0B23B416B897CF00F8F69C /* Foundation.framework in Frameworks */,
+				AB0B23D616B899B400F8F69C /* libADTAudioACR-universal.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,14 +112,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABF79D8516B33F4700FF7EB7 /* AdSupport.framework in Frameworks */,
-				AB3C08C7154F97C600EEFA58 /* AudioToolbox.framework in Frameworks */,
-				AB3C08C1154F973300EEFA58 /* Accelerate.framework in Frameworks */,
+				AB0B23DA16B899F900F8F69C /* AdSupport.framework in Frameworks */,
+				AB0B23D916B899F300F8F69C /* AudioToolbox.framework in Frameworks */,
+				AB0B23D816B899EE00F8F69C /* Accelerate.framework in Frameworks */,
+				AB0B23D516B8996F00F8F69C /* libADTClient.a in Frameworks */,
 				AB3C08BF154F972D00EEFA58 /* AVFoundation.framework in Frameworks */,
 				AB3C0869154F96C700EEFA58 /* UIKit.framework in Frameworks */,
 				AB3C086B154F96C700EEFA58 /* Foundation.framework in Frameworks */,
 				AB3C086D154F96C700EEFA58 /* CoreGraphics.framework in Frameworks */,
-				AB0B23A416B8973C00F8F69C /* libADTAudioACR-universal.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +255,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AB0B23DC16B89A1100F8F69C /* PBXTargetDependency */,
 			);
 			name = DemoApp;
 			productName = DemoApp;
@@ -317,12 +322,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB0B23CD16B8989400F8F69C /* ADTUtils.m in Sources */,
-				AB0B23CE16B8989400F8F69C /* ADTClient.m in Sources */,
-				AB0B23CF16B8989400F8F69C /* ADTAudioRecorder.m in Sources */,
-				AB0B23D016B8989400F8F69C /* ADTLogging.m in Sources */,
-				AB0B23D116B8989400F8F69C /* ADTRestAPI.m in Sources */,
-				AB0B23D216B8989400F8F69C /* ADTRestEnvelope.m in Sources */,
 				AB3C0896154F96E900EEFA58 /* ADTAppDelegate.m in Sources */,
 				AB3C0897154F96E900EEFA58 /* ADTViewController.m in Sources */,
 				AB3C089C154F96E900EEFA58 /* main.m in Sources */,
@@ -331,6 +330,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AB0B23DC16B89A1100F8F69C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AB0B23B216B897CF00F8F69C /* ADTClient */;
+			targetProxy = AB0B23DB16B89A1100F8F69C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		AB3C088F154F96E900EEFA58 /* InfoPlist.strings */ = {
@@ -364,6 +371,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				DSTROOT = /tmp/ADTClient.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../src/libacr\"",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -383,6 +394,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				DSTROOT = /tmp/ADTClient.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../src/libacr\"",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
