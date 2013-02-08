@@ -288,16 +288,17 @@
 
 - (NSString *)getAdvertiserIdentifier
 {
+    NSString *identifier;
   // check method override in delegate
   if([self.delegate respondsToSelector:@selector(ADTAdvertiserIdentifier)]) {
-    return [self.delegate ADTAdvertiserIdentifier];
+      identifier = [self.delegate ADTAdvertiserIdentifier];
+  } else {
+      identifier = ADTAdvertisingIdentifier();
   }
-
-  NSString *identifier = ADTAdvertisingIdentifier();
 
   if(!identifier) {
     [NSException raise:@"Unable to get AdvertiserIdentifier"
-                format:@"AdvertiserIdentifier required to use ADTClient, " \
+                format:@"non-nil AdvertiserIdentifier required to use ADTClient, " \
                         "implement ADTAdvertiserIdentifier in the delegate"];
   }
 
