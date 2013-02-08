@@ -14,8 +14,6 @@
 @interface ADTAudioRecorder () <AVAudioRecorderDelegate>
 
 @property (nonatomic, strong) NSURL *filename;
-@property (nonatomic, copy)   NSString *defaultCategory;
-@property (nonatomic, copy)   NSString *defaultMode;
 @property (nonatomic, strong) AVAudioRecorder  *audioRecorder;
 @property (nonatomic, weak) id<ADTAudioRecorderDelegate> delegate;
 @property (nonatomic, strong) NSDictionary* recordSettings;
@@ -50,17 +48,10 @@
                        AVEncoderAudioQualityKey: @(AVAudioQualityMax),
                        AVSampleRateConverterAudioQualityKey: @(AVAudioQualityMax),
                        AVLinearPCMIsFloatKey: @YES};
-
-    _defaultCategory = [[AVAudioSession sharedInstance] category];
-    _defaultMode     = [[AVAudioSession sharedInstance] mode];
   }
 
   return self;
 }
-
-#pragma mark -
-#pragma mark Deallocate
-
 
 #pragma mark -
 #pragma mark Controlling Recording
@@ -74,25 +65,6 @@
   }
 
   self.duration = duration;
-
-  // Set the audio session category to play and record to enable the microphone..
-  NSError *audioSessionError = nil;
-  BOOL result = [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord
-                                                  error: &audioSessionError];
-
-  if(!result) {
-    ADTLogError(@"Error setting AVAudioSession category to PlayAndRecord: %@", audioSessionError);
-    return NO;
-  }
-
-  UInt32 allowMixing = true;
-  
-  AudioSessionSetProperty (kAudioSessionProperty_OverrideCategoryMixWithOthers,  // 1
-                           sizeof (allowMixing),                                 // 2
-                           &allowMixing                                          // 3
-                           );
-    
-  [[AVAudioSession sharedInstance] setMode:AVAudioSessionModeMeasurement error:nil];
 
   // Generate temporary filename for our recording session
   self.filename = [NSURL fileURLWithPath:[self generateUniqueFilename]];
@@ -154,11 +126,6 @@
   if([self.delegate respondsToSelector:@selector(recorderFinished:successfully:)]) {
     [self.delegate recorderFinished:self.filename successfully:flag];
   }
-  
-  // After file is processed, delete from disk and reset the audio session category to default..
-  // [recorder deleteRecording];
-  
-  [self resetAudioSessionCategory];
 }
 
 - (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError *)error
@@ -174,12 +141,7 @@
     [self.delegate recorderFailure:error];
   }
 
-  // TODO: call observer when completed. observer's responsibility should be to reset
-  // the audio session category to default. we should do this in one place so we do
-  // not introduce a bug by forgetting to reset the audio session category when complete.
   [recorder deleteRecording];
-  
-  [self resetAudioSessionCategory];
 }
 
 - (void)audioRecorderBeginInterruption:(AVAudioRecorder *)recorder
@@ -199,20 +161,7 @@
     ADTLogInfo(@"Audio recorder cannot recover from interruption.. stopping it.");
     self.recording = NO;
     [recorder deleteRecording];
-    [self resetAudioSessionCategory];
   }
-}
-
-#pragma mark -
-#pragma mark Reset Audio Session Category
-
-- (void)resetAudioSessionCategory
-{
-  self.filename = nil;
-  ADTLogInfo(@"Resetting Audio Session Category back to %@", self.defaultCategory);
-
-  [[AVAudioSession sharedInstance] setCategory:self.defaultCategory error: nil];
-  [[AVAudioSession sharedInstance] setMode:self.defaultMode error: nil];
 }
 
 #pragma mark -

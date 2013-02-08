@@ -28,7 +28,6 @@
   [super viewDidLoad];
 
   self.adtonik = [[ADTClient alloc] initWithDelegate:self doRefresh:YES andAppID:@"ADTDemoApp" andAppSecret:@"ADTDemoApp"];
-
   self.loadAd = [[ADTLoadAd alloc] initWithDelegate:self andUDID:self.adtonik.ifa];
 
   // start it up
@@ -67,31 +66,7 @@
 
 - (void) ADTClientDidReceiveMatch:(NSDictionary *)results
 {
-  NSNumber *liveTV = results[@"live_tv"];
-
   NSLog(@"%@", results);
-
-  if([liveTV intValue] == 1) {
-    NSString *title = results[@"title"];
-    NSString *subtitle = results[@"subtitle"];
-
-    if([subtitle isKindOfClass:[NSNull class]] == NO) {
-      title = [NSString stringWithFormat:@"%@ - %@", title, subtitle];
-    }
-
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Live TV"
-                                                      message:title
-                                                     delegate:nil
-                                            cancelButtonTitle:@"OK"
-                                            otherButtonTitles:nil];
-
-    if([self.liveTitle isEqualToString:title]) {
-      [message show];
-    }
-
-    self.liveTitle = title;
-
-  }
 }
 
 - (void)ADTClientDidReceiveAd

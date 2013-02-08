@@ -41,6 +41,13 @@
 // audio processing errors as well as when the server returns results..
 @property (nonatomic, weak) id <ADTClientDelegate> delegate;
 
+/**
+  Set to true when audio session has been setup.
+  To prevent AdTonik library from doing session setup, set this to YES before calling start.
+  Library requires AVAudioSessionCategoryRecord or AVAudioSessionCategoryPlayAndRecord
+ */
+@property (nonatomic, assign) BOOL didAudioSessionSetup;
+
 #pragma mark -
 #pragma mark Collecting SDK Version
 
@@ -70,6 +77,16 @@
               andAppID:(NSString *)appID
           andAppSecret:(NSString *)appSecret;
 
+
+#pragma mark -
+#pragma mark Setup Audio Session
+
+/**
+  Sets up the audio session to allow microphone use.
+
+  In application that uses the audio session, make sure this gets set last.
+*/
+- (BOOL)setupAudioSession;
 
 #pragma mark -
 #pragma mark ACR process control methods

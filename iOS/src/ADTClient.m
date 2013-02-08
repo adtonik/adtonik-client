@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/NSKeyValueObserving.h>
+#import <AVFoundation/AVFoundation.h>
 
 #import "ADTAudioRecorder.h"
 #import "ADTAudioRecorderDelegate.h"
@@ -54,7 +55,7 @@
                                                   andAppId:appID
                                               andAppSecret:appSecret
                                                    andUDID:_ifa];
-    
+
     // make sure allocations successful, bail otherwise.
     if(!_acrQueue || !_restAPI) {
       ADTLogError(@"ADTClient initWithDelegate failed..");
@@ -63,6 +64,25 @@
   }
 
   return self;
+}
+
+#pragma mark -
+#pragma mark Setup Audio Session
+
+- (BOOL)setupAudioSession
+{
+  // Set the audio session category to play and record to enable the microphone..
+  NSError *audioSessionError = nil;
+  BOOL result = [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord
+                                                       error: &audioSessionError];
+  if(!result) {
+    ADTLogError(@"Error setting AVAudioSession category to PlayAndRecord: %@", audioSessionError);
+    return NO;
+  }
+
+  self.didAudioSessionSetup = YES;
+
+  return YES;
 }
 
 #pragma mark -
@@ -81,6 +101,13 @@
     return NO;
   }
 
+  // setup audio session if necessary
+  if(self.didAudioSessionSetup == NO) {
+    if([self setupAudioSession] == NO) {
+      return NO;
+    }
+  }
+
   self.running = YES;
 
   [self.acrQueue setMaxConcurrentOperationCount:1];
@@ -88,13 +115,13 @@
   //
   //setup KVO observers
   //
-  
+
   // when isRunning is set to NO
   [self addObserver:self forKeyPath:@"running" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:nil];
 
   // when error is set
   [self addObserver:self forKeyPath:@"error" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:nil];
-  
+
   return [self queueOperation];
 }
 
@@ -103,15 +130,15 @@
   if(self.isRunning) {
     if(self.audioRecorder.isRecording)
       [self.audioRecorder stop];
-    
+
     if(self.restAPI.isLoading)
       [self.restAPI cancel];
-    
+
     self.running = NO;
-        
+
     return YES;
   }
-  
+
   return NO;
 }
 
@@ -121,15 +148,15 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
   if([keyPath isEqual:@"running"]) {
-    
+
     // is isRunning set to NO, call delegate finished method
-    if(self.isRunning == NO && change[@"new"] != change[@"old"]) {      
+    if(self.isRunning == NO && change[@"new"] != change[@"old"]) {
       if(self.isRunning == NO && [self.delegate respondsToSelector:@selector(ADTClientDidFinishSuccessfully)])
         [self.delegate ADTClientDidFinishSuccessfully];
     }
-    
+
   } else if([keyPath isEqual:@"error"]) {
-    
+
     // if error is set, call delegate error method
     if(self.error && [self.delegate respondsToSelector:@selector(ADTClientErrorDidOccur:)]) {
       [self.delegate ADTClientErrorDidOccur:self.error];
@@ -207,18 +234,18 @@
 #pragma mark Run ACR Algorithm on Audio File
 
 - (void) runAlgorithm:(NSString *) filename
-{  
+{
   // Asynchronously compute the audio signatures
   [ADTAudioACR computeSignatures:filename callback:^(NSSet *fingerprints, NSString *errorMessage) {
-    
+
     // It is now our responsibility to delete the file
     NSError *error = nil;
     [[NSFileManager defaultManager] removeItemAtPath:filename error:&error];
-    
+
     if(error) {
       ADTLogError(@"Error deleting file");
     }
-    
+
     if(errorMessage || !fingerprints) {
       ADTLogError(@"Error computing fingerprints");
       self.error = [NSError errorWithDomain:kADTClientErrorDomain code:kADTError userInfo:nil];
@@ -235,7 +262,7 @@
 - (void) queryAPIServer:(NSSet *)fingerprints
 {
   NSString *acrVersion = [ADTAudioACR getACRVersion];
-  
+
   if(!fingerprints || [fingerprints count] == 0) {
     ADTLogError(@"Error during ACR: No fingerprints computed");
     self.error = [NSError errorWithDomain:kADTClientErrorDomain code:kADTAudioNoFingerprints userInfo:nil];
@@ -261,13 +288,13 @@
   }
 
   NSString *identifier = ADTAdvertisingIdentifier();
-  
+
   if(!identifier) {
     [NSException raise:@"Unable to get AdvertiserIdentifier"
                 format:@"AdvertiserIdentifier required to use ADTClient, " \
                         "implement ADTAdvertiserIdentifier in the delegate"];
   }
-  
+
   return identifier;
 }
 
@@ -307,7 +334,7 @@
         [self.delegate ADTClientDidReceiveAd];
       }
     }
-  
+
     // Notify the delegate that a successful match occurred
     if([results[@"match"] boolValue] == YES) {
       if([self.delegate respondsToSelector:@selector(ADTClientDidReceiveMatch:)]) {
@@ -315,14 +342,14 @@
       }
     }
   }
-  
+
   [self finishedRun];
 }
 
 - (void)restAPIDidErrorOccur:(id)error
 {
   ADTLogError(@"Experienced error from API server. Requeueing process");
-  
+
   self.error = [NSError errorWithDomain:kADTClientErrorDomain code:kADTAPIError userInfo:nil];
 
   [self finishedRun];
@@ -331,7 +358,7 @@
 - (void)restAPIDidReceiveOptOut
 {
   ADTLogInfo(@"Received OPT-OUT message from API for Device.. stopping process");
-  
+
   self.running = NO;
 }
 
