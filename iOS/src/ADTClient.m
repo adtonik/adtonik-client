@@ -80,6 +80,12 @@
     return NO;
   }
 
+  // in play and record, have to force audio to the main speaker
+  UInt32 audioRouteOverride = kAudioSessionOverrideAudioRoute_Speaker;
+  AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute,
+                          sizeof(audioRouteOverride), &audioRouteOverride);
+
+
   self.didAudioSessionSetup = YES;
 
   return YES;
