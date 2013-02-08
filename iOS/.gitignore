@@ -1,6 +1,8 @@
 .DS_Store
 *.swp
 
+example/mopub-client
+
 docs/docset/
 docset-installed.txt
 
