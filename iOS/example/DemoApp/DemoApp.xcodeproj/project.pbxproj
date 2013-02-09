@@ -58,6 +58,9 @@
 		AB09EF9D158C44BD00ADDE88 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		AB0B23A316B8973C00F8F69C /* libADTAudioACR-universal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libADTAudioACR-universal.a"; sourceTree = "<group>"; };
 		AB0B23B316B897CF00F8F69C /* libADTClient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libADTClient.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB2C010D16C5CC1C006F7156 /* frame1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame1.png; sourceTree = "<group>"; };
+		AB2C010E16C5CC1C006F7156 /* frame2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame2.png; sourceTree = "<group>"; };
+		AB2C010F16C5CC1C006F7156 /* frame3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame3.png; sourceTree = "<group>"; };
 		AB3C0864154F96C700EEFA58 /* DemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB3C0868154F96C700EEFA58 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AB3C086A154F96C700EEFA58 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -126,6 +129,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AB2C010C16C5CC1C006F7156 /* spinner */ = {
+			isa = PBXGroup;
+			children = (
+				AB2C010D16C5CC1C006F7156 /* frame1.png */,
+				AB2C010E16C5CC1C006F7156 /* frame2.png */,
+				AB2C010F16C5CC1C006F7156 /* frame3.png */,
+			);
+			path = spinner;
+			sourceTree = "<group>";
+		};
 		AB3C0859154F96C700EEFA58 = {
 			isa = PBXGroup;
 			children = (
@@ -192,6 +205,7 @@
 		ABD1AF9B1587FF9700BF789E /* AdTonikSDK */ = {
 			isa = PBXGroup;
 			children = (
+				AB2C010C16C5CC1C006F7156 /* spinner */,
 				ABF79D8616B3418100FF7EB7 /* ADTUtils.h */,
 				ABF79D8716B3418100FF7EB7 /* ADTUtils.m */,
 				AB3F09341694E0C900132794 /* ADTVersion.h */,
