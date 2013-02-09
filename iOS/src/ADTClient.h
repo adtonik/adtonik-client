@@ -6,7 +6,10 @@
 //  Copyright (c) 2012 AdTonik, Inc. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
+
 #import "ADTClientDelegate.h"
+
 
 /**
  An instance of the ADTClient class discovers what a user is watching on television using
@@ -77,6 +80,12 @@
               andAppID:(NSString *)appID
           andAppSecret:(NSString *)appSecret;
 
+
+#pragma mark -
+#pragma mark Setup Spinner View
+
+- (void)showSpinnerAtX:(NSInteger)x
+                  andY:(NSInteger)y;
 
 #pragma mark -
 #pragma mark Setup Audio Session

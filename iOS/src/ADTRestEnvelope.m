@@ -12,6 +12,7 @@
 #import "ADTClient.h"
 #import "ADTLogging.h"
 #import "ADTConstants.h"
+#import "ADTUtils.h"
 
 @interface ADTRestEnvelope ()
 
@@ -44,15 +45,16 @@
   time_t unixTime = (time_t) [[NSDate date] timeIntervalSince1970];
 
   NSDictionary *message = @{@"timestamp": @(unixTime),
-                           @"type": @"request",
-                           @"envelopeVersion": [ADTRestEnvelope envelopeVersion],
-                           @"sdkVersion": kADTSDKVersion,
-                           @"acrVersion": acrVersion,
-                           @"udid": udid,
-                           @"appID": appId,
-                           @"state": state,
-                           @"data": data};
-  
+                            @"type": @"request",
+                            @"envelopeVersion": [ADTRestEnvelope envelopeVersion],
+                            @"sdkVersion": kADTSDKVersion,
+                            @"acrVersion": acrVersion,
+                            @"udid": udid,
+                            @"appID": appId,
+                            @"tracking": @(ADTIsAdvertisingTrackingEnabled()),
+                            @"state": state,
+                            @"data": data};
+    
   NSError *error = nil;
   NSData *jsonData = [NSJSONSerialization dataWithJSONObject:message options:0 error:&error];
   

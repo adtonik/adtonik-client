@@ -12,3 +12,5 @@
 
 NSString *ADTSHA1Digest(NSString *string);
 NSString *ADTAdvertisingIdentifier(void);
+
+BOOL ADTIsAdvertisingTrackingEnabled(void);

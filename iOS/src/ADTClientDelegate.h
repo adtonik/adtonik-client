@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 AdTonik, Inc. All rights reserved.
 //
 
+@class ADTClient;
+
 /**
  The delegate of an ADTClient object must adopt the ADTClientDelegate protocol.
  These methods allow the delegate to receive ACR results and be notified upon errors.
@@ -15,10 +17,25 @@
  */
 @protocol ADTClientDelegate <NSObject>
 
+/**
+ Required view controller for displaying adtonik information and disclosures
+ if the user clicks the adtonik spinner. This will be the root controller for
+ presenting and dismissing our modal info pane. If ADTClient is created inside a view
+ controller, this should return self.
+ */
+
+- (UIViewController *) viewControllerForPresentingModalView;
+
 @optional
 
 /**
  Called by the system when results have been received from the API server.
+ 
+ The AdTonik API does not normally pass results back to the client. This method
+ is only used for debugging and demo purposes. 
+ 
+ In the context of ad serving, implement ADTClientDidReceiveAd or 
+ ADTClientDidReceiveAdsWithDimensions:
 
  @param results NSDictionary containing meta-data of the content that was matched
  */
@@ -27,21 +44,31 @@
 
 /**
  Called by the system when an ad is available for this device.
-
- @param results NSDictionary containing meta-data of the content that was matched
- @param flag The flag indicating a sucessful match (YES), or failure (NO)
  */
 
 - (void)ADTClientDidReceiveAd;
 
 /**
- Optional method to override the AdvertiserIdentifier method. IFA must match the IFA your chosen Ad SDK uses.
- If you do not specify this method, if available we use the IFA (iOS 6+), otherwise the SHA1 hashed deviceIdentifier
+ Called by the system when an ad is available for this device.  
+ Also returns a dictionary of available ad unit sizes.
+ 
+ supportedSizes[@"320x50"] = true;
+ */
+
+- (void)ADTClientDidReceiveAdsWithDimensions:(NSDictionary *)dimensions;
+
+/**
+ Optional method to override the AdvertiserIdentifier method. AdTonik uses the IFA to pair the 
+ ad call to the tv data, therefore this method must return the same IFA used by your chosen ad sdk.
+ 
+ By default, we use the IdentifierForAdvertising on iOS 6.0+ and the SHA1 hashed deviceIdentifier
+ for previous iOS versions.
  */
 - (NSString *)ADTAdvertiserIdentifier;
 
 /**
- Called by the system when ACR is completed.
+ Called by the system when the ACR process is complete. If doRefresh is set to YES, this method
+ will only be executed when the caller calls the stop method. 
  */
 - (void)ADTClientDidFinishSuccessfully;
 
@@ -49,5 +76,14 @@
  Called by the system when an error occurs.
  */
 - (void)ADTClientErrorDidOccur:(NSError *)error;
+
+/**
+ These callbacks are executed when the info panel is about to be presented or dismissed as a modal
+ view. Your application may need to perform an action when the modal is displayed (i.e.: pausing
+ the game).
+ */
+
+- (void)ADTWillPresentInfoPaneView:(ADTClient *) client;
+- (void)ADTDidDismissInfoPaneView:(ADTClient *) client;
 
 @end

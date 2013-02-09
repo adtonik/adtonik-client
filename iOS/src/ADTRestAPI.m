@@ -70,7 +70,7 @@
     ADTLogInfo(@"queryWithFingerprints is already loading a request");
     return NO;
   }
-  
+
   NSData *requestBody = [ADTRestEnvelope messageWithData:[fingerprints allObjects]
                                                    state:self.state
                                                    appId:self.appId
@@ -120,7 +120,7 @@
   if([response respondsToSelector:@selector(statusCode)]) {
     int statusCode = [((NSHTTPURLResponse *) response) statusCode];
 
-    if(statusCode >= 400) {
+    if(statusCode != 200) {
       [connection cancel];
 
       NSDictionary *errorInfo = @{NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedString(@"Server returned status code %d", @""),
@@ -167,12 +167,20 @@
 - (void) connectionDidFinishLoading:(NSURLConnection *) connection {
   self.loading = NO;
 
+  if(![self.headers[@"Content-Type"] isEqual: @"application/json; charset=utf-8"]) {
+
+    if([self.delegate respondsToSelector:@selector(restAPIDidErrorOccur:)])
+      [self.delegate restAPIDidErrorOccur:@"bad content type"];
+
+    return;
+  }
+
   NSError *error = nil;
-  
+
   NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:self.data
                                                              options:NSJSONReadingMutableContainers
                                                                error:&error];
-  
+
   NSNumber *refreshTimerNum = jsonObject[@"refreshTimer"];
 
   if(!refreshTimerNum) {
@@ -183,29 +191,29 @@
 
   // Save the state
   self.state = jsonObject[@"state"];
-  
+
   // Check for user opt out flag
   if(error == nil && [self.state[@"optout"] boolValue] == YES) {
     if([self.delegate respondsToSelector:@selector(restAPIDidReceiveOptOut)])
       [self.delegate restAPIDidReceiveOptOut];
-    
+
     return;
   }
-  
+
   BOOL success;
-  
+
   if(error) {
     success = NO;
     ADTLogError(@"experienced error decoding json response: %@", error);
   } else {
     success = [ADTRestEnvelope successResponse:jsonObject];
   }
-  
+
   ADTLogInfo(@"Received %@ response from server", success == 1 ? @"success" : @"error");
-  
+
   if([self.delegate respondsToSelector:@selector(restAPIDidReceiveResponse:successfully:)])
     [self.delegate restAPIDidReceiveResponse:jsonObject successfully:success];
-  
+
   return;
 }
 

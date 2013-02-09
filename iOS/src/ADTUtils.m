@@ -36,7 +36,7 @@ NSString *ADTSHA1Digest(NSString *string)
 NSString *ADTAdvertisingIdentifier(void)
 {
   NSString *identifier = nil;
-  
+    
   if (NSClassFromString(@"ASIdentifierManager")) {
     identifier = ADTSHA1Digest([[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString]);
   } else {
@@ -46,4 +46,15 @@ NSString *ADTAdvertisingIdentifier(void)
   }
 
   return identifier;
+}
+
+#pragma mark -
+#pragma mark Lookup IFA Device Tracking
+
+BOOL ADTIsAdvertisingTrackingEnabled(void)
+{
+  if (NSClassFromString(@"ASIdentifierManager"))
+    return [ASIdentifierManager sharedManager].advertisingTrackingEnabled;
+  else
+    return true;
 }

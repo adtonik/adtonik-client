@@ -16,12 +16,12 @@
 @property (nonatomic, strong) ADTClient* adtonik;
 @property (nonatomic, copy)   NSString*  liveTitle;
 @property (nonatomic, strong) ADTLoadAd* loadAd;
+
 @property (nonatomic, strong) IBOutlet UIWebView* webView;
 
 @end
 
 @implementation ADTViewController
-
 
 - (void)viewDidLoad
 {
@@ -29,6 +29,9 @@
 
   self.adtonik = [[ADTClient alloc] initWithDelegate:self doRefresh:YES andAppID:@"ADTDemoApp" andAppSecret:@"ADTDemoApp"];
   self.loadAd = [[ADTLoadAd alloc] initWithDelegate:self andUDID:self.adtonik.ifa];
+
+  // load spinner on our view. Apple requires a visual notification when mic is activated.
+  [self.adtonik showSpinnerAtX:5 andY:65];
 
   // start it up
   [self.adtonik start];
@@ -69,20 +72,45 @@
   NSLog(@"%@", results);
 }
 
+/**
+ called when ad is ready for device
+ */
 - (void)ADTClientDidReceiveAd
 {
   NSLog(@"LOADING AD FROM AD SERVER");
   [self.loadAd loadAd];
 }
 
+/**
+ called when ad with dimensions is ready for device
+ */
+- (void)ADTClientDidReceiveAdsWithDimensions:(NSDictionary *)dimensions
+{
+  // check dimensions to do ad request in proper ad unit
+}
+
+/**
+ called when ADTClient experiences an error
+ */
 - (void)ADTClientErrorDidOccur:(NSError *)error
 {
   NSLog(@"ADTClient error occurred: %@", error);
 }
 
+/**
+ called when ADTClient is completed
+ */
 - (void)ADTClientDidFinishSuccessfully
 {
   NSLog(@"ACR Complete!");
+}
+
+/**
+ view controller for presenting modal info pane and spinner
+ */
+- (UIViewController *) viewControllerForPresentingModalView
+{
+  return self;
 }
 
 #pragma mark -

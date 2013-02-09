@@ -9,6 +9,12 @@
 #import <Foundation/NSKeyValueObserving.h>
 #import <AVFoundation/AVFoundation.h>
 
+#import <UIKit/UIWindow.h>
+#import <UIKit/UIImage.h>
+#import <UIKit/UIKit.h>
+
+#import "ADTInfoPaneController.h"
+
 #import "ADTAudioRecorder.h"
 #import "ADTAudioRecorderDelegate.h"
 #import "ADTClient.h"
@@ -18,13 +24,23 @@
 #import "ADTRestAPI.h"
 #import "ADTUtils.h"
 
-@interface ADTClient () <ADTAudioRecorderDelegate, ADTRestAPIDelegate>
+#import "ADTInfoPaneController.h"
+
+@interface ADTClient () <ADTAudioRecorderDelegate, ADTRestAPIDelegate, ADTInfoPaneControllerDelegate>
 
 @property (getter=doRefresh)  BOOL              refresh;
 @property (nonatomic, strong) ADTAudioRecorder* audioRecorder;
 @property (nonatomic, strong) NSOperationQueue* acrQueue;
 @property (nonatomic, strong) ADTRestAPI*       restAPI;
+@property (nonatomic, strong) NSString*         appID;
 @property (nonatomic, assign) NSUInteger        sampleDuration;
+@property (nonatomic, strong) UIImageView*      spinner;
+@property (nonatomic, strong) UIWebView*        infoPaneView;
+
+@property (nonatomic, strong) ADTInfoPaneController* infoPaneController;
+
+@property (nonatomic, assign) NSInteger         spinnerX;
+@property (nonatomic, assign) NSInteger         spinnerY;
 
 @end
 
@@ -51,10 +67,13 @@
     _acrQueue       = [[NSOperationQueue alloc] init];
     _ifa            = [self getAdvertiserIdentifier];
     _sampleDuration = ADT_SAMPLE_SECONDS;
+    _appID          = appID;
     _restAPI        = [[ADTRestAPI alloc] initWithDelegate:self
                                                   andAppId:appID
                                               andAppSecret:appSecret
                                                    andUDID:_ifa];
+
+    _infoPaneView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
 
     // make sure allocations successful, bail otherwise.
     if(!_acrQueue || !_restAPI) {
@@ -89,6 +108,66 @@
   self.didAudioSessionSetup = YES;
 
   return YES;
+}
+
+#pragma mark -
+#pragma mark Setup Spinner
+
+- (void)showSpinnerAtX:(NSInteger)x andY:(NSInteger)y
+{
+  self.spinnerX = x;
+  self.spinnerY = y;
+
+  self.spinner = [[UIImageView alloc] initWithFrame:CGRectMake(self.spinnerX,self.spinnerY,30,25)];
+  self.spinner.userInteractionEnabled = YES;
+  self.spinner.image = [UIImage imageNamed:@"adtonikLogo.tiff"];
+
+  self.spinner.hidden = YES;
+
+  // Setup spinner to be tapped
+  UITapGestureRecognizer *singleFingerTap =
+  [[UITapGestureRecognizer alloc] initWithTarget:self
+                                          action:@selector(openInfoPane:)];
+
+  [self.spinner addGestureRecognizer:singleFingerTap];
+
+  CABasicAnimation *theAnimation;
+  theAnimation=[CABasicAnimation animationWithKeyPath:@"opacity"];
+  theAnimation.duration=0.75;
+  theAnimation.repeatCount=HUGE_VALF;
+  theAnimation.autoreverses=YES;
+  theAnimation.removedOnCompletion = NO;
+  theAnimation.fillMode = kCAFillModeForwards;
+  theAnimation.fromValue=@1.0f;
+  theAnimation.toValue = @0.0f;
+
+  [[self.spinner layer] addAnimation:theAnimation forKey:@"animateOpacity"];
+
+  [[[self viewControllerForPresentingModalView] view] addSubview:self.spinner];
+}
+
+#pragma mark -
+#pragma mark Show Information Pane when Spinner Tapped
+
+- (void)openInfoPane:(UITapGestureRecognizer *)recognizer
+{
+  // notify delegate that the info pane is about to open
+  if([self.delegate respondsToSelector:@selector(ADTWillPresentInfoPaneView:)])
+    [self.delegate ADTWillPresentInfoPaneView:self];
+  
+  self.infoPaneController = [[ADTInfoPaneController alloc] initWithDelegate:self andAppID:self.appID andIFA:self.ifa];
+
+  self.infoPaneController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+
+  [self.infoPaneController startLoading];
+}
+
+#pragma mark -
+#pragma mark Start Spinner upon Activation
+
+- (void) startSpinner:(id)data {
+  self.spinner.hidden = NO;
+  [self.spinner startAnimating];
 }
 
 #pragma mark -
@@ -182,6 +261,7 @@
 - (BOOL)queueOperation
 {
   NSInvocationOperation *acrOperation;
+  [self startSpinner:nil];
 
   acrOperation = [[NSInvocationOperation alloc] initWithTarget:self
                                                       selector:@selector(startAsyncOperations)
@@ -310,6 +390,11 @@
 
 - (void)recorderFinished:(NSURL *)filename successfully:(BOOL)flag
 {
+  if(self.spinner) {
+    [self.spinner stopAnimating];
+    self.spinner.hidden = YES;
+  }
+
   if(flag == YES) {
     ADTLogInfo(@"successfully captured audio. starting fingerprint generation.");
     [self runAlgorithm:[filename path]];
@@ -323,6 +408,11 @@
 
 - (void)recorderFailure:(NSError *)error
 {
+  if(self.spinner) {
+    [self.spinner stopAnimating];
+    self.spinner.hidden = YES;
+  }
+
   ADTLogInfo(@"ACR process ending: recorderFinished experienced and error..");
 
   self.running = NO;
@@ -367,6 +457,54 @@
   ADTLogInfo(@"Received OPT-OUT message from API for Device.. stopping process");
 
   self.running = NO;
+}
+
+#pragma mark -
+#pragma mark Info Pane Delegate Methods
+
+- (UIViewController *)viewControllerForPresentingModalView
+{
+  return [self.delegate viewControllerForPresentingModalView];
+}
+
+- (void)dismissInfoPaneController:(ADTInfoPaneController *)infoPaneController
+{
+  [self dismissInfoPaneController:infoPaneController animated:YES];
+}
+
+- (void)dismissInfoPaneController:(ADTInfoPaneController *)infoPaneController animated:(BOOL)animated
+{
+  [infoPaneController stopLoading];
+  
+  [[self viewControllerForPresentingModalView] dismissViewControllerAnimated:animated completion:nil];
+  
+  if ([self.delegate respondsToSelector:@selector(ADTDidDismissInfoPaneView:)])
+    [self.delegate ADTDidDismissInfoPaneView:self];
+}
+
+- (void)infoPaneControllerDidFinishLoad:(ADTInfoPaneController *)infoPaneController
+{
+  UIViewController *presentingViewController = [self viewControllerForPresentingModalView];
+  UIViewController *presentedViewController;
+
+  if ([presentingViewController respondsToSelector:@selector(presentedViewController)]) {
+    // For iOS 5 and above.
+    presentedViewController = presentingViewController.presentedViewController;
+  } else {
+    // Prior to iOS 5, the modalViewController property holds the presented view controller.
+    presentedViewController = presentingViewController.modalViewController;
+  }
+
+  // If the browser controller is already on-screen, don't try to present it again, or an
+  // exception will be thrown (iOS 5 and above).
+  if (presentedViewController == infoPaneController) return;
+
+  [[self viewControllerForPresentingModalView] presentModalViewController:infoPaneController animated:YES];
+}
+
+- (void)infoPaneControllerWillLeaveApplication:(ADTInfoPaneController *)infoPaneController
+{
+
 }
 
 @end

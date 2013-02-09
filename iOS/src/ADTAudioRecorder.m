@@ -69,7 +69,7 @@
   // Generate temporary filename for our recording session
   self.filename = [NSURL fileURLWithPath:[self generateUniqueFilename]];
 
-  ADTLogInfo(@"Recording audio to %@", self.filename);
+  ADTLogInfo(@"Starting audio analysis");
 
   NSError *recordError = nil;
   

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB04B1C916C9B617007EB224 /* ADTInfoPane.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB04B1C816C9B617007EB224 /* ADTInfoPane.xib */; };
 		AB09EF9E158C44BD00ADDE88 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = AB09EF9D158C44BD00ADDE88 /* bg.png */; };
 		AB0B23BF16B897E000F8F69C /* ADTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF79D8716B3418100FF7EB7 /* ADTUtils.m */; };
 		AB0B23C016B897E000F8F69C /* ADTClient.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD1AF9D1587FF9700BF789E /* ADTClient.m */; };
@@ -19,6 +20,9 @@
 		AB0B23D816B899EE00F8F69C /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C08C0154F973300EEFA58 /* Accelerate.framework */; };
 		AB0B23D916B899F300F8F69C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C08C6154F97C600EEFA58 /* AudioToolbox.framework */; };
 		AB0B23DA16B899F900F8F69C /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F092A1694D30C00132794 /* AdSupport.framework */; };
+		AB2C011716C5D294006F7156 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB2C011616C5D294006F7156 /* QuartzCore.framework */; };
+		AB2C011916C5D423006F7156 /* adtonikLogo.tiff in Resources */ = {isa = PBXBuildFile; fileRef = AB2C011816C5D423006F7156 /* adtonikLogo.tiff */; };
+		AB2C011C16C5DBE9006F7156 /* ADTInfoPaneController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2C011B16C5DBE9006F7156 /* ADTInfoPaneController.m */; };
 		AB3C0869154F96C700EEFA58 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C0868154F96C700EEFA58 /* UIKit.framework */; };
 		AB3C086B154F96C700EEFA58 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C086A154F96C700EEFA58 /* Foundation.framework */; };
 		AB3C086D154F96C700EEFA58 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3C086C154F96C700EEFA58 /* CoreGraphics.framework */; };
@@ -45,9 +49,9 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		AB0B23B116B897CF00F8F69C /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "include/${PRODUCT_NAME}";
-			dstSubfolderSpec = 16;
+			dstSubfolderSpec = 7;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -55,9 +59,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AB04B1C816C9B617007EB224 /* ADTInfoPane.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADTInfoPane.xib; sourceTree = "<group>"; };
 		AB09EF9D158C44BD00ADDE88 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		AB0B23A316B8973C00F8F69C /* libADTAudioACR-universal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libADTAudioACR-universal.a"; sourceTree = "<group>"; };
 		AB0B23B316B897CF00F8F69C /* libADTClient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libADTClient.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB2C011616C5D294006F7156 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		AB2C011816C5D423006F7156 /* adtonikLogo.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = adtonikLogo.tiff; path = spinner/adtonikLogo.tiff; sourceTree = "<group>"; };
+		AB2C011A16C5DBE9006F7156 /* ADTInfoPaneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTInfoPaneController.h; sourceTree = "<group>"; };
+		AB2C011B16C5DBE9006F7156 /* ADTInfoPaneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTInfoPaneController.m; sourceTree = "<group>"; };
 		AB3C0864154F96C700EEFA58 /* DemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB3C0868154F96C700EEFA58 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AB3C086A154F96C700EEFA58 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -112,6 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB2C011716C5D294006F7156 /* QuartzCore.framework in Frameworks */,
 				AB0B23DA16B899F900F8F69C /* AdSupport.framework in Frameworks */,
 				AB0B23D916B899F300F8F69C /* AudioToolbox.framework in Frameworks */,
 				AB0B23D816B899EE00F8F69C /* Accelerate.framework in Frameworks */,
@@ -126,6 +136,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AB04B1CA16C9B7C9007EB224 /* Bundle Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AB04B1C816C9B617007EB224 /* ADTInfoPane.xib */,
+				AB2C011816C5D423006F7156 /* adtonikLogo.tiff */,
+			);
+			name = "Bundle Resources";
+			sourceTree = "<group>";
+		};
 		AB3C0859154F96C700EEFA58 = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +170,7 @@
 		AB3C0867154F96C700EEFA58 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB2C011616C5D294006F7156 /* QuartzCore.framework */,
 				AB3F092A1694D30C00132794 /* AdSupport.framework */,
 				AB3C08BE154F972D00EEFA58 /* AVFoundation.framework */,
 				AB3C08C0154F973300EEFA58 /* Accelerate.framework */,
@@ -192,6 +212,9 @@
 		ABD1AF9B1587FF9700BF789E /* AdTonikSDK */ = {
 			isa = PBXGroup;
 			children = (
+				AB04B1CA16C9B7C9007EB224 /* Bundle Resources */,
+				AB2C011A16C5DBE9006F7156 /* ADTInfoPaneController.h */,
+				AB2C011B16C5DBE9006F7156 /* ADTInfoPaneController.m */,
 				ABF79D8616B3418100FF7EB7 /* ADTUtils.h */,
 				ABF79D8716B3418100FF7EB7 /* ADTUtils.m */,
 				AB3F09341694E0C900132794 /* ADTVersion.h */,
@@ -299,6 +322,8 @@
 				AB3C089B154F96E900EEFA58 /* MainStoryboard_iPhone.storyboard in Resources */,
 				AB09EF9E158C44BD00ADDE88 /* bg.png in Resources */,
 				AB3E9A1716517F5E00307E5D /* Default-568h@2x.png in Resources */,
+				AB2C011916C5D423006F7156 /* adtonikLogo.tiff in Resources */,
+				AB04B1C916C9B617007EB224 /* ADTInfoPane.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,6 +340,7 @@
 				AB0B23C216B897E000F8F69C /* ADTLogging.m in Sources */,
 				AB0B23C316B897E000F8F69C /* ADTRestAPI.m in Sources */,
 				AB0B23C416B897E000F8F69C /* ADTRestEnvelope.m in Sources */,
+				AB2C011C16C5DBE9006F7156 /* ADTInfoPaneController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +396,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				DSTROOT = /tmp/ADTClient.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../src/libacr\"",
@@ -392,6 +419,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				DSTROOT = /tmp/ADTClient.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../src/libacr\"",
