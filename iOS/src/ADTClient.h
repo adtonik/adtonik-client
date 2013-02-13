@@ -10,7 +10,6 @@
 
 #import "ADTClientDelegate.h"
 
-
 /**
  An instance of the ADTClient class discovers what a user is watching on television using
  audio automated content recognition technology. This works by turning on the microphone and taking
@@ -23,10 +22,6 @@
  You must setup a class to be an ADTClientDelegate to receive notifications when a result has
  been received or if an error occurred. If refresh was set to YES, it will continue to run in the
  background. To stop, call the stop method on the ACR object in the delegate callbacks.
-
- @note:
- Please expect in the very near future for the server to specify the refresh time amount dynamically,
- so it can be put to sleep if our algorithm believes the user is not in front of a TV.
  */
 
 @interface ADTClient : NSObject
