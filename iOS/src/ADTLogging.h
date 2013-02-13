@@ -12,14 +12,14 @@
 
 typedef enum
 {
-	ADTLogLevelAll		= 1 << 0,
-	ADTLogLevelTrace	= 1 << 1,
-	ADTLogLevelDebug	= 1 << 2,
-	ADTLogLevelInfo		= 1 << 3,
-	ADTLogLevelWarn		= 1 << 4,
-	ADTLogLevelError	= 1 << 5,
-	ADTLogLevelFatal	= 1 << 6,
-	ADTLogLevelOff		= 1 << 7
+  ADTLogLevelAll   = 1 << 0,
+  ADTLogLevelTrace = 1 << 1,
+  ADTLogLevelDebug = 1 << 2,
+  ADTLogLevelInfo  = 1 << 3,
+  ADTLogLevelWarn  = 1 << 4,
+  ADTLogLevelError = 1 << 5,
+  ADTLogLevelFatal = 1 << 6,
+  ADTLogLevelOff   = 1 << 7
 } ADTLogLevel;
 
 ADTLogLevel ADTLogGetLevel(void);
