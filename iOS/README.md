@@ -10,8 +10,10 @@ You can view the API documents at [http://dev.adtonik.net/docs](http://dev.adton
 
 ## Integration
 
-Go to [http://control.adtonik.net](http://control.adtonik.net) to register your application and generate an App ID
-and App Secret which will be used in your ADTAudioACRDelegate.
+Email marshall@adtonik.com with the following information to receive your appID and appSecret:
+  Application Name:
+  Contact Email:
+  Description:
 
 See the examples/ directory to get an idea of how simple it is to integrate our SDK in an existing application.
 
