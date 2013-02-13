@@ -108,7 +108,7 @@
 /**
  view controller for presenting modal info pane and spinner
  */
-- (UIViewController *) viewControllerForPresentingModalView
+- (UIViewController *)viewControllerForPresentingModalView
 {
   return self;
 }
@@ -118,7 +118,7 @@
 
 - (void)ADTLoadAdDidReceiveAd:(NSString *)markup
 {
-  [self.webView loadHTMLString:markup baseURL:[NSURL URLWithString:@"http://api.adtonik.net"]];
+  [self.webView loadHTMLString:markup baseURL:nil];
 }
 
 @end

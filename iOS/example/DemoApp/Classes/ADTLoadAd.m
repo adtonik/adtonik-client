@@ -90,7 +90,7 @@
 {
   self.loading = NO;
   
-  NSString *response = [NSString stringWithCString:[self.data bytes] encoding:NSUTF8StringEncoding];
+  NSString *response = [[NSString alloc] initWithData:self.data encoding:NSUTF8StringEncoding];
   
   if(response && response.length > 0) {
     if([self.delegate respondsToSelector:@selector(ADTLoadAdDidReceiveAd:)])

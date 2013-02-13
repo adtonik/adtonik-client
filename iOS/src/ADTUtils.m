@@ -8,8 +8,9 @@
 
 #import "ADTUtils.h"
 #import <CommonCrypto/CommonDigest.h>
+#import <UIKit/UIDevice.h>
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= ADT_IOS_6_06000
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= ADT_IOS_6_0
 #import <AdSupport/AdSupport.h>
 #endif
 
@@ -33,18 +34,21 @@ NSString *ADTSHA1Digest(NSString *string)
 #pragma mark -
 #pragma mark Lookup Device Advertising Identifier
 
+
 NSString *ADTAdvertisingIdentifier(void)
 {
   NSString *identifier = nil;
-    
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= ADT_IOS_6_0
   if (NSClassFromString(@"ASIdentifierManager")) {
     identifier = ADTSHA1Digest([[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString]);
   } else {
-#if __IPHONE_OS_VERSION_MAX_ALLOWED < ADT_IOS_6_0
-    identifier = ADTSHA1Digest([[UIDevice currentDevice] uniqueIdentifier]);
-#endif
+    [NSException raise:@"Missing ASIdentifierManager" format:@"Must use advertising identifier on iOS 6.0+"];
   }
-
+#else
+  identifier = ADTSHA1Digest([[UIDevice currentDevice] uniqueIdentifier]);
+#endif
+  
   return identifier;
 }
 
@@ -53,8 +57,11 @@ NSString *ADTAdvertisingIdentifier(void)
 
 BOOL ADTIsAdvertisingTrackingEnabled(void)
 {
-  if (NSClassFromString(@"ASIdentifierManager"))
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= ADT_IOS_6_0
+  if (NSClassFromString(@"ASIdentifierManager")) {
     return [ASIdentifierManager sharedManager].advertisingTrackingEnabled;
-  else
-    return true;
+  }
+#endif
+
+  return YES;
 }
