@@ -1,0 +1,684 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>ADTClientDelegate Protocol Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<meta name="viewport" content="width=550" />
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.1 (build 840)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">AdTonik SDK </a></h1>
+				<a id="developerHome" href="../index.html">AdTonik, Inc.</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">ADTClientDelegate Protocol Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/ADTAdvertiserIdentifier">&nbsp;&nbsp;&nbsp;&nbsp;- ADTAdvertiserIdentifier</option>
+	
+	<option value="//api/name/ADTClientDidFinishSuccessfully">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientDidFinishSuccessfully</option>
+	
+	<option value="//api/name/ADTClientDidReceiveAd">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientDidReceiveAd</option>
+	
+	<option value="//api/name/ADTClientDidReceiveAdsWithDimensions:">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientDidReceiveAdsWithDimensions:</option>
+	
+	<option value="//api/name/ADTClientDidReceiveMatch:">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientDidReceiveMatch:</option>
+	
+	<option value="//api/name/ADTClientErrorDidOccur:">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientErrorDidOccur:</option>
+	
+	<option value="//api/name/ADTWillPresentInfoPaneView:">&nbsp;&nbsp;&nbsp;&nbsp;- ADTWillPresentInfoPaneView:</option>
+	
+	<option value="//api/name/viewControllerForPresentingModalView">&nbsp;&nbsp;&nbsp;&nbsp;- viewControllerForPresentingModalView</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+</ul></li>
+
+
+
+
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTAdvertiserIdentifier">ADTAdvertiserIdentifier</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientDidFinishSuccessfully">ADTClientDidFinishSuccessfully</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientDidReceiveAd">ADTClientDidReceiveAd</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientDidReceiveAdsWithDimensions:">ADTClientDidReceiveAdsWithDimensions:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientDidReceiveMatch:">ADTClientDidReceiveMatch:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientErrorDidOccur:">ADTClientErrorDidOccur:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTWillPresentInfoPaneView:">ADTWillPresentInfoPaneView:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/viewControllerForPresentingModalView">viewControllerForPresentingModalView</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="ADTClientDelegate Protocol Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">ADTClientDelegate Protocol Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Conforms to</td>
+	<td class="specification-value">NSObject</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">ADTClientDelegate.h</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The delegate of an <a href="../Classes/ADTClient.html">ADTClient</a> object must adopt the ADTClientDelegate protocol.
+These methods allow the delegate to receive ACR results and be notified upon errors.</p>
+
+<p>When you register your application with AdTonik, you will be given an appID and an
+appSecret. Both of these must be specified in the delegate object.</p>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						
+						
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/viewControllerForPresentingModalView">&ndash;&nbsp;viewControllerForPresentingModalView</a></code>
+		<span class="tooltip"><p>Required view controller for displaying adtonik information and disclosures
+if the user clicks the adtonik spinner. This will be the root controller for
+presenting and dismissing our modal info pane. If <a href="../Classes/ADTClient.html">ADTClient</a> is created inside a view
+controller, this should return self.</p></span>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/ADTClientDidReceiveMatch:">&ndash;&nbsp;ADTClientDidReceiveMatch:</a></code>
+		<span class="tooltip"><p>Called by the system when results have been received from the API server.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/ADTClientDidReceiveAd">&ndash;&nbsp;ADTClientDidReceiveAd</a></code>
+		<span class="tooltip"><p>Called by the system when an ad is available for this device.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/ADTClientDidReceiveAdsWithDimensions:">&ndash;&nbsp;ADTClientDidReceiveAdsWithDimensions:</a></code>
+		<span class="tooltip"><p>Called by the system when an ad is available for this device.
+Also returns a dictionary of available ad unit sizes.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/ADTAdvertiserIdentifier">&ndash;&nbsp;ADTAdvertiserIdentifier</a></code>
+		<span class="tooltip"><p>Optional method to override the AdvertiserIdentifier method. AdTonik uses the IFA to pair the
+ad call to the tv data, therefore this method must return the same IFA used by your chosen ad sdk.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/ADTClientDidFinishSuccessfully">&ndash;&nbsp;ADTClientDidFinishSuccessfully</a></code>
+		<span class="tooltip"><p>Called by the system when the ACR process is complete. If doRefresh is set to YES, this method
+will only be executed when the caller calls the stop method.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/ADTClientErrorDidOccur:">&ndash;&nbsp;ADTClientErrorDidOccur:</a></code>
+		<span class="tooltip"><p>Called by the system when an error occurs.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/ADTWillPresentInfoPaneView:">&ndash;&nbsp;ADTWillPresentInfoPaneView:</a></code>
+		<span class="tooltip"><p>These callbacks are executed when the info panel is about to be presented or dismissed as a modal
+view. Your application may need to perform an action when the modal is displayed (i.e.: pausing
+the game).</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/ADTAdvertiserIdentifier" title="ADTAdvertiserIdentifier"></a>
+	<h3 class="subsubtitle method-title">ADTAdvertiserIdentifier</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Optional method to override the AdvertiserIdentifier method. AdTonik uses the IFA to pair the
+ad call to the tv data, therefore this method must return the same IFA used by your chosen ad sdk.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSString *)ADTAdvertiserIdentifier</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>By default, we use the IdentifierForAdvertising on iOS 6.0+ and the SHA1 hashed deviceIdentifier
+for previous iOS versions.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">ADTClientDelegate.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/ADTClientDidFinishSuccessfully" title="ADTClientDidFinishSuccessfully"></a>
+	<h3 class="subsubtitle method-title">ADTClientDidFinishSuccessfully</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Called by the system when the ACR process is complete. If doRefresh is set to YES, this method
+will only be executed when the caller calls the stop method.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)ADTClientDidFinishSuccessfully</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">ADTClientDelegate.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/ADTClientDidReceiveAd" title="ADTClientDidReceiveAd"></a>
+	<h3 class="subsubtitle method-title">ADTClientDidReceiveAd</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Called by the system when an ad is available for this device.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)ADTClientDidReceiveAd</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">ADTClientDelegate.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/ADTClientDidReceiveAdsWithDimensions:" title="ADTClientDidReceiveAdsWithDimensions:"></a>
+	<h3 class="subsubtitle method-title">ADTClientDidReceiveAdsWithDimensions:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Called by the system when an ad is available for this device.
+Also returns a dictionary of available ad unit sizes.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)ADTClientDidReceiveAdsWithDimensions:(NSDictionary *)<em>dimensions</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>supportedSizes[@&ldquo;320x50&rdquo;] = true;</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">ADTClientDelegate.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/ADTClientDidReceiveMatch:" title="ADTClientDidReceiveMatch:"></a>
+	<h3 class="subsubtitle method-title">ADTClientDidReceiveMatch:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Called by the system when results have been received from the API server.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)ADTClientDidReceiveMatch:(NSDictionary *)<em>results</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>results</em></dt>
+			<dd><p>NSDictionary containing meta-data of the content that was matched</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The AdTonik API does not normally pass results back to the client. This method
+is only used for debugging and demo purposes.</p>
+
+<p>In the context of ad serving, implement <a href="#//api/name/ADTClientDidReceiveAd">ADTClientDidReceiveAd</a> or
+<a href="#//api/name/ADTClientDidReceiveAdsWithDimensions:">ADTClientDidReceiveAdsWithDimensions:</a></p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">ADTClientDelegate.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/ADTClientErrorDidOccur:" title="ADTClientErrorDidOccur:"></a>
+	<h3 class="subsubtitle method-title">ADTClientErrorDidOccur:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Called by the system when an error occurs.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)ADTClientErrorDidOccur:(NSError *)<em>error</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">ADTClientDelegate.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/ADTWillPresentInfoPaneView:" title="ADTWillPresentInfoPaneView:"></a>
+	<h3 class="subsubtitle method-title">ADTWillPresentInfoPaneView:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>These callbacks are executed when the info panel is about to be presented or dismissed as a modal
+view. Your application may need to perform an action when the modal is displayed (i.e.: pausing
+the game).</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)ADTWillPresentInfoPaneView:(ADTClient *)<em>client</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">ADTClientDelegate.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/viewControllerForPresentingModalView" title="viewControllerForPresentingModalView"></a>
+	<h3 class="subsubtitle method-title">viewControllerForPresentingModalView</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Required view controller for displaying adtonik information and disclosures
+if the user clicks the adtonik spinner. This will be the root controller for
+presenting and dismissing our modal info pane. If <a href="../Classes/ADTClient.html">ADTClient</a> is created inside a view
+controller, this should return self.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (UIViewController *)viewControllerForPresentingModalView</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">ADTClientDelegate.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2013 AdTonik, Inc.. All rights reserved. (Last updated: 2013-02-12)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>
