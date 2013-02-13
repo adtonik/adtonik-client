@@ -11,9 +11,9 @@ You can view the API documents at [http://dev.adtonik.net/docs](http://dev.adton
 ## Integration
 
 Email marshall@adtonik.com with the following information to receive your appID and appSecret:
-  Application Name:
-  Contact Email:
-  Description:
+* Application Name
+* Contact Email
+* Description
 
 See the examples/ directory to get an idea of how simple it is to integrate our SDK in an existing application.
 
