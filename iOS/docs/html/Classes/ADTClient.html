@@ -38,15 +38,20 @@
 	
 	
 	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/didAudioSessionSetup">&nbsp;&nbsp;&nbsp;&nbsp;didAudioSessionSetup</option>
+	
+	
 	
 	
 	
 	
 	<option value="instance_methods">Instance Methods</option>
 	
-	<option value="//api/name/initWithDelegate:andAppID:andAppSecret:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithDelegate:andAppID:andAppSecret:</option>
-	
 	<option value="//api/name/initWithDelegate:doRefresh:andAppID:andAppSecret:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithDelegate:doRefresh:andAppID:andAppSecret:</option>
+	
+	<option value="//api/name/setupAudioSession">&nbsp;&nbsp;&nbsp;&nbsp;- setupAudioSession</option>
 	
 	<option value="//api/name/start">&nbsp;&nbsp;&nbsp;&nbsp;- start</option>
 	
@@ -76,15 +81,21 @@
 
 
 
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/didAudioSessionSetup">didAudioSessionSetup</a></span></li>
+	
+</ul></li>
+
 
 
 
 
 <li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithDelegate:andAppID:andAppSecret:">initWithDelegate:andAppID:andAppSecret:</a></span></li>
-	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithDelegate:doRefresh:andAppID:andAppSecret:">initWithDelegate:doRefresh:andAppID:andAppSecret:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setupAudioSession">setupAudioSession</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/start">start</a></span></li>
 	
@@ -153,21 +164,38 @@ so it can be put to sleep if our algorithm believes the user is not in front of 
 						<h2 class="subtitle subtitle-tasks">Tasks</h2>
 						
 						
-						<a title="Initializing an ADTClient Object" name="task_Initializing an ADTClient Object"></a>
 						
-<h3 class="subsubtitle task-title">Initializing an ADTClient Object</h3>
+						<h3 class="subsubtitle task-title">Other Methods</h3>
+
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
-		<code><a href="#//api/name/initWithDelegate:andAppID:andAppSecret:">&ndash;&nbsp;initWithDelegate:andAppID:andAppSecret:</a></code>
-		<span class="tooltip"><p>Initializes the adtonik client object</p></span>
+		<code><a href="#//api/name/didAudioSessionSetup">&nbsp;&nbsp;didAudioSessionSetup</a></code>
+		<span class="tooltip"><p>  Set to true when audio session has been setup.
+  To prevent AdTonik library from doing session setup, set this to YES before calling <a href="#//api/name/start">start</a>.
+  Library requires AVAudioSessionCategoryRecord or AVAudioSessionCategoryPlayAndRecord</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+						
+						<a title="Initializing an ADTClient Object" name="task_Initializing an ADTClient Object"></a>
+						<h3 class="subsubtitle task-title">Initializing an ADTClient Object</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithDelegate:doRefresh:andAppID:andAppSecret:">&ndash;&nbsp;initWithDelegate:doRefresh:andAppID:andAppSecret:</a></code>
+		<span class="tooltip"><p>Initializes the audio ACR object</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/initWithDelegate:doRefresh:andAppID:andAppSecret:">&ndash;&nbsp;initWithDelegate:doRefresh:andAppID:andAppSecret:</a></code>
-		<span class="tooltip"><p>Initializes the audio ACR object</p></span>
+		<code><a href="#//api/name/setupAudioSession">&ndash;&nbsp;setupAudioSession</a></code>
+		<span class="tooltip"><p>  Sets up the audio session to allow microphone use.</p></span>
 	</span>
 	
 	
@@ -194,67 +222,33 @@ so it can be put to sleep if our algorithm believes the user is not in front of 
 					
 					
 					
-					
-					
-					
-					
 					<div class="section section-methods">
-						<a title="Instance Methods" name="instance_methods"></a>
-						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
 						
 						<div class="section-method">
-	<a name="//api/name/initWithDelegate:andAppID:andAppSecret:" title="initWithDelegate:andAppID:andAppSecret:"></a>
-	<h3 class="subsubtitle method-title">initWithDelegate:andAppID:andAppSecret:</h3>
+	<a name="//api/name/didAudioSessionSetup" title="didAudioSessionSetup"></a>
+	<h3 class="subsubtitle method-title">didAudioSessionSetup</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Initializes the adtonik client object</p>
+		<p>  Set to true when audio session has been setup.
+  To prevent AdTonik library from doing session setup, set this to YES before calling <a href="#//api/name/start">start</a>.
+  Library requires AVAudioSessionCategoryRecord or AVAudioSessionCategoryPlayAndRecord</p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (id)initWithDelegate:(id&lt;ADTClientDelegate&gt;)<em>delegate</em> andAppID:(NSString *)<em>appID</em> andAppSecret:(NSString *)<em>appSecret</em></code></div>
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) BOOL didAudioSessionSetup</code></div>
 
     
 	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>delegate</em></dt>
-			<dd><p>The <a href="../Protocols/ADTClientDelegate.html">ADTClientDelegate</a> object</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>appID</em></dt>
-			<dd><p>The AdTonik assigned appID</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>appSecret</em></dt>
-			<dd><p>The AdTonik assigned appSecret</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	<div class="method-subsection return">
-		<h4 class="method-subtitle parameter-title">Return Value</h4>
-		<p>Returns initialized instance or <code>nil</code> if initialization fails.</p>
-	</div>
 	
 	
 	
 	
 	
-	<div class="method-subsection discussion-section">
-		<h4 class="method-subtitle">Discussion</h4>
-		<p>By default, the refreshFlag is set to NO. This means after making the delegate callbacks, the acr
-process will be stopped. You may manually call <a href="#//api/name/start">start</a> again if desired or instead initialize object
-with refreshFlag to YES.</p>
-	</div>
 	
 	
 	
@@ -269,6 +263,16 @@ with refreshFlag to YES.</p>
 	
 	
 </div>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
 						
 						<div class="section-method">
 	<a name="//api/name/initWithDelegate:doRefresh:andAppID:andAppSecret:" title="initWithDelegate:doRefresh:andAppID:andAppSecret:"></a>
@@ -301,7 +305,7 @@ with refreshFlag to YES.</p>
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>appID</em></dt>
-			<dd><p>The AdTonik assigned appID</p></dd>
+			<dd><p>The AdTonik assigned <a href="#//api/name/appID">appID</a></p></dd>
 		</dl>
 		
 		<dl class="argument-def parameter-def">
@@ -321,6 +325,47 @@ with refreshFlag to YES.</p>
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">ADTClient.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/setupAudioSession" title="setupAudioSession"></a>
+	<h3 class="subsubtitle method-title">setupAudioSession</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>  Sets up the audio session to allow microphone use.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (BOOL)setupAudioSession</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>  In application that uses the audio session, make sure this gets set last.</p>
+	</div>
 	
 	
 	
@@ -431,7 +476,7 @@ with refreshFlag to YES.</p>
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2013 AdTonik, Inc.. All rights reserved. (Last updated: 2013-01-16)</span><br />
+						<p><span class="copyright">&copy; 2013 AdTonik, Inc.. All rights reserved. (Last updated: 2013-02-12)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
 						

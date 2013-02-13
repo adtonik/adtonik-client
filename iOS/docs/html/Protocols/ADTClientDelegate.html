@@ -44,15 +44,21 @@
 	
 	<option value="instance_methods">Instance Methods</option>
 	
+	<option value="//api/name/ADTAdvertiserIdentifier">&nbsp;&nbsp;&nbsp;&nbsp;- ADTAdvertiserIdentifier</option>
+	
 	<option value="//api/name/ADTClientDidFinishSuccessfully">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientDidFinishSuccessfully</option>
 	
 	<option value="//api/name/ADTClientDidReceiveAd">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientDidReceiveAd</option>
+	
+	<option value="//api/name/ADTClientDidReceiveAdsWithDimensions:">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientDidReceiveAdsWithDimensions:</option>
 	
 	<option value="//api/name/ADTClientDidReceiveMatch:">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientDidReceiveMatch:</option>
 	
 	<option value="//api/name/ADTClientErrorDidOccur:">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientErrorDidOccur:</option>
 	
-	<option value="//api/name/ADTClientUDID">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientUDID</option>
+	<option value="//api/name/ADTWillPresentInfoPaneView:">&nbsp;&nbsp;&nbsp;&nbsp;- ADTWillPresentInfoPaneView:</option>
+	
+	<option value="//api/name/viewControllerForPresentingModalView">&nbsp;&nbsp;&nbsp;&nbsp;- viewControllerForPresentingModalView</option>
 	
 	
 	
@@ -82,15 +88,21 @@
 
 <li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTAdvertiserIdentifier">ADTAdvertiserIdentifier</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientDidFinishSuccessfully">ADTClientDidFinishSuccessfully</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientDidReceiveAd">ADTClientDidReceiveAd</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientDidReceiveAdsWithDimensions:">ADTClientDidReceiveAdsWithDimensions:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientDidReceiveMatch:">ADTClientDidReceiveMatch:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientErrorDidOccur:">ADTClientErrorDidOccur:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientUDID">ADTClientUDID</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTWillPresentInfoPaneView:">ADTWillPresentInfoPaneView:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/viewControllerForPresentingModalView">viewControllerForPresentingModalView</a></span></li>
 	
 </ul></li>
 
@@ -151,30 +163,49 @@ appSecret. Both of these must be specified in the delegate object.</p>
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
+		<code><a href="#//api/name/viewControllerForPresentingModalView">&ndash;&nbsp;viewControllerForPresentingModalView</a></code>
+		<span class="tooltip"><p>Required view controller for displaying adtonik information and disclosures
+if the user clicks the adtonik spinner. This will be the root controller for
+presenting and dismissing our modal info pane. If <a href="../Classes/ADTClient.html">ADTClient</a> is created inside a view
+controller, this should return self.</p></span>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
 		<code><a href="#//api/name/ADTClientDidReceiveMatch:">&ndash;&nbsp;ADTClientDidReceiveMatch:</a></code>
 		<span class="tooltip"><p>Called by the system when results have been received from the API server.</p></span>
 	</span>
 	
-	<span class="task-item-suffix">required method</span>
+	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/ADTClientDidReceiveAd">&ndash;&nbsp;ADTClientDidReceiveAd</a></code>
 		<span class="tooltip"><p>Called by the system when an ad is available for this device.</p></span>
 	</span>
 	
-	<span class="task-item-suffix">required method</span>
+	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/ADTClientUDID">&ndash;&nbsp;ADTClientUDID</a></code>
-		<span class="tooltip"><p>Optional method to override the UDID method. UDID must match the UDID the Ad SDK uses.
-If you do not specify this method, we use the IFA on iOS 6 and sha1 udid for iOS &lt; 6.</p></span>
+		<code><a href="#//api/name/ADTClientDidReceiveAdsWithDimensions:">&ndash;&nbsp;ADTClientDidReceiveAdsWithDimensions:</a></code>
+		<span class="tooltip"><p>Called by the system when an ad is available for this device.
+Also returns a dictionary of available ad unit sizes.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/ADTAdvertiserIdentifier">&ndash;&nbsp;ADTAdvertiserIdentifier</a></code>
+		<span class="tooltip"><p>Optional method to override the AdvertiserIdentifier method. AdTonik uses the IFA to pair the
+ad call to the tv data, therefore this method must return the same IFA used by your chosen ad sdk.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/ADTClientDidFinishSuccessfully">&ndash;&nbsp;ADTClientDidFinishSuccessfully</a></code>
-		<span class="tooltip"><p>Called by the system when ACR is completed.</p></span>
+		<span class="tooltip"><p>Called by the system when the ACR process is complete. If doRefresh is set to YES, this method
+will only be executed when the caller calls the stop method.</p></span>
 	</span>
 	
 	
@@ -182,6 +213,15 @@ If you do not specify this method, we use the IFA on iOS 6 and sha1 udid for iOS
 	<span class="tooltip">
 		<code><a href="#//api/name/ADTClientErrorDidOccur:">&ndash;&nbsp;ADTClientErrorDidOccur:</a></code>
 		<span class="tooltip"><p>Called by the system when an error occurs.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/ADTWillPresentInfoPaneView:">&ndash;&nbsp;ADTWillPresentInfoPaneView:</a></code>
+		<span class="tooltip"><p>These callbacks are executed when the info panel is about to be presented or dismissed as a modal
+view. Your application may need to perform an action when the modal is displayed (i.e.: pausing
+the game).</p></span>
 	</span>
 	
 	
@@ -203,13 +243,57 @@ If you do not specify this method, we use the IFA on iOS 6 and sha1 udid for iOS
 						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
 						
 						<div class="section-method">
+	<a name="//api/name/ADTAdvertiserIdentifier" title="ADTAdvertiserIdentifier"></a>
+	<h3 class="subsubtitle method-title">ADTAdvertiserIdentifier</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Optional method to override the AdvertiserIdentifier method. AdTonik uses the IFA to pair the
+ad call to the tv data, therefore this method must return the same IFA used by your chosen ad sdk.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSString *)ADTAdvertiserIdentifier</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>By default, we use the IdentifierForAdvertising on iOS 6.0+ and the SHA1 hashed deviceIdentifier
+for previous iOS versions.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">ADTClientDelegate.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/ADTClientDidFinishSuccessfully" title="ADTClientDidFinishSuccessfully"></a>
 	<h3 class="subsubtitle method-title">ADTClientDidFinishSuccessfully</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Called by the system when ACR is completed.</p>
+		<p>Called by the system when the ACR process is complete. If doRefresh is set to YES, this method
+will only be executed when the caller calls the stop method.</p>
 	</div>		
 	
     
@@ -254,26 +338,53 @@ If you do not specify this method, we use the IFA on iOS 6 and sha1 udid for iOS
 
     
 	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>results</em></dt>
-			<dd><p>NSDictionary containing meta-data of the content that was matched</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>flag</em></dt>
-			<dd><p>The flag indicating a sucessful match (YES), or failure (NO)</p></dd>
-		</dl>
-		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">ADTClientDelegate.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/ADTClientDidReceiveAdsWithDimensions:" title="ADTClientDidReceiveAdsWithDimensions:"></a>
+	<h3 class="subsubtitle method-title">ADTClientDidReceiveAdsWithDimensions:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Called by the system when an ad is available for this device.
+Also returns a dictionary of available ad unit sizes.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)ADTClientDidReceiveAdsWithDimensions:(NSDictionary *)<em>dimensions</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>supportedSizes[@&ldquo;320x50&rdquo;] = true;</p>
 	</div>
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -320,6 +431,15 @@ If you do not specify this method, we use the IFA on iOS 6 and sha1 udid for iOS
 	
 	
 	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The AdTonik API does not normally pass results back to the client. This method
+is only used for debugging and demo purposes.</p>
+
+<p>In the context of ad serving, implement <a href="#//api/name/ADTClientDidReceiveAd">ADTClientDidReceiveAd</a> or
+<a href="#//api/name/ADTClientDidReceiveAdsWithDimensions:">ADTClientDidReceiveAdsWithDimensions:</a></p>
+	</div>
 	
 	
 	
@@ -372,19 +492,59 @@ If you do not specify this method, we use the IFA on iOS 6 and sha1 udid for iOS
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/ADTClientUDID" title="ADTClientUDID"></a>
-	<h3 class="subsubtitle method-title">ADTClientUDID</h3>
+	<a name="//api/name/ADTWillPresentInfoPaneView:" title="ADTWillPresentInfoPaneView:"></a>
+	<h3 class="subsubtitle method-title">ADTWillPresentInfoPaneView:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Optional method to override the UDID method. UDID must match the UDID the Ad SDK uses.
-If you do not specify this method, we use the IFA on iOS 6 and sha1 udid for iOS &lt; 6.</p>
+		<p>These callbacks are executed when the info panel is about to be presented or dismissed as a modal
+view. Your application may need to perform an action when the modal is displayed (i.e.: pausing
+the game).</p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (NSString *)ADTClientUDID</code></div>
+	<div class="method-subsection method-declaration"><code>- (void)ADTWillPresentInfoPaneView:(ADTClient *)<em>client</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">ADTClientDelegate.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/viewControllerForPresentingModalView" title="viewControllerForPresentingModalView"></a>
+	<h3 class="subsubtitle method-title">viewControllerForPresentingModalView</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Required view controller for displaying adtonik information and disclosures
+if the user clicks the adtonik spinner. This will be the root controller for
+presenting and dismissing our modal info pane. If <a href="../Classes/ADTClient.html">ADTClient</a> is created inside a view
+controller, this should return self.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (UIViewController *)viewControllerForPresentingModalView</code></div>
 
     
 	
@@ -421,7 +581,7 @@ If you do not specify this method, we use the IFA on iOS 6 and sha1 udid for iOS
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2013 AdTonik, Inc.. All rights reserved. (Last updated: 2013-01-16)</span><br />
+						<p><span class="copyright">&copy; 2013 AdTonik, Inc.. All rights reserved. (Last updated: 2013-02-12)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
 						
