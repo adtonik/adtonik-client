@@ -22,12 +22,12 @@ NSString *ADTSHA1Digest(NSString *string)
   unsigned char digest[CC_SHA1_DIGEST_LENGTH];
   NSData *data = [string dataUsingEncoding:NSASCIIStringEncoding];
   CC_SHA1([data bytes], [data length], digest);
-  
+
   NSMutableString *output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
   for (int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++) {
     [output appendFormat:@"%02x", digest[i]];
   }
-  
+
   return output;
 }
 
@@ -43,12 +43,12 @@ NSString *ADTAdvertisingIdentifier(void)
   if (NSClassFromString(@"ASIdentifierManager")) {
     identifier = ADTSHA1Digest([[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString]);
   } else {
-    [NSException raise:@"Missing ASIdentifierManager" format:@"Must use advertising identifier on iOS 6.0+"];
+    identifier = ADTSHA1Digest([[UIDevice currentDevice] uniqueIdentifier]);
   }
 #else
   identifier = ADTSHA1Digest([[UIDevice currentDevice] uniqueIdentifier]);
 #endif
-  
+
   return identifier;
 }
 
