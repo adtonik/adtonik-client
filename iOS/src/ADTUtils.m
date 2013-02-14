@@ -34,23 +34,22 @@ NSString *ADTSHA1Digest(NSString *string)
 #pragma mark -
 #pragma mark Lookup Device Advertising Identifier
 
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 
 NSString *ADTAdvertisingIdentifier(void)
 {
   NSString *identifier = nil;
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= ADT_IOS_6_0
   if (NSClassFromString(@"ASIdentifierManager")) {
     identifier = ADTSHA1Digest([[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString]);
   } else {
     identifier = ADTSHA1Digest([[UIDevice currentDevice] uniqueIdentifier]);
   }
-#else
-  identifier = ADTSHA1Digest([[UIDevice currentDevice] uniqueIdentifier]);
-#endif
 
   return identifier;
 }
+
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
 
 #pragma mark -
 #pragma mark Lookup IFA Device Tracking
