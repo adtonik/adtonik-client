@@ -36,6 +36,7 @@
 @property (nonatomic, assign) NSUInteger        sampleDuration;
 @property (nonatomic, strong) UIImageView*      spinner;
 @property (nonatomic, strong) UIWebView*        infoPaneView;
+@property (nonatomic, copy)   NSDictionary*     dimensions;
 
 @property (nonatomic, strong) ADTInfoPaneController* infoPaneController;
 
@@ -144,6 +145,18 @@
   [[self.spinner layer] addAnimation:theAnimation forKey:@"animateOpacity"];
 
   [[[self viewControllerForPresentingModalView] view] addSubview:self.spinner];
+}
+
+
+#pragma mark -
+#pragma mark Checks for available ad unit with dimensions
+
+- (BOOL)hasAdForWidth:(NSInteger)width andHeight:(NSInteger)height
+{
+  if(!self.dimensions)
+    return NO;
+  
+  return NO;
 }
 
 #pragma mark -
@@ -424,11 +437,19 @@
 
 - (void)restAPIDidReceiveResponse:(NSDictionary *)results successfully:(BOOL)flag
 {
+  // if adSizes available, save it, else nuke it
+  if(results[@"adSizes"]) {
+    self.dimensions = results[@"adSizes"];
+  } else {
+    self.dimensions = nil;
+  }
+  
   if(flag) {
     // Notify delegate that an ad is now available for this device
     if([results[@"hasAd"] boolValue] == YES) {
-      if([self.delegate respondsToSelector:@selector(ADTClientDidReceiveAd)]) {
-        [self.delegate ADTClientDidReceiveAd];
+      
+      if([self.delegate respondsToSelector:@selector(ADTClientDidReceiveAd:)]) {
+        [self.delegate ADTClientDidReceiveAd:self];
       }
     }
 

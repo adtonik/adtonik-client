@@ -79,8 +79,12 @@
 #pragma mark -
 #pragma mark Setup Spinner View
 
-- (void)showSpinnerAtX:(NSInteger)x
-                  andY:(NSInteger)y;
+- (void)showSpinnerAtX:(NSInteger)x andY:(NSInteger)y;
+
+#pragma mark -
+#pragma mark Checks for available ad unit with dimensions
+
+- (BOOL)hasAdForWidth:(NSInteger)width andHeight:(NSInteger)height;
 
 #pragma mark -
 #pragma mark Setup Audio Session

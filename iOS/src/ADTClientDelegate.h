@@ -30,11 +30,11 @@
 
 /**
  Called by the system when results have been received from the API server.
- 
+
  The AdTonik API does not normally pass results back to the client. This method
- is only used for debugging and demo purposes. 
- 
- In the context of ad serving, implement ADTClientDidReceiveAd or 
+ is only used for debugging and demo purposes.
+
+ In the context of ad serving, implement ADTClientDidReceiveAd or
  ADTClientDidReceiveAdsWithDimensions:
 
  @param results NSDictionary containing meta-data of the content that was matched
@@ -46,21 +46,12 @@
  Called by the system when an ad is available for this device.
  */
 
-- (void)ADTClientDidReceiveAd;
+- (void)ADTClientDidReceiveAd:(ADTClient *)adtonik;
 
 /**
- Called by the system when an ad is available for this device.  
- Also returns a dictionary of available ad unit sizes.
- 
- supportedSizes[@"320x50"] = true;
- */
-
-- (void)ADTClientDidReceiveAdsWithDimensions:(NSDictionary *)dimensions;
-
-/**
- Optional method to override the AdvertiserIdentifier method. AdTonik uses the IFA to pair the 
+ Optional method to override the AdvertiserIdentifier method. AdTonik uses the IFA to pair the
  ad call to the tv data, therefore this method must return the same IFA used by your chosen ad sdk.
- 
+
  By default, we use the IdentifierForAdvertising on iOS 6.0+ and the SHA1 hashed deviceIdentifier
  for previous iOS versions.
  */
@@ -68,7 +59,7 @@
 
 /**
  Called by the system when the ACR process is complete. If doRefresh is set to YES, this method
- will only be executed when the caller calls the stop method. 
+ will only be executed when the caller calls the stop method.
  */
 - (void)ADTClientDidFinishSuccessfully;
 
