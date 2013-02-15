@@ -139,13 +139,10 @@
   ADTLogInfo(@"ADTRestAPI (%p) received response from API server", self);
 
   // Initialize data
-  NSMutableData *newData = [NSMutableData data];
-  self.data = newData;
+  self.data = [NSMutableData data];
 
-  // Parse response headers
-  NSDictionary *headers = [(NSHTTPURLResponse *) response allHeaderFields];
-
-  self.headers = headers;
+  // Save headers
+  self.headers = [(NSHTTPURLResponse *) response allHeaderFields];
 }
 
 - (void) connection:(NSURLConnection *) connection didReceiveData:(NSData *) data {
@@ -167,8 +164,7 @@
 - (void) connectionDidFinishLoading:(NSURLConnection *) connection {
   self.loading = NO;
 
-  if(![self.headers[@"Content-Type"] isEqual: @"application/json; charset=utf-8"]) {
-
+  if(![self.headers[@"Content-Type"] rangeOfString:@"application/json"].location == NSNotFound) {
     if([self.delegate respondsToSelector:@selector(restAPIDidErrorOccur:)])
       [self.delegate restAPIDidErrorOccur:@"bad content type"];
 
@@ -180,17 +176,6 @@
   NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:self.data
                                                              options:NSJSONReadingMutableContainers
                                                                error:&error];
-
-  NSNumber *refreshTimerNum = jsonObject[@"refreshTimer"];
-
-  if(!refreshTimerNum) {
-    self.refreshTimer = ADT_DEFAULT_REFRESH_TIMER;
-  } else {
-    self.refreshTimer = [refreshTimerNum integerValue];
-  }
-
-  // Save the state
-  self.state = jsonObject[@"state"];
 
   // Check for user opt out flag
   if(error == nil && [self.state[@"optout"] boolValue] == YES) {
@@ -206,6 +191,22 @@
     success = NO;
     ADTLogError(@"experienced error decoding json response: %@", error);
   } else {
+    NSNumber *refreshTimerNum = jsonObject[@"refreshTimer"];
+    
+    if(!refreshTimerNum) {
+      self.refreshTimer = ADT_DEFAULT_REFRESH_TIMER;
+    } else {
+      self.refreshTimer = [refreshTimerNum integerValue];
+    }
+    
+    // Save the state
+    self.state = jsonObject[@"state"];
+    
+    if(!self.state) {
+      ADTLogError(@"state is nil");
+      self.state = [[NSDictionary alloc] init];
+    }
+
     success = [ADTRestEnvelope successResponse:jsonObject];
   }
 

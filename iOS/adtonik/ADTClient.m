@@ -9,11 +9,7 @@
 #import <Foundation/NSKeyValueObserving.h>
 #import <AVFoundation/AVFoundation.h>
 
-#import <UIKit/UIWindow.h>
-#import <UIKit/UIImage.h>
-#import <UIKit/UIKit.h>
-
-#import "ADTInfoPaneController.h"
+#import "ADTBrowserController.h"
 
 #import "ADTAudioRecorder.h"
 #import "ADTAudioRecorderDelegate.h"
@@ -24,9 +20,7 @@
 #import "ADTRestAPI.h"
 #import "ADTUtils.h"
 
-#import "ADTInfoPaneController.h"
-
-@interface ADTClient () <ADTAudioRecorderDelegate, ADTRestAPIDelegate, ADTInfoPaneControllerDelegate>
+@interface ADTClient () <ADTAudioRecorderDelegate, ADTRestAPIDelegate, ADTBrowserControllerDelegate>
 
 @property (getter=doRefresh)  BOOL              refresh;
 @property (nonatomic, strong) ADTAudioRecorder* audioRecorder;
@@ -37,8 +31,9 @@
 @property (nonatomic, strong) UIImageView*      spinner;
 @property (nonatomic, strong) UIWebView*        infoPaneView;
 @property (nonatomic, copy)   NSDictionary*     dimensions;
+@property (nonatomic, strong) UIViewController* rootViewController;
 
-@property (nonatomic, strong) ADTInfoPaneController* infoPaneController;
+@property (nonatomic, strong) ADTBrowserController* infoPaneController;
 
 @property (nonatomic, assign) NSInteger         spinnerX;
 @property (nonatomic, assign) NSInteger         spinnerY;
@@ -105,7 +100,6 @@
   AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute,
                           sizeof(audioRouteOverride), &audioRouteOverride);
 
-
   self.didAudioSessionSetup = YES;
 
   return YES;
@@ -114,14 +108,18 @@
 #pragma mark -
 #pragma mark Setup Spinner
 
-- (void)showSpinnerAtX:(NSInteger)x andY:(NSInteger)y
+- (void)showSpinner:(CGPoint)pos rootViewController:(UIViewController *)rootViewController
 {
-  self.spinnerX = x;
-  self.spinnerY = y;
+  self.spinnerX = pos.x;
+  self.spinnerY = pos.y;
 
+  self.rootViewController = rootViewController;
+  
   self.spinner = [[UIImageView alloc] initWithFrame:CGRectMake(self.spinnerX,self.spinnerY,30,25)];
   self.spinner.userInteractionEnabled = YES;
-  self.spinner.image = [UIImage imageNamed:@"adtonikLogo.tiff"];
+  self.spinner.image = [UIImage imageNamed:@"ADTIcon.png"];
+  
+  [self.spinner sizeToFit];
 
   self.spinner.hidden = YES;
 
@@ -144,7 +142,7 @@
 
   [[self.spinner layer] addAnimation:theAnimation forKey:@"animateOpacity"];
 
-  [[[self viewControllerForPresentingModalView] view] addSubview:self.spinner];
+  [self.rootViewController.view addSubview:self.spinner];
 }
 
 
@@ -155,6 +153,11 @@
 {
   if(!self.dimensions)
     return NO;
+  
+  NSString *key = [NSString stringWithFormat:@"%dx%d", width, height];
+  
+  if(self.dimensions[key])
+    return YES;
   
   return NO;
 }
@@ -168,8 +171,11 @@
   if([self.delegate respondsToSelector:@selector(ADTWillPresentInfoPaneView:)])
     [self.delegate ADTWillPresentInfoPaneView:self];
   
-  self.infoPaneController = [[ADTInfoPaneController alloc] initWithDelegate:self andAppID:self.appID andIFA:self.ifa];
+  NSURL *url = [NSURL URLWithString:
+                [NSString stringWithFormat:@"http://api.adtonik.net/infoPane?ifa=%@&appID=%@", self.ifa, self.appID]];
 
+  self.infoPaneController = [[ADTBrowserController alloc] initWithURL:url delegate:self];
+  
   self.infoPaneController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
 
   [self.infoPaneController startLoading];
@@ -368,7 +374,7 @@
   }
 
   ADTLogInfo(@"Received %d total fingerprints", [fingerprints count]);
-
+  
   // Async call to API server
   if([self.restAPI queryWithFingerprints:fingerprints andVersion:acrVersion] == NO) {
     ADTLogError(@"ACR process ending: queryWithFingerprints failed");
@@ -447,7 +453,7 @@
   if(flag) {
     // Notify delegate that an ad is now available for this device
     if([results[@"hasAd"] boolValue] == YES) {
-      
+            
       if([self.delegate respondsToSelector:@selector(ADTClientDidReceiveAd:)]) {
         [self.delegate ADTClientDidReceiveAd:self];
       }
@@ -483,29 +489,24 @@
 #pragma mark -
 #pragma mark Info Pane Delegate Methods
 
-- (UIViewController *)viewControllerForPresentingModalView
+- (void)dismissBrowserController:(ADTBrowserController *)browserController
 {
-  return [self.delegate viewControllerForPresentingModalView];
+  [self dismissBrowserController:browserController animated:YES];
 }
 
-- (void)dismissInfoPaneController:(ADTInfoPaneController *)infoPaneController
+- (void) dismissBrowserController:(ADTBrowserController *)browserController animated:(BOOL)animated
 {
-  [self dismissInfoPaneController:infoPaneController animated:YES];
-}
-
-- (void)dismissInfoPaneController:(ADTInfoPaneController *)infoPaneController animated:(BOOL)animated
-{
-  [infoPaneController stopLoading];
+  [browserController stopLoading];
   
-  [[self viewControllerForPresentingModalView] dismissViewControllerAnimated:animated completion:nil];
+  [self.rootViewController dismissViewControllerAnimated:animated completion:nil];
   
   if ([self.delegate respondsToSelector:@selector(ADTDidDismissInfoPaneView:)])
     [self.delegate ADTDidDismissInfoPaneView:self];
 }
 
-- (void)infoPaneControllerDidFinishLoad:(ADTInfoPaneController *)infoPaneController
+- (void)browserControllerDidFinishLoad:(ADTBrowserController *)browserController
 {
-  UIViewController *presentingViewController = [self viewControllerForPresentingModalView];
+  UIViewController *presentingViewController = self.rootViewController;
   UIViewController *presentedViewController;
 
   if ([presentingViewController respondsToSelector:@selector(presentedViewController)]) {
@@ -518,14 +519,9 @@
 
   // If the browser controller is already on-screen, don't try to present it again, or an
   // exception will be thrown (iOS 5 and above).
-  if (presentedViewController == infoPaneController) return;
+  if (presentedViewController == browserController) return;
 
-  [[self viewControllerForPresentingModalView] presentModalViewController:infoPaneController animated:YES];
-}
-
-- (void)infoPaneControllerWillLeaveApplication:(ADTInfoPaneController *)infoPaneController
-{
-
+  [self.rootViewController presentModalViewController:browserController animated:YES];
 }
 
 @end

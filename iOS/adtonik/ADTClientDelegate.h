@@ -17,15 +17,6 @@
  */
 @protocol ADTClientDelegate <NSObject>
 
-/**
- Required view controller for displaying adtonik information and disclosures
- if the user clicks the adtonik spinner. This will be the root controller for
- presenting and dismissing our modal info pane. If ADTClient is created inside a view
- controller, this should return self.
- */
-
-- (UIViewController *) viewControllerForPresentingModalView;
-
 @optional
 
 /**
@@ -73,6 +64,8 @@
  view. Your application may need to perform an action when the modal is displayed (i.e.: pausing
  the game).
  */
+
+// TODO: redundant, use the same ones as the AdView..
 
 - (void)ADTWillPresentInfoPaneView:(ADTClient *) client;
 - (void)ADTDidDismissInfoPaneView:(ADTClient *) client;

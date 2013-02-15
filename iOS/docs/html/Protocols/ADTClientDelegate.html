@@ -48,9 +48,7 @@
 	
 	<option value="//api/name/ADTClientDidFinishSuccessfully">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientDidFinishSuccessfully</option>
 	
-	<option value="//api/name/ADTClientDidReceiveAd">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientDidReceiveAd</option>
-	
-	<option value="//api/name/ADTClientDidReceiveAdsWithDimensions:">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientDidReceiveAdsWithDimensions:</option>
+	<option value="//api/name/ADTClientDidReceiveAd:">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientDidReceiveAd:</option>
 	
 	<option value="//api/name/ADTClientDidReceiveMatch:">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientDidReceiveMatch:</option>
 	
@@ -92,9 +90,7 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientDidFinishSuccessfully">ADTClientDidFinishSuccessfully</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientDidReceiveAd">ADTClientDidReceiveAd</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientDidReceiveAdsWithDimensions:">ADTClientDidReceiveAdsWithDimensions:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientDidReceiveAd:">ADTClientDidReceiveAd:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientDidReceiveMatch:">ADTClientDidReceiveMatch:</a></span></li>
 	
@@ -180,16 +176,8 @@ controller, this should return self.</p></span>
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/ADTClientDidReceiveAd">&ndash;&nbsp;ADTClientDidReceiveAd</a></code>
+		<code><a href="#//api/name/ADTClientDidReceiveAd:">&ndash;&nbsp;ADTClientDidReceiveAd:</a></code>
 		<span class="tooltip"><p>Called by the system when an ad is available for this device.</p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/ADTClientDidReceiveAdsWithDimensions:">&ndash;&nbsp;ADTClientDidReceiveAdsWithDimensions:</a></code>
-		<span class="tooltip"><p>Called by the system when an ad is available for this device.
-Also returns a dictionary of available ad unit sizes.</p></span>
 	</span>
 	
 	
@@ -323,8 +311,8 @@ will only be executed when the caller calls the stop method.</p>
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/ADTClientDidReceiveAd" title="ADTClientDidReceiveAd"></a>
-	<h3 class="subsubtitle method-title">ADTClientDidReceiveAd</h3>
+	<a name="//api/name/ADTClientDidReceiveAd:" title="ADTClientDidReceiveAd:"></a>
+	<h3 class="subsubtitle method-title">ADTClientDidReceiveAd:</h3>
 	
 	
 	
@@ -334,7 +322,7 @@ will only be executed when the caller calls the stop method.</p>
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (void)ADTClientDidReceiveAd</code></div>
+	<div class="method-subsection method-declaration"><code>- (void)ADTClientDidReceiveAd:(ADTClient *)<em>adtonik</em></code></div>
 
     
 	
@@ -343,48 +331,6 @@ will only be executed when the caller calls the stop method.</p>
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">ADTClientDelegate.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/ADTClientDidReceiveAdsWithDimensions:" title="ADTClientDidReceiveAdsWithDimensions:"></a>
-	<h3 class="subsubtitle method-title">ADTClientDidReceiveAdsWithDimensions:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Called by the system when an ad is available for this device.
-Also returns a dictionary of available ad unit sizes.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>- (void)ADTClientDidReceiveAdsWithDimensions:(NSDictionary *)<em>dimensions</em></code></div>
-
-    
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection discussion-section">
-		<h4 class="method-subtitle">Discussion</h4>
-		<p>supportedSizes[@&ldquo;320x50&rdquo;] = true;</p>
-	</div>
 	
 	
 	
@@ -437,8 +383,8 @@ Also returns a dictionary of available ad unit sizes.</p>
 		<p>The AdTonik API does not normally pass results back to the client. This method
 is only used for debugging and demo purposes.</p>
 
-<p>In the context of ad serving, implement <a href="#//api/name/ADTClientDidReceiveAd">ADTClientDidReceiveAd</a> or
-<a href="#//api/name/ADTClientDidReceiveAdsWithDimensions:">ADTClientDidReceiveAdsWithDimensions:</a></p>
+<p>In the context of ad serving, implement ADTClientDidReceiveAd or
+ADTClientDidReceiveAdsWithDimensions:</p>
 	</div>
 	
 	
@@ -581,7 +527,7 @@ controller, this should return self.</p>
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2013 AdTonik, Inc.. All rights reserved. (Last updated: 2013-02-12)</span><br />
+						<p><span class="copyright">&copy; 2013 AdTonik, Inc.. All rights reserved. (Last updated: 2013-02-14)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
 						

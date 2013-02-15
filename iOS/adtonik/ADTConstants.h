@@ -22,7 +22,7 @@ static NSString *kADTSDKVersion __unused = ADT_BUILD_TAG;
 #endif
 
 // Error domain
-static NSString *const kADTClientErrorDomain = @"com.adtonik.adtclient";
+static NSString *const kADTClientErrorDomain = @"com.adtonik.ios";
 
 // Error codes
 static NSInteger const kADTError = 1;

@@ -12,28 +12,38 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PAS-HL-0Df">
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y7D-nM-aIA">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="IPx-fh-ddk"/>
+                                    <constraint firstAttribute="height" constant="50" id="dri-fI-UaJ"/>
                                 </constraints>
-                            </webView>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="PAS-HL-0Df" firstAttribute="top" secondItem="3" secondAttribute="top" type="default" id="85u-c5-Nma"/>
-                            <constraint firstItem="PAS-HL-0Df" firstAttribute="leading" secondItem="3" secondAttribute="leading" type="default" id="AZH-Zf-ZCy"/>
-                            <constraint firstItem="PAS-HL-0Df" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" type="default" id="jrQ-fc-Jab"/>
+                            <constraint firstItem="Y7D-nM-aIA" firstAttribute="leading" secondItem="3" secondAttribute="leading" type="default" id="GNb-UE-ybS"/>
+                            <constraint firstItem="Y7D-nM-aIA" firstAttribute="top" secondItem="3" secondAttribute="top" type="default" id="WoA-78-wGV"/>
+                            <constraint firstItem="Y7D-nM-aIA" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" type="default" id="wPo-qU-FRB"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="webView" destination="PAS-HL-0Df" id="BcT-pW-wNR"/>
+                        <outlet property="adView" destination="Y7D-nM-aIA" id="aZC-gL-6lr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
     </scenes>
+    <classes>
+        <class className="ADTViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ADTViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="adView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
