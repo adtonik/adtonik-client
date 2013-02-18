@@ -30,7 +30,7 @@ Step 4 - Initialize and start ADTClient
 ---
 Add an ADTClient object in your main view. Include the provided app id and app secret. As Apple requires a visual notification when the microphone is activated, we have provided an icon that pulses when the mic is active. When the spinner is tapped, it opens up a modal browser with options for the user. Activate the spinner by providing a coordinate where it should render and the view controller for handling the modal.
 
-    ADTClient *adtonik = [[ADTClient alloc] initWithDelegate:self doRefresh:YES andAppID:YOUR_APP_ID andAppSecret:@YOUR_APP_SECRET];
+    ADTClient *adtonik = [[ADTClient alloc] initWithDelegate:self doRefresh:YES appID:YOUR_APP_ID appSecret:@YOUR_APP_SECRET];
 
     [adtonik showSpinner:CGPointMake(0,0) rootViewController:self];
 

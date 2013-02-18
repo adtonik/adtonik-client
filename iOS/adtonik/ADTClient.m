@@ -54,8 +54,8 @@
 
 - (id)initWithDelegate:(id<ADTClientDelegate>)delegate
              doRefresh:(BOOL)refreshFlag
-              andAppID:(NSString *)appID
-          andAppSecret:(NSString *)appSecret
+                 appID:(NSString *)appID
+             appSecret:(NSString *)appSecret
 {
   if(self = [super init]) {
     _refresh        = refreshFlag;
@@ -149,7 +149,7 @@
 #pragma mark -
 #pragma mark Checks for available ad unit with dimensions
 
-- (BOOL)hasAdForWidth:(NSInteger)width andHeight:(NSInteger)height
+- (BOOL)hasAdForWidth:(NSInteger)width height:(NSInteger)height
 {
   if(!self.dimensions)
     return NO;

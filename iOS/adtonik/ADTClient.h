@@ -72,8 +72,8 @@
 
 - (id)initWithDelegate:(id<ADTClientDelegate>)delegate
              doRefresh:(BOOL)refreshFlag
-              andAppID:(NSString *)appID
-          andAppSecret:(NSString *)appSecret;
+                 appID:(NSString *)appID
+             appSecret:(NSString *)appSecret;
 
 
 #pragma mark -
@@ -86,7 +86,7 @@
 #pragma mark -
 #pragma mark Checks for available ad unit with dimensions
 
-- (BOOL)hasAdForWidth:(NSInteger)width andHeight:(NSInteger)height;
+- (BOOL)hasAdForWidth:(NSInteger)width height:(NSInteger)height;
 
 #pragma mark -
 #pragma mark Setup Audio Session

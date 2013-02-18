@@ -25,7 +25,7 @@
 {
   [super viewDidLoad];
 
-  self.adtonik = [[ADTClient alloc] initWithDelegate:self doRefresh:YES andAppID:@"ADTDemoApp" andAppSecret:@"ADTDemoApp"];
+  self.adtonik = [[ADTClient alloc] initWithDelegate:self doRefresh:YES appID:@"ADTDemoApp" appSecret:@"ADTDemoApp"];
   self.adtAdView = [[ADTAdView alloc] initWithFrame:CGRectMake(0,0,320,50) appID:@"ADTDemoApp" adSize:CGSizeMake(320,50) rootViewController:self];
     
   [self.adView addSubview:self.adtAdView];
