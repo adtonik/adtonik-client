@@ -28,6 +28,9 @@
   self.adtonik = [[ADTClient alloc] initWithDelegate:self doRefresh:YES appID:@"ADTDemoApp" appSecret:@"ADTDemoApp"];
   self.adtAdView = [[ADTAdView alloc] initWithFrame:CGRectMake(0,0,320,50) appID:@"ADTDemoApp" adSize:CGSizeMake(320,50) rootViewController:self];
     
+  self.adView.backgroundColor = [UIColor grayColor];
+  self.adView.opaque = YES;
+  
   [self.adView addSubview:self.adtAdView];
   
   // load spinner on our view. Apple requires a visual notification when mic is activated.

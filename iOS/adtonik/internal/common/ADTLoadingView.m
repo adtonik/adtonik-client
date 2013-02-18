@@ -7,6 +7,7 @@
 //
 
 #import "ADTLoadingView.h"
+#import "ADTLogging.h"
 
 @interface ADTLoadingView ()
 
@@ -105,7 +106,12 @@
                       animated:(BOOL)animated
                       delegate:(id<ADTLoadingViewDelegate>)delegate
 {
-  ADTLoadingView *overlay = [[ADTLoadingView alloc] initWithFrame:window.bounds];  
+  if ([self windowHasExistingOverlay:window]) {
+    ADTLogWarn(@"This window is already displaying a progress overlay view.");
+    return;
+  }
+
+  ADTLoadingView *overlay = [[ADTLoadingView alloc] initWithFrame:window.bounds];
   
   overlay.delegate = delegate;
 
@@ -133,6 +139,11 @@
   [UIView beginAnimations:nil context:nil];
   self.closeButton.alpha = 1.0;
   [UIView commitAnimations];
+}
+
++ (BOOL)windowHasExistingOverlay:(UIWindow *)window
+{
+  return !![self overlayForWindow:window];
 }
 
 #pragma mark -
