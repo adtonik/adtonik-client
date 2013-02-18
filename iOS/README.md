@@ -44,6 +44,8 @@ Step 5 - Setup Ad Serving
 
 AdTonik supports multiple ways to serve TV related advertisements in your application.  At the current time, we recommend using a mediation SDK such as MoPub.  If you wish to integrate ad serving directly, please contact support.
 
+To see an example mopub integration, see http://github.com/adtonik/example-mopub-integration
+
 We have a MoPub custom event adapter that allows our ads to be served using MoPub for mediation. To use, include the integrations/mopub source code in your project and modify the ADTBannerEvent & ADTInterstitialEvent files to include your provided APP_ID. For more instructions on configuring MoPub to serve AdTonik ads, contact us.
 
 ### For any questions please email support@adtonik.com
