@@ -167,7 +167,9 @@
 }
 
 - (void)browserControllerWillLeaveApplication:(ADTBrowserController *)browserController
-{  
+{
+  [self hideLoadingIndicator];
+
   if([self.delegate respondsToSelector:@selector(adViewWillLeaveApplication:)])
     [self.delegate adViewWillLeaveApplication:self];
 }
