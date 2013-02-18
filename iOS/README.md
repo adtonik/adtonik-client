@@ -3,7 +3,7 @@ Integration Instructions
 
 Step 1: Add the AdTonik source code to your app.
 --
-Drag the iOS/adtonik folder into your project
+Add the contents of iOS/adtonik folder into your project. If you use MoPub include the integrations/mopub folder also.
 
 Step 2 - Include required frameworks.
 ------
@@ -16,6 +16,11 @@ Add the following frameworks to your project if they do not already exist:
 * AVFoundation.framework
 * AudioToolbox.framework
 * QuartzCore.framework
+
+Verify the following resources were added to your project:
+* ADTIcon.png & ADTIcon@2x.png
+* ADTCloseButton.png & ADTCloseButton@2x.png
+* ADTBrowserController.xib
 
 Step 3 - Receive app id and app secret from AdTonik
 
