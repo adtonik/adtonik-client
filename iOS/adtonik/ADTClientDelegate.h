@@ -65,8 +65,6 @@
  the game).
  */
 
-// TODO: redundant, use the same ones as the AdView..
-
 - (void)ADTWillPresentInfoPaneView:(ADTClient *) client;
 - (void)ADTDidDismissInfoPaneView:(ADTClient *) client;
 

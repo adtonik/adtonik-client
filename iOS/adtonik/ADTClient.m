@@ -19,8 +19,9 @@
 #import "ADTAudioACR.h"
 #import "ADTRestAPI.h"
 #import "ADTUtils.h"
+#import "ADTLoadingView.h"
 
-@interface ADTClient () <ADTAudioRecorderDelegate, ADTRestAPIDelegate, ADTBrowserControllerDelegate>
+@interface ADTClient () <ADTAudioRecorderDelegate, ADTRestAPIDelegate, ADTBrowserControllerDelegate, ADTLoadingViewDelegate>
 
 @property (getter=doRefresh)  BOOL              refresh;
 @property (nonatomic, strong) ADTAudioRecorder* audioRecorder;
@@ -179,6 +180,8 @@
   self.infoPaneController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
 
   [self.infoPaneController startLoading];
+  
+  [self showLoadingIndicator];
 }
 
 #pragma mark -
@@ -509,6 +512,8 @@
   UIViewController *presentingViewController = self.rootViewController;
   UIViewController *presentedViewController;
 
+  [self hideLoadingIndicator];
+
   if ([presentingViewController respondsToSelector:@selector(presentedViewController)]) {
     // For iOS 5 and above.
     presentedViewController = presentingViewController.presentedViewController;
@@ -522,6 +527,31 @@
   if (presentedViewController == browserController) return;
 
   [self.rootViewController presentModalViewController:browserController animated:YES];
+}
+
+#pragma mark -
+#pragma mark ADTLoadingView Delegate Methods
+
+- (void)showLoadingIndicator
+{
+  [ADTLoadingView presentOverlayInWindow:self.rootViewController.view.window animated:NO delegate:self];
+}
+
+- (void)hideLoadingIndicator
+{
+  UIWindow *window = self.rootViewController.view.window;
+  
+  [ADTLoadingView dismissOverlayFromWindow:window animated:NO];
+}
+
+- (void)overlayCanceled
+{
+  [self.infoPaneController stopLoading];
+  
+  [self hideLoadingIndicator];
+  
+  if([self.delegate respondsToSelector:@selector(ADTDidDismissInfoPaneView:)])
+    [self.delegate ADTDidDismissInfoPaneView:self];
 }
 
 @end

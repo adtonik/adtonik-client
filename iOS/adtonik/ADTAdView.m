@@ -23,7 +23,10 @@
 
 @implementation ADTAdView
 
-- (id)initWithFrame:(CGRect)frame appID:(NSString *)appID adSize:(CGSize)adSize rootViewController:(UIViewController *)rootViewController
+- (id)initWithFrame:(CGRect)frame
+              appID:(NSString *)appID
+             adSize:(CGSize)adSize
+ rootViewController:(UIViewController *)rootViewController
 {
   if(self = [super initWithFrame:frame]) {
     self.backgroundColor = [UIColor clearColor];
@@ -162,7 +165,7 @@
   // If the browser controller is already on-screen, don't try to present it again, or an
   // exception will be thrown (iOS 5 and above).
   if (presentedViewController == browserController) return;
-  
+    
   [[self viewControllerForPresentingModalView] presentModalViewController:browserController animated:YES];
 }
 
