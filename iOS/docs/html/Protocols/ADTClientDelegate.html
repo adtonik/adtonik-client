@@ -48,17 +48,13 @@
 	
 	<option value="//api/name/ADTClientDidFinishSuccessfully">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientDidFinishSuccessfully</option>
 	
-	<option value="//api/name/ADTClientDidReceiveAd">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientDidReceiveAd</option>
-	
-	<option value="//api/name/ADTClientDidReceiveAdsWithDimensions:">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientDidReceiveAdsWithDimensions:</option>
+	<option value="//api/name/ADTClientDidReceiveAd:">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientDidReceiveAd:</option>
 	
 	<option value="//api/name/ADTClientDidReceiveMatch:">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientDidReceiveMatch:</option>
 	
 	<option value="//api/name/ADTClientErrorDidOccur:">&nbsp;&nbsp;&nbsp;&nbsp;- ADTClientErrorDidOccur:</option>
 	
 	<option value="//api/name/ADTWillPresentInfoPaneView:">&nbsp;&nbsp;&nbsp;&nbsp;- ADTWillPresentInfoPaneView:</option>
-	
-	<option value="//api/name/viewControllerForPresentingModalView">&nbsp;&nbsp;&nbsp;&nbsp;- viewControllerForPresentingModalView</option>
 	
 	
 	
@@ -92,17 +88,13 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientDidFinishSuccessfully">ADTClientDidFinishSuccessfully</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientDidReceiveAd">ADTClientDidReceiveAd</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientDidReceiveAdsWithDimensions:">ADTClientDidReceiveAdsWithDimensions:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientDidReceiveAd:">ADTClientDidReceiveAd:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientDidReceiveMatch:">ADTClientDidReceiveMatch:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTClientErrorDidOccur:">ADTClientErrorDidOccur:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ADTWillPresentInfoPaneView:">ADTWillPresentInfoPaneView:</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/viewControllerForPresentingModalView">viewControllerForPresentingModalView</a></span></li>
 	
 </ul></li>
 
@@ -163,16 +155,6 @@ appSecret. Both of these must be specified in the delegate object.</p>
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
-		<code><a href="#//api/name/viewControllerForPresentingModalView">&ndash;&nbsp;viewControllerForPresentingModalView</a></code>
-		<span class="tooltip"><p>Required view controller for displaying adtonik information and disclosures
-if the user clicks the adtonik spinner. This will be the root controller for
-presenting and dismissing our modal info pane. If <a href="../Classes/ADTClient.html">ADTClient</a> is created inside a view
-controller, this should return self.</p></span>
-	</span>
-	
-	<span class="task-item-suffix">required method</span>
-</li><li>
-	<span class="tooltip">
 		<code><a href="#//api/name/ADTClientDidReceiveMatch:">&ndash;&nbsp;ADTClientDidReceiveMatch:</a></code>
 		<span class="tooltip"><p>Called by the system when results have been received from the API server.</p></span>
 	</span>
@@ -180,16 +162,8 @@ controller, this should return self.</p></span>
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/ADTClientDidReceiveAd">&ndash;&nbsp;ADTClientDidReceiveAd</a></code>
+		<code><a href="#//api/name/ADTClientDidReceiveAd:">&ndash;&nbsp;ADTClientDidReceiveAd:</a></code>
 		<span class="tooltip"><p>Called by the system when an ad is available for this device.</p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/ADTClientDidReceiveAdsWithDimensions:">&ndash;&nbsp;ADTClientDidReceiveAdsWithDimensions:</a></code>
-		<span class="tooltip"><p>Called by the system when an ad is available for this device.
-Also returns a dictionary of available ad unit sizes.</p></span>
 	</span>
 	
 	
@@ -323,8 +297,8 @@ will only be executed when the caller calls the stop method.</p>
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/ADTClientDidReceiveAd" title="ADTClientDidReceiveAd"></a>
-	<h3 class="subsubtitle method-title">ADTClientDidReceiveAd</h3>
+	<a name="//api/name/ADTClientDidReceiveAd:" title="ADTClientDidReceiveAd:"></a>
+	<h3 class="subsubtitle method-title">ADTClientDidReceiveAd:</h3>
 	
 	
 	
@@ -334,7 +308,7 @@ will only be executed when the caller calls the stop method.</p>
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (void)ADTClientDidReceiveAd</code></div>
+	<div class="method-subsection method-declaration"><code>- (void)ADTClientDidReceiveAd:(ADTClient *)<em>adtonik</em></code></div>
 
     
 	
@@ -343,48 +317,6 @@ will only be executed when the caller calls the stop method.</p>
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">ADTClientDelegate.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/ADTClientDidReceiveAdsWithDimensions:" title="ADTClientDidReceiveAdsWithDimensions:"></a>
-	<h3 class="subsubtitle method-title">ADTClientDidReceiveAdsWithDimensions:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Called by the system when an ad is available for this device.
-Also returns a dictionary of available ad unit sizes.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>- (void)ADTClientDidReceiveAdsWithDimensions:(NSDictionary *)<em>dimensions</em></code></div>
-
-    
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection discussion-section">
-		<h4 class="method-subtitle">Discussion</h4>
-		<p>supportedSizes[@&ldquo;320x50&rdquo;] = true;</p>
-	</div>
 	
 	
 	
@@ -437,8 +369,8 @@ Also returns a dictionary of available ad unit sizes.</p>
 		<p>The AdTonik API does not normally pass results back to the client. This method
 is only used for debugging and demo purposes.</p>
 
-<p>In the context of ad serving, implement <a href="#//api/name/ADTClientDidReceiveAd">ADTClientDidReceiveAd</a> or
-<a href="#//api/name/ADTClientDidReceiveAdsWithDimensions:">ADTClientDidReceiveAdsWithDimensions:</a></p>
+<p>In the context of ad serving, implement ADTClientDidReceiveAd or
+ADTClientDidReceiveAdsWithDimensions:</p>
 	</div>
 	
 	
@@ -529,45 +461,6 @@ the game).</p>
 	
 </div>
 						
-						<div class="section-method">
-	<a name="//api/name/viewControllerForPresentingModalView" title="viewControllerForPresentingModalView"></a>
-	<h3 class="subsubtitle method-title">viewControllerForPresentingModalView</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Required view controller for displaying adtonik information and disclosures
-if the user clicks the adtonik spinner. This will be the root controller for
-presenting and dismissing our modal info pane. If <a href="../Classes/ADTClient.html">ADTClient</a> is created inside a view
-controller, this should return self.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>- (UIViewController *)viewControllerForPresentingModalView</code></div>
-
-    
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">ADTClientDelegate.h</code><br />
-	</div>				
-	
-	
-</div>
-						
 					</div>
 					
 					
@@ -581,7 +474,7 @@ controller, this should return self.</p>
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2013 AdTonik, Inc.. All rights reserved. (Last updated: 2013-02-12)</span><br />
+						<p><span class="copyright">&copy; 2013 AdTonik, Inc.. All rights reserved. (Last updated: 2013-02-18)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
 						
