@@ -36,8 +36,9 @@
 
 @property (nonatomic, strong) ADTBrowserController* infoPaneController;
 
-@property (nonatomic, assign) NSInteger         spinnerX;
-@property (nonatomic, assign) NSInteger         spinnerY;
+@property (nonatomic, assign) CGPoint           spinnerCoords;
+
+@property (nonatomic, assign) BOOL              spinnerEnabled;
 
 @end
 
@@ -111,18 +112,19 @@
 
 - (void)showSpinner:(CGPoint)pos rootViewController:(UIViewController *)rootViewController
 {
-  self.spinnerX = pos.x;
-  self.spinnerY = pos.y;
+  self.spinnerCoords = pos;
 
   self.rootViewController = rootViewController;
   
-  self.spinner = [[UIImageView alloc] initWithFrame:CGRectMake(self.spinnerX,self.spinnerY,30,25)];
+  self.spinner = [[UIImageView alloc] initWithFrame:CGRectMake(self.spinnerCoords.x,self.spinnerCoords.y,30,25)];
   self.spinner.userInteractionEnabled = YES;
   self.spinner.image = [UIImage imageNamed:@"ADTIcon.png"];
   
   [self.spinner sizeToFit];
 
   self.spinner.hidden = YES;
+  
+  self.spinnerEnabled = YES;
 
   // Setup spinner to be tapped
   UITapGestureRecognizer *singleFingerTap =
@@ -146,6 +148,27 @@
   [self.rootViewController.view addSubview:self.spinner];
 }
 
+- (void)enableSpinner
+{
+  self.spinnerEnabled = YES;
+  
+  if(self.spinner) {
+    self.spinner.hidden = NO;
+    self.spinner.alpha = 1.0;
+    [self.spinner startAnimating];
+  }
+}
+
+- (void)disableSpinner
+{
+  self.spinnerEnabled = NO;
+  
+  if(self.spinner) {
+    [self.spinner stopAnimating];
+    self.spinner.hidden = YES;
+    self.spinner.alpha = 0.0;
+  }
+}
 
 #pragma mark -
 #pragma mark Checks for available ad unit with dimensions
@@ -188,8 +211,10 @@
 #pragma mark Start Spinner upon Activation
 
 - (void) startSpinner:(id)data {
-  self.spinner.hidden = NO;
-  [self.spinner startAnimating];
+  if(self.spinnerEnabled) {
+    self.spinner.hidden = NO;
+    [self.spinner startAnimating];
+  }
 }
 
 #pragma mark -

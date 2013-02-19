@@ -79,9 +79,9 @@
 #pragma mark -
 #pragma mark Setup Spinner View
 
-//- (void)showSpinnerAtX:(NSInteger)x andY:(NSInteger)y;
-
 - (void)showSpinner:(CGPoint)pos rootViewController:(UIViewController *)rootViewController;
+- (void)enableSpinner;
+- (void)disableSpinner;
 
 #pragma mark -
 #pragma mark Checks for available ad unit with dimensions
