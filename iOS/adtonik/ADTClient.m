@@ -71,6 +71,9 @@
                                                   andAppId:appID
                                               andAppSecret:appSecret
                                                    andUDID:_ifa];
+    
+    _audioRecorder = [[ADTAudioRecorder alloc] initWithDelegate:self];
+
 
     _infoPaneView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
 
@@ -349,7 +352,6 @@
 
 - (void)startAsyncOperations
 {
-  self.audioRecorder = [[ADTAudioRecorder alloc] initWithDelegate:self];
   [self.audioRecorder record:self.sampleDuration];
 }
 
