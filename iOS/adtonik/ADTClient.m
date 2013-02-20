@@ -268,8 +268,8 @@
 #pragma mark -
 #pragma mark Start Spinner upon Activation
 
-- (void) startSpinner:(id)data {
-  if(self.spinnerEnabled) {
+- (void) startSpinner {
+  if(self.spinner && self.spinnerEnabled) {
     self.spinner.hidden = NO;
     [self.spinner startAnimating];
   }
@@ -280,6 +280,8 @@
 
 - (BOOL)startProcess
 {
+  [self startSpinner];
+
   [self.audioRecorder record:self.sampleDuration];
 
   return YES;
