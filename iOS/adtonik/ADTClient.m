@@ -39,6 +39,8 @@
 @property (nonatomic, assign) CGPoint           spinnerCoords;
 
 @property (nonatomic, assign) BOOL              spinnerEnabled;
+@property (nonatomic, assign) BOOL              kvoSetup;
+
 
 @end
 
@@ -62,7 +64,6 @@
   if(self = [super init]) {
     _refresh        = refreshFlag;
     _delegate       = delegate;
-    _acrQueue       = [[NSOperationQueue alloc] init];
     _ifa            = [self getAdvertiserIdentifier];
     _sampleDuration = ADT_SAMPLE_SECONDS;
     _appID          = appID;
@@ -74,7 +75,7 @@
     _infoPaneView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
 
     // make sure allocations successful, bail otherwise.
-    if(!_acrQueue || !_restAPI) {
+    if(!_restAPI) {
       ADTLogError(@"ADTClient initWithDelegate failed..");
       return nil;
     }
@@ -115,15 +116,15 @@
   self.spinnerCoords = pos;
 
   self.rootViewController = rootViewController;
-  
+
   self.spinner = [[UIImageView alloc] initWithFrame:CGRectMake(self.spinnerCoords.x,self.spinnerCoords.y,30,25)];
   self.spinner.userInteractionEnabled = YES;
   self.spinner.image = [UIImage imageNamed:@"ADTIcon.png"];
-  
+
   [self.spinner sizeToFit];
 
   self.spinner.hidden = YES;
-  
+
   self.spinnerEnabled = YES;
 
   // Setup spinner to be tapped
@@ -151,7 +152,7 @@
 - (void)enableSpinner
 {
   self.spinnerEnabled = YES;
-  
+
   if(self.spinner) {
     self.spinner.hidden = NO;
     self.spinner.alpha = 1.0;
@@ -162,7 +163,7 @@
 - (void)disableSpinner
 {
   self.spinnerEnabled = NO;
-  
+
   if(self.spinner) {
     [self.spinner stopAnimating];
     self.spinner.hidden = YES;
@@ -177,12 +178,12 @@
 {
   if(!self.dimensions)
     return NO;
-  
+
   NSString *key = [NSString stringWithFormat:@"%dx%d", width, height];
-  
+
   if(self.dimensions[key])
     return YES;
-  
+
   return NO;
 }
 
@@ -194,16 +195,16 @@
   // notify delegate that the info pane is about to open
   if([self.delegate respondsToSelector:@selector(ADTWillPresentInfoPaneView:)])
     [self.delegate ADTWillPresentInfoPaneView:self];
-  
+
   NSURL *url = [NSURL URLWithString:
                 [NSString stringWithFormat:@"http://api.adtonik.net/infoPane?ifa=%@&appID=%@", self.ifa, self.appID]];
 
   self.infoPaneController = [[ADTBrowserController alloc] initWithURL:url delegate:self];
-  
+
   self.infoPaneController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
 
   [self.infoPaneController startLoading];
-  
+
   [self showLoadingIndicator];
 }
 
@@ -215,6 +216,21 @@
     self.spinner.hidden = NO;
     [self.spinner startAnimating];
   }
+}
+
+
+- (void)setupKVO
+{
+  if(self.kvoSetup == YES)
+    return;
+
+  // when isRunning is set to NO
+  [self addObserver:self forKeyPath:@"running" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:nil];
+
+  // when error is set
+  [self addObserver:self forKeyPath:@"error" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:nil];
+
+  self.kvoSetup = YES;
 }
 
 #pragma mark -
@@ -235,6 +251,7 @@
 
   // setup audio session if necessary
   if(self.didAudioSessionSetup == NO) {
+    NSLog(@"Setting up audio session");
     if([self setupAudioSession] == NO) {
       return NO;
     }
@@ -242,17 +259,16 @@
 
   self.running = YES;
 
+  if(self.acrQueue) {
+    [self.acrQueue cancelAllOperations];
+    self.acrQueue = nil;
+  }
+
+  self.acrQueue = [[NSOperationQueue alloc] init];
+
   [self.acrQueue setMaxConcurrentOperationCount:1];
 
-  //
-  //setup KVO observers
-  //
-
-  // when isRunning is set to NO
-  [self addObserver:self forKeyPath:@"running" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:nil];
-
-  // when error is set
-  [self addObserver:self forKeyPath:@"error" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:nil];
+  [self setupKVO];
 
   return [self queueOperation];
 }
@@ -260,8 +276,7 @@
 - (BOOL) stop
 {
   if(self.isRunning) {
-    if(self.audioRecorder.isRecording)
-      [self.audioRecorder stop];
+    [self.acrQueue cancelAllOperations];
 
     if(self.restAPI.isLoading)
       [self.restAPI cancel];
@@ -310,9 +325,11 @@
   NSInvocationOperation *acrOperation;
   [self startSpinner:nil];
 
+
   acrOperation = [[NSInvocationOperation alloc] initWithTarget:self
                                                       selector:@selector(startAsyncOperations)
                                                         object:nil];
+
 
   [self.acrQueue addOperation:acrOperation];
 
@@ -402,7 +419,7 @@
   }
 
   ADTLogInfo(@"Received %d total fingerprints", [fingerprints count]);
-  
+
   // Async call to API server
   if([self.restAPI queryWithFingerprints:fingerprints andVersion:acrVersion] == NO) {
     ADTLogError(@"ACR process ending: queryWithFingerprints failed");
@@ -477,11 +494,11 @@
   } else {
     self.dimensions = nil;
   }
-  
+
   if(flag) {
     // Notify delegate that an ad is now available for this device
     if([results[@"hasAd"] boolValue] == YES) {
-            
+
       if([self.delegate respondsToSelector:@selector(ADTClientDidReceiveAd:)]) {
         [self.delegate ADTClientDidReceiveAd:self];
       }
@@ -525,9 +542,9 @@
 - (void) dismissBrowserController:(ADTBrowserController *)browserController animated:(BOOL)animated
 {
   [browserController stopLoading];
-  
+
   [self.rootViewController dismissViewControllerAnimated:animated completion:nil];
-  
+
   if ([self.delegate respondsToSelector:@selector(ADTDidDismissInfoPaneView:)])
     [self.delegate ADTDidDismissInfoPaneView:self];
 }
@@ -565,16 +582,16 @@
 - (void)hideLoadingIndicator
 {
   UIWindow *window = self.rootViewController.view.window;
-  
+
   [ADTLoadingView dismissOverlayFromWindow:window animated:NO];
 }
 
 - (void)overlayCanceled
 {
   [self.infoPaneController stopLoading];
-  
+
   [self hideLoadingIndicator];
-  
+
   if([self.delegate respondsToSelector:@selector(ADTDidDismissInfoPaneView:)])
     [self.delegate ADTDidDismissInfoPaneView:self];
 }
