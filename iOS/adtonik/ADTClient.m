@@ -467,6 +467,9 @@
     self.spinner.hidden = YES;
   }
 
+  if(!self.isRunning)
+    return;
+
   if(flag == YES) {
     ADTLogInfo(@"successfully captured audio. starting fingerprint generation.");
     [self runAlgorithm:[filename path]];
@@ -496,6 +499,9 @@
 
 - (void)restAPIDidReceiveResponse:(NSDictionary *)results successfully:(BOOL)flag
 {
+  if(!self.isRunning)
+    return;
+
   // if adSizes available, save it, else nuke it
   if(results[@"adSizes"]) {
     self.dimensions = results[@"adSizes"];
