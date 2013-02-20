@@ -259,6 +259,10 @@
 
   self.running = YES;
 
+  if(self.spinner) {
+    [self enableSpinner];
+  }
+
   if(self.acrQueue) {
     [self.acrQueue cancelAllOperations];
     self.acrQueue = nil;
@@ -280,6 +284,10 @@
 
     if(self.restAPI.isLoading)
       [self.restAPI cancel];
+
+    if(self.spinner) {
+      [self disableSpinner];
+    }
 
     self.running = NO;
 
