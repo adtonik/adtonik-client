@@ -72,8 +72,9 @@
                                               andAppSecret:appSecret
                                                    andUDID:_ifa];
     
+    _acrQueue = [[NSOperationQueue alloc] init];
+    
     _audioRecorder = [[ADTAudioRecorder alloc] initWithDelegate:self];
-
 
     _infoPaneView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
 
@@ -221,7 +222,6 @@
   }
 }
 
-
 - (void)setupKVO
 {
   if(self.kvoSetup == YES)
@@ -266,13 +266,6 @@
     [self enableSpinner];
   }
 
-  if(self.acrQueue) {
-    [self.acrQueue cancelAllOperations];
-    self.acrQueue = nil;
-  }
-
-  self.acrQueue = [[NSOperationQueue alloc] init];
-
   [self.acrQueue setMaxConcurrentOperationCount:1];
 
   [self setupKVO];
@@ -283,8 +276,9 @@
 - (BOOL) stop
 {
   if(self.isRunning) {
-    [self.acrQueue cancelAllOperations];
-
+    if(self.audioRecorder.isRecording)
+      [self.audioRecorder stop];
+    
     if(self.restAPI.isLoading)
       [self.restAPI cancel];
 
