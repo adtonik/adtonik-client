@@ -25,7 +25,6 @@
 
 @property (getter=doRefresh)  BOOL              refresh;
 @property (nonatomic, strong) ADTAudioRecorder* audioRecorder;
-@property (nonatomic, strong) NSOperationQueue* acrQueue;
 @property (nonatomic, strong) ADTRestAPI*       restAPI;
 @property (nonatomic, strong) NSString*         appID;
 @property (nonatomic, assign) NSUInteger        sampleDuration;
@@ -71,9 +70,7 @@
                                                   andAppId:appID
                                               andAppSecret:appSecret
                                                    andUDID:_ifa];
-    
-    _acrQueue = [[NSOperationQueue alloc] init];
-    
+
     _audioRecorder = [[ADTAudioRecorder alloc] initWithDelegate:self];
 
     _infoPaneView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
@@ -110,6 +107,62 @@
   self.didAudioSessionSetup = YES;
 
   return YES;
+}
+
+#pragma mark -
+#pragma mark ACR process control methods
+
+- (BOOL)start
+{
+  // Need to decide what we want to return here..
+#if TARGET_IPHONE_SIMULATOR
+  NSLog(@"ADTClient cannot run in the simulator.. start failed.");
+  return NO;
+#endif
+
+  if(self.isRunning) {
+    ADTLogError(@"acr is already running..");
+    return NO;
+  }
+
+  // setup audio session if necessary
+  if(self.didAudioSessionSetup == NO) {
+    NSLog(@"Setting up audio session");
+    if([self setupAudioSession] == NO) {
+      return NO;
+    }
+  }
+
+  self.running = YES;
+
+  if(self.spinner) {
+    [self enableSpinner];
+  }
+
+  [self setupKVO];
+
+  return [self startProcess];
+}
+
+- (BOOL) stop
+{
+  if(self.isRunning) {
+    if(self.audioRecorder.isRecording)
+      [self.audioRecorder stop];
+
+    if(self.restAPI.isLoading)
+      [self.restAPI cancel];
+
+    if(self.spinner) {
+      [self disableSpinner];
+    }
+
+    self.running = NO;
+
+    return YES;
+  }
+
+  return NO;
 }
 
 #pragma mark -
@@ -222,137 +275,20 @@
   }
 }
 
-- (void)setupKVO
-{
-  if(self.kvoSetup == YES)
-    return;
-
-  // when isRunning is set to NO
-  [self addObserver:self forKeyPath:@"running" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:nil];
-
-  // when error is set
-  [self addObserver:self forKeyPath:@"error" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:nil];
-
-  self.kvoSetup = YES;
-}
-
 #pragma mark -
-#pragma mark ACR process control methods
+#pragma mark Start the ACR Process
 
-- (BOOL)start
+- (BOOL)startProcess
 {
-  // Need to decide what we want to return here..
-#if TARGET_IPHONE_SIMULATOR
-  NSLog(@"ADTClient cannot run in the simulator.. start failed.");
-  return NO;
-#endif
-
-  if(self.isRunning) {
-    ADTLogError(@"acr is already running..");
-    return NO;
-  }
-
-  // setup audio session if necessary
-  if(self.didAudioSessionSetup == NO) {
-    NSLog(@"Setting up audio session");
-    if([self setupAudioSession] == NO) {
-      return NO;
-    }
-  }
-
-  self.running = YES;
-
-  if(self.spinner) {
-    [self enableSpinner];
-  }
-
-  [self.acrQueue setMaxConcurrentOperationCount:1];
-
-  [self setupKVO];
-
-  return [self queueOperation];
-}
-
-- (BOOL) stop
-{
-  if(self.isRunning) {
-    if(self.audioRecorder.isRecording)
-      [self.audioRecorder stop];
-    
-    if(self.restAPI.isLoading)
-      [self.restAPI cancel];
-
-    if(self.spinner) {
-      [self disableSpinner];
-    }
-
-    self.running = NO;
-
-    return YES;
-  }
-
-  return NO;
-}
-
-#pragma mark -
-#pragma mark Handle KVO Events
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-  if([keyPath isEqual:@"running"]) {
-
-    // is isRunning set to NO, call delegate finished method
-    if(self.isRunning == NO && change[@"new"] != change[@"old"]) {
-      if(self.isRunning == NO && [self.delegate respondsToSelector:@selector(ADTClientDidFinishSuccessfully)])
-        [self.delegate ADTClientDidFinishSuccessfully];
-    }
-
-  } else if([keyPath isEqual:@"error"]) {
-
-    // if error is set, call delegate error method
-    if(self.error && [self.delegate respondsToSelector:@selector(ADTClientErrorDidOccur:)]) {
-      [self.delegate ADTClientErrorDidOccur:self.error];
-    }
-  } else {
-    [super observeValueForKeyPath:keyPath
-                         ofObject:object
-                           change:change
-                          context:context];
-  }
-}
-
-
-#pragma mark -
-#pragma mark Add Operation to Queue
-
-- (BOOL)queueOperation
-{
-  NSInvocationOperation *acrOperation;
-  [self startSpinner:nil];
-
-
-  acrOperation = [[NSInvocationOperation alloc] initWithTarget:self
-                                                      selector:@selector(startAsyncOperations)
-                                                        object:nil];
-
-
-  [self.acrQueue addOperation:acrOperation];
+  [self.audioRecorder record:self.sampleDuration];
 
   return YES;
 }
 
 #pragma mark -
-#pragma mark Starts Asynchronous ACR Process
-
-- (void)startAsyncOperations
-{
-  [self.audioRecorder record:self.sampleDuration];
-}
-
-#pragma mark -
 #pragma mark Finish ACR Process
 
-- (void) finishedRun
+- (void)finishedRun
 {
   // If user specified refresh=YES and ADTClient is running, requeue ACR
   if([self doRefresh] && self.isRunning == YES) {
@@ -375,7 +311,7 @@
 
   refreshTimer = [NSTimer scheduledTimerWithTimeInterval:self.restAPI.refreshTimer
                                                   target:self
-                                                selector:@selector(queueOperation)
+                                                selector:@selector(startProcess)
                                                 userInfo:nil
                                                  repeats:NO];
 
@@ -383,11 +319,10 @@
   [runLoop run];
 }
 
-
 #pragma mark -
 #pragma mark Run ACR Algorithm on Audio File
 
-- (void) runAlgorithm:(NSString *) filename
+- (void)runAlgorithm:(NSString *) filename
 {
   // Asynchronously compute the audio signatures
   [ADTAudioACR computeSignatures:filename callback:^(NSSet *fingerprints, NSString *errorMessage) {
@@ -604,6 +539,48 @@
 
   if([self.delegate respondsToSelector:@selector(ADTDidDismissInfoPaneView:)])
     [self.delegate ADTDidDismissInfoPaneView:self];
+}
+
+#pragma mark -
+#pragma mark Handle KVO Events
+
+- (void)setupKVO
+{
+  if(self.kvoSetup == YES)
+    return;
+
+  // when isRunning is set to NO
+  [self addObserver:self forKeyPath:@"running" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:nil];
+
+  // when error is set
+  [self addObserver:self forKeyPath:@"error" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:nil];
+
+  self.kvoSetup = YES;
+}
+
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+  if([keyPath isEqual:@"running"]) {
+
+    // is isRunning set to NO, call delegate finished method
+    if(self.isRunning == NO && change[@"new"] != change[@"old"]) {
+      if(self.isRunning == NO && [self.delegate respondsToSelector:@selector(ADTClientDidFinishSuccessfully)])
+        [self.delegate ADTClientDidFinishSuccessfully];
+    }
+
+  } else if([keyPath isEqual:@"error"]) {
+
+    // if error is set, call delegate error method
+    if(self.error && [self.delegate respondsToSelector:@selector(ADTClientErrorDidOccur:)]) {
+      [self.delegate ADTClientErrorDidOccur:self.error];
+    }
+  } else {
+    [super observeValueForKeyPath:keyPath
+                         ofObject:object
+                           change:change
+                          context:context];
+  }
 }
 
 @end

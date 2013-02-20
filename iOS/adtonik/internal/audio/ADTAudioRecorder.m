@@ -102,7 +102,7 @@
 - (void)stop {
   if(self.isRecording) {
     ADTLogInfo(@"Stopping audio recorder..");
-    //    [self.audioRecorder stop];
+    [self.audioRecorder stop];
     self.recording = NO;
   }
 }
