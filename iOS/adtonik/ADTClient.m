@@ -518,6 +518,12 @@
   [self.rootViewController presentModalViewController:browserController animated:YES];
 }
 
+- (void)browserControllerWillLeaveApplication:(ADTBrowserController *)browserController
+{
+  if([self.delegate respondsToSelector:@selector(ADTWillLeaveApplication:)])
+    [self.delegate ADTWillLeaveApplication:self];
+}
+
 #pragma mark -
 #pragma mark ADTLoadingView Delegate Methods
 

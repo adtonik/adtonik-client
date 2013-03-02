@@ -81,4 +81,9 @@
   NSLog(@"ACR Complete!");
 }
 
+- (void)ADTWillLeaveApplication:(ADTClient *)client
+{
+  NSLog(@"Leaving application");
+}
+
 @end

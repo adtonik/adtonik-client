@@ -9,14 +9,20 @@
 #import "ADTBrowserController.h"
 #import "ADTLogging.h"
 
-@interface ADTBrowserController ()
+@interface ADTBrowserController () <UIAlertViewDelegate>
 
 @property (nonatomic, copy) NSURL* URL;
 @property (nonatomic, weak) id<ADTBrowserControllerDelegate> delegate;
 @property (nonatomic, assign) BOOL hasLeftApplication;
 @property (nonatomic, assign) NSInteger loadCount;
+@property (nonatomic, strong) UIActivityIndicatorView *webSpinner;
 
 @property (nonatomic, strong) IBOutlet UIWebView* webView;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem* backButton;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem* forwardButton;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem* webSpinnerItem;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem* refreshButton;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem* safariButton;
 
 - (IBAction) close;
 
@@ -31,6 +37,10 @@
   if(self) {
     _delegate = delegate;
     _URL = [URL copy];
+    
+    _webSpinner = [[UIActivityIndicatorView alloc] initWithFrame:CGRectZero];
+		[_webSpinner sizeToFit];
+		_webSpinner.hidesWhenStopped = YES;
   }
   
   return self;
@@ -133,6 +143,20 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+  
+  self.backButton.image = [UIImage imageNamed:@"ADTBack.png"];
+  self.backButton.title = nil;
+  self.forwardButton.image = [UIImage imageNamed:@"ADTForward.png"];
+  self.forwardButton.title = nil;
+  self.webSpinnerItem.customView = self.webSpinner;
+	self.webSpinnerItem.title = nil;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  self.backButton.enabled = self.webView.canGoBack;
+  self.forwardButton.enabled = self.webView.canGoForward;
+  self.refreshButton.enabled = NO;
 }
 
 #pragma mark -
@@ -153,12 +177,21 @@
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
   self.loadCount++;
+  
+  self.refreshButton.enabled = YES;
+  [self.webSpinner startAnimating];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
   self.loadCount--;
   
+  self.backButton.enabled = self.webView.canGoBack;
+  self.forwardButton.enabled = self.webView.canGoForward;
+  self.refreshButton.enabled = YES;
+
+  [self.webSpinner stopAnimating];
+
   if(self.loadCount > 0)
     return;
   
@@ -174,6 +207,11 @@
 {
   self.loadCount--;
   
+  self.backButton.enabled = self.webView.canGoBack;
+  self.forwardButton.enabled = self.webView.canGoForward;
+  [self.webSpinner stopAnimating];
+  self.refreshButton.enabled = YES;
+
   // Ignore innocuous errors: NSURLErrorDomain, Frame Load Interrupted
   if (error.code == NSURLErrorCancelled) return;
   if (error.code == 102 && [error.domain isEqual:@"WebKitErrorDomain"]) return;
@@ -184,6 +222,48 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
   return YES;
+}
+
+#pragma mark - WebView Button Actions
+
+- (IBAction)refresh
+{
+	[self.webView reload];
+}
+
+- (IBAction)back
+{
+  [self.webView goBack];
+  self.backButton.enabled = self.webView.canGoBack;
+  self.forwardButton.enabled = self.webView.canGoForward;
+}
+
+- (IBAction)forward
+{
+  [self.webView goForward];
+  self.backButton.enabled = self.webView.canGoBack;
+  self.forwardButton.enabled = self.webView.canGoForward;
+}
+
+- (IBAction)safari
+{
+  UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Open in Safari"
+                                                    message:nil
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"OK", nil];
+    
+  [message show];
+
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+  NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+  
+  if([title isEqualToString:@"OK"]) {    
+    [self leaveApplicationForURL:self.webView.request.URL];
+  }
 }
 
 @end

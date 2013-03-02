@@ -39,6 +39,10 @@
 		AB6359F116CEB8E600428573 /* ADTBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6359E216CEB8E600428573 /* ADTBrowserController.m */; };
 		AB6359F216CEB8E600428573 /* ADTLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6359E716CEB8E600428573 /* ADTLogging.m */; };
 		AB6359F316CEB8E600428573 /* ADTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6359E916CEB8E600428573 /* ADTUtils.m */; };
+		ABFE2D1316E1974B00DAF0A7 /* ADTBack.png in Resources */ = {isa = PBXBuildFile; fileRef = ABFE2D0F16E1974B00DAF0A7 /* ADTBack.png */; };
+		ABFE2D1416E1974B00DAF0A7 /* ADTBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABFE2D1016E1974B00DAF0A7 /* ADTBack@2x.png */; };
+		ABFE2D1516E1974B00DAF0A7 /* ADTForward.png in Resources */ = {isa = PBXBuildFile; fileRef = ABFE2D1116E1974B00DAF0A7 /* ADTForward.png */; };
+		ABFE2D1616E1974B00DAF0A7 /* ADTForward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABFE2D1216E1974B00DAF0A7 /* ADTForward@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +122,10 @@
 		AB6359E716CEB8E600428573 /* ADTLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTLogging.m; sourceTree = "<group>"; };
 		AB6359E816CEB8E600428573 /* ADTUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTUtils.h; sourceTree = "<group>"; };
 		AB6359E916CEB8E600428573 /* ADTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTUtils.m; sourceTree = "<group>"; };
+		ABFE2D0F16E1974B00DAF0A7 /* ADTBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ADTBack.png; sourceTree = "<group>"; };
+		ABFE2D1016E1974B00DAF0A7 /* ADTBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ADTBack@2x.png"; sourceTree = "<group>"; };
+		ABFE2D1116E1974B00DAF0A7 /* ADTForward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ADTForward.png; sourceTree = "<group>"; };
+		ABFE2D1216E1974B00DAF0A7 /* ADTForward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ADTForward@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -298,6 +306,10 @@
 		AB6359EA16CEB8E600428573 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				ABFE2D0F16E1974B00DAF0A7 /* ADTBack.png */,
+				ABFE2D1016E1974B00DAF0A7 /* ADTBack@2x.png */,
+				ABFE2D1116E1974B00DAF0A7 /* ADTForward.png */,
+				ABFE2D1216E1974B00DAF0A7 /* ADTForward@2x.png */,
 				AB24498016D2D42B00ACDD94 /* ADTIcon.png */,
 				AB24498116D2D42B00ACDD94 /* ADTIcon@2x.png */,
 				AB24497816D2BAD200ACDD94 /* ADTCloseButton.png */,
@@ -386,6 +398,10 @@
 				AB24497B16D2BAD200ACDD94 /* ADTCloseButton@2x.png in Resources */,
 				AB24498216D2D42B00ACDD94 /* ADTIcon.png in Resources */,
 				AB24498316D2D42B00ACDD94 /* ADTIcon@2x.png in Resources */,
+				ABFE2D1316E1974B00DAF0A7 /* ADTBack.png in Resources */,
+				ABFE2D1416E1974B00DAF0A7 /* ADTBack@2x.png in Resources */,
+				ABFE2D1516E1974B00DAF0A7 /* ADTForward.png in Resources */,
+				ABFE2D1616E1974B00DAF0A7 /* ADTForward@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

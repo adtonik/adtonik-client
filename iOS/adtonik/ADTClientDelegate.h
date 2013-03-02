@@ -67,5 +67,6 @@
 
 - (void)ADTWillPresentInfoPaneView:(ADTClient *) client;
 - (void)ADTDidDismissInfoPaneView:(ADTClient *) client;
+- (void)ADTWillLeaveApplication:(ADTClient *) client;
 
 @end
