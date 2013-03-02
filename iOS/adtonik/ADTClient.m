@@ -174,10 +174,10 @@
 
   self.rootViewController = rootViewController;
 
-  self.spinner = [[UIImageView alloc] initWithFrame:CGRectMake(self.spinnerCoords.x,self.spinnerCoords.y,30,25)];
+  self.spinner = [[UIImageView alloc] initWithFrame:CGRectMake(self.spinnerCoords.x,self.spinnerCoords.y,20,20)];
   self.spinner.userInteractionEnabled = YES;
   self.spinner.image = [UIImage imageNamed:@"ADTIcon.png"];
-
+  
   [self.spinner sizeToFit];
 
   self.spinner.hidden = YES;
