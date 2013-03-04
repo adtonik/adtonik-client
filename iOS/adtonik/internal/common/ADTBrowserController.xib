@@ -97,16 +97,6 @@
 								<reference key="IBUIToolbar" ref="131839230"/>
 								<int key="IBUISystemItemIdentifier">5</int>
 							</object>
-							<object class="IBUIBarButtonItem" id="832137944">
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<reference key="IBUIToolbar" ref="131839230"/>
-								<int key="IBUISystemItemIdentifier">9</int>
-							</object>
-							<object class="IBUIBarButtonItem" id="769941089">
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<reference key="IBUIToolbar" ref="131839230"/>
-								<int key="IBUISystemItemIdentifier">5</int>
-							</object>
 							<object class="IBUIBarButtonItem" id="501479671">
 								<string key="IBUITitle">S</string>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -114,8 +104,9 @@
 							</object>
 							<object class="IBUIBarButtonItem" id="579355555">
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<float key="IBUIWidth">87</float>
 								<reference key="IBUIToolbar" ref="131839230"/>
-								<int key="IBUISystemItemIdentifier">5</int>
+								<int key="IBUISystemItemIdentifier">6</int>
 							</object>
 							<object class="IBUIBarButtonItem" id="267024689">
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -201,14 +192,6 @@
 					<int key="connectionID">284</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">safariButton</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="832137944"/>
-					</object>
-					<int key="connectionID">295</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">close</string>
 						<reference key="source" ref="267024689"/>
@@ -239,14 +222,6 @@
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">291</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">safari</string>
-						<reference key="source" ref="832137944"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">296</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -440,8 +415,6 @@
 							<reference ref="956620537"/>
 							<reference ref="275569243"/>
 							<reference ref="294432402"/>
-							<reference ref="832137944"/>
-							<reference ref="769941089"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -535,16 +508,6 @@
 						<reference key="object" ref="294432402"/>
 						<reference key="parent" ref="131839230"/>
 					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">292</int>
-						<reference key="object" ref="832137944"/>
-						<reference key="parent" ref="131839230"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">294</int>
-						<reference key="object" ref="769941089"/>
-						<reference key="parent" ref="131839230"/>
-					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -586,8 +549,6 @@
 				<string key="288.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="289.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="290.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="292.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="294.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<boolean value="NO" key="3.IBViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 			</dictionary>
