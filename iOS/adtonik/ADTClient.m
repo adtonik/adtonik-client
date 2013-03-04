@@ -177,7 +177,7 @@
   self.spinner = [[UIImageView alloc] initWithFrame:CGRectMake(self.spinnerCoords.x,self.spinnerCoords.y,20,20)];
   self.spinner.userInteractionEnabled = YES;
   self.spinner.image = [UIImage imageNamed:@"ADTIcon.png"];
-  
+
   [self.spinner sizeToFit];
 
   self.spinner.hidden = YES;
@@ -254,7 +254,7 @@
     [self.delegate ADTWillPresentInfoPaneView:self];
 
   NSURL *url = [NSURL URLWithString:
-                [NSString stringWithFormat:@"http://api.adtonik.net/infoPane?ifa=%@&appID=%@", self.ifa, self.appID]];
+                [NSString stringWithFormat:@"http://infopane.adtonik.net/infoPane?ifa=%@&appID=%@", self.ifa, self.appID]];
 
   self.infoPaneController = [[ADTBrowserController alloc] initWithURL:url delegate:self];
 
