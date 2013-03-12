@@ -32,13 +32,13 @@
 		AB3D4A2416CF2B3D000F3F4D /* ADTAdView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D49F116CF2AF6000F3F4D /* ADTAdView.m */; };
 		AB3D4A2516CF2B4F000F3F4D /* ADTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3C088A154F96E900EEFA58 /* ADTAppDelegate.m */; };
 		AB6359EC16CEB8E600428573 /* ADTClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6359CE16CEB8E600428573 /* ADTClient.m */; };
-		AB6359ED16CEB8E600428573 /* libADTAudioACR.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB6359D416CEB8E600428573 /* libADTAudioACR.a */; };
 		AB6359EE16CEB8E600428573 /* ADTRestAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6359D716CEB8E600428573 /* ADTRestAPI.m */; };
 		AB6359EF16CEB8E600428573 /* ADTRestEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6359DA16CEB8E600428573 /* ADTRestEnvelope.m */; };
 		AB6359F016CEB8E600428573 /* ADTAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6359DD16CEB8E600428573 /* ADTAudioRecorder.m */; };
 		AB6359F116CEB8E600428573 /* ADTBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6359E216CEB8E600428573 /* ADTBrowserController.m */; };
 		AB6359F216CEB8E600428573 /* ADTLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6359E716CEB8E600428573 /* ADTLogging.m */; };
 		AB6359F316CEB8E600428573 /* ADTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6359E916CEB8E600428573 /* ADTUtils.m */; };
+		ABBB94AE16EEAC4B00E5C10A /* libADTAudioACR.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB6359D416CEB8E600428573 /* libADTAudioACR.a */; };
 		ABFE2D1316E1974B00DAF0A7 /* ADTBack.png in Resources */ = {isa = PBXBuildFile; fileRef = ABFE2D0F16E1974B00DAF0A7 /* ADTBack.png */; };
 		ABFE2D1416E1974B00DAF0A7 /* ADTBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABFE2D1016E1974B00DAF0A7 /* ADTBack@2x.png */; };
 		ABFE2D1516E1974B00DAF0A7 /* ADTForward.png in Resources */ = {isa = PBXBuildFile; fileRef = ABFE2D1116E1974B00DAF0A7 /* ADTForward.png */; };
@@ -133,7 +133,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB6359ED16CEB8E600428573 /* libADTAudioACR.a in Frameworks */,
+				ABBB94AE16EEAC4B00E5C10A /* libADTAudioACR.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -593,6 +593,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/..\"",
+					"\"$(SRCROOT)/../adtonik/internal/acr\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
@@ -627,6 +628,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/..\"",
+					"\"$(SRCROOT)/../adtonik/internal/acr\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";

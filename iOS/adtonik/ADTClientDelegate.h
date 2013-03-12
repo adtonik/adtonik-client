@@ -25,8 +25,7 @@
  The AdTonik API does not normally pass results back to the client. This method
  is only used for debugging and demo purposes.
 
- In the context of ad serving, implement ADTClientDidReceiveAd or
- ADTClientDidReceiveAdsWithDimensions:
+ In the context of ad serving, implement ADTClientDidReceiveAd.
 
  @param results NSDictionary containing meta-data of the content that was matched
  */
@@ -65,8 +64,8 @@
  the game).
  */
 
-- (void)ADTWillPresentInfoPaneView:(ADTClient *) client;
-- (void)ADTDidDismissInfoPaneView:(ADTClient *) client;
-- (void)ADTWillLeaveApplication:(ADTClient *) client;
+- (void)ADTWillPresentInfoPaneView:(ADTClient *)client;
+- (void)ADTDidDismissInfoPaneView:(ADTClient *)client;
+- (void)ADTWillLeaveApplication:(ADTClient *)client;
 
 @end
