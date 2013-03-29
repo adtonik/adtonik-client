@@ -92,6 +92,7 @@
   // Kick off async record operation
   if([self.audioRecorder recordForDuration:duration] == NO) {
     ADTLogError(@"AudioRecorder returned FALSE");
+    return NO;
   }
 
   self.recording = YES;

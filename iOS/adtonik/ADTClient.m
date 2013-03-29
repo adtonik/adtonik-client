@@ -210,22 +210,13 @@
 {
   self.spinnerEnabled = YES;
 
-  if(self.spinner) {
-    self.spinner.hidden = NO;
-    self.spinner.alpha = 1.0;
-    [self.spinner startAnimating];
-  }
+  [self startSpinner];
 }
 
 - (void)disableSpinner
 {
   self.spinnerEnabled = NO;
-
-  if(self.spinner) {
-    [self.spinner stopAnimating];
-    self.spinner.hidden = YES;
-    self.spinner.alpha = 0.0;
-  }
+  [self stopSpinner];
 }
 
 #pragma mark -
@@ -272,6 +263,15 @@
   if(self.spinner && self.spinnerEnabled) {
     self.spinner.hidden = NO;
     [self.spinner startAnimating];
+    self.spinner.alpha = 1.0;
+  }
+}
+
+- (void) stopSpinner {
+  if(self.spinner) {
+    [self.spinner stopAnimating];
+    self.spinner.hidden = YES;
+    self.spinner.alpha = 0.0;
   }
 }
 
@@ -282,7 +282,12 @@
 {
   [self startSpinner];
 
-  [self.audioRecorder record:self.sampleDuration];
+  // this will return false if in the middle of a phone call,
+  // stop the spinner and requeue the process
+  if([self.audioRecorder record:self.sampleDuration] == NO) {
+    [self stopSpinner];
+    [self finishedRun];
+  }
 
   return YES;
 }
@@ -395,10 +400,7 @@
 
 - (void)recorderFinished:(NSURL *)filename successfully:(BOOL)flag
 {
-  if(self.spinner) {
-    [self.spinner stopAnimating];
-    self.spinner.hidden = YES;
-  }
+  [self stopSpinner];
 
   if(!self.isRunning)
     return;
@@ -416,11 +418,8 @@
 
 - (void)recorderFailure:(NSError *)error
 {
-  if(self.spinner) {
-    [self.spinner stopAnimating];
-    self.spinner.hidden = YES;
-  }
-
+  [self stopSpinner];
+  
   ADTLogInfo(@"ACR process ending: recorderFinished experienced and error..");
 
   self.running = NO;
@@ -573,6 +572,8 @@
 
     // is isRunning set to NO, call delegate finished method
     if(self.isRunning == NO && change[@"new"] != change[@"old"]) {
+      [self stopSpinner];
+      
       if(self.isRunning == NO && [self.delegate respondsToSelector:@selector(ADTClientDidFinishSuccessfully)])
         [self.delegate ADTClientDidFinishSuccessfully];
     }
