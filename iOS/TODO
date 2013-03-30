@@ -1,3 +1,5 @@
+- use objc-stomp to receive asynchronous events from the server
+
 - Add spinner when browser controller is clicked
 - Add forward, backward, open in safari buttons in browser controller
 
