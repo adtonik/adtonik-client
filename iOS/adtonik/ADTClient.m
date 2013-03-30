@@ -565,7 +565,7 @@
   self.kvoSetup = YES;
 }
 
-
+	
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
   if([keyPath isEqual:@"running"]) {
