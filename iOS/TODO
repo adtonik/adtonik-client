@@ -1,11 +1,6 @@
 - use objc-stomp to receive asynchronous events from the server
 
-- Add spinner when browser controller is clicked
-- Add forward, backward, open in safari buttons in browser controller
-
 - Make demo app more interesting, show 320x50 and 300x250 banners with default adtonik banners.
   - Load youtube and watch them both change simultaneously
 
 - Add tab to demo interstitial full screen advertisements
-
-- Animate the adtonik logo and use for our spinner when user clicks ads, etc. Build the brand that way
