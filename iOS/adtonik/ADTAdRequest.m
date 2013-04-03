@@ -95,7 +95,7 @@
 - (void) connectionDidFinishLoading:(NSURLConnection *) connection
 {
   self.loading = NO;
-  
+    
   if([self.delegate respondsToSelector:@selector(didReceiveAdResponse:)])
     [self.delegate didReceiveAdResponse:self.data];
 }

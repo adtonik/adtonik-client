@@ -1,3 +1,5 @@
+- encode the prints to and from
+
 - use objc-stomp to receive asynchronous events from the server
 
 - Make demo app more interesting, show 320x50 and 300x250 banners with default adtonik banners.

@@ -10,7 +10,7 @@
 
 #define ADT_USE_DEV_API 0
 
-#define ADT_SAMPLE_SECONDS 6
+#define ADT_SAMPLE_SECONDS 10
 #define ADT_DEFAULT_REFRESH_TIMER 10
 
 static NSString *kADTSDKVersion __unused = ADT_BUILD_TAG;
