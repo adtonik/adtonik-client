@@ -58,7 +58,6 @@
 
 - (BOOL)record:(NSTimeInterval)duration
 {
-
   if(self.isRecording) {
     ADTLogWarn(@"Called record while ADTAudioRecorder is already recording..");
     return NO;

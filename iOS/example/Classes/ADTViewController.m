@@ -79,6 +79,7 @@
 - (void)ADTClientDidFinishSuccessfully
 {
   NSLog(@"ACR Complete!");
+  [self.adtonik start];
 }
 
 - (void)ADTWillLeaveApplication:(ADTClient *)client

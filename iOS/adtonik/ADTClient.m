@@ -88,8 +88,43 @@
 #pragma mark -
 #pragma mark Setup Audio Session
 
+void audioRouteChangeListenerCallback(void *inUserData,
+                                      AudioSessionPropertyID inPropertyID,
+                                      UInt32 inPropertyValueSize,
+                                      const void *inPropertyValue) {
+
+  if (inPropertyID != kAudioSessionProperty_AudioRouteChange) return;
+
+  CFDictionaryRef routeChangeDictionary = inPropertyValue;
+  CFNumberRef routeChangeReasonRef =
+  CFDictionaryGetValue(routeChangeDictionary, CFSTR (kAudioSession_AudioRouteChangeKey_Reason));
+
+  SInt32 routeChangeReason;
+  CFNumberGetValue(routeChangeReasonRef, kCFNumberSInt32Type, &routeChangeReason);
+
+  if(routeChangeReason == kAudioSessionRouteChangeReason_CategoryChange ||
+     routeChangeReason == kAudioSessionRouteChangeReason_OldDeviceUnavailable) {
+
+    // in play and record, have to force audio to the main speaker
+    UInt32 audioRouteOverride = kAudioSessionOverrideAudioRoute_Speaker;
+    AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute,
+                            sizeof(audioRouteOverride), &audioRouteOverride);
+  }
+
+  if (routeChangeReason == kAudioSessionRouteChangeReason_NewDeviceAvailable)
+  {
+    //NSLog(@"Headphones plugged in");
+  }
+}
+
 - (BOOL)setupAudioSession
 {
+  AudioSessionPropertyID routeChangeID = kAudioSessionProperty_AudioRouteChange;
+  AudioSessionAddPropertyListener(routeChangeID, audioRouteChangeListenerCallback, nil);
+
+  // Deactivate audio session for configuration
+  [[AVAudioSession sharedInstance] setActive: NO error: nil];
+
   // Set the audio session category to play and record to enable the microphone..
   NSError *audioSessionError = nil;
   BOOL result = [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord
@@ -99,12 +134,17 @@
     return NO;
   }
 
-  // in play and record, have to force audio to the main speaker
-  UInt32 audioRouteOverride = kAudioSessionOverrideAudioRoute_Speaker;
-  AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute,
-                          sizeof(audioRouteOverride), &audioRouteOverride);
+  UInt32 allowMixing = true;
 
-  self.didAudioSessionSetup = YES;
+  AudioSessionSetProperty (kAudioSessionProperty_OverrideCategoryMixWithOthers,  // 1
+                           sizeof (allowMixing),                                 // 2
+                           &allowMixing                                          // 3
+                           );
+
+  [[AVAudioSession sharedInstance] setMode:AVAudioSessionModeMeasurement error:nil];
+
+  // Reactivate audio session
+  [[AVAudioSession sharedInstance] setActive: YES error: nil];
 
   return YES;
 }
@@ -126,11 +166,9 @@
   }
 
   // setup audio session if necessary
-  if(self.didAudioSessionSetup == NO) {
-    NSLog(@"Setting up audio session");
-    if([self setupAudioSession] == NO) {
-      return NO;
-    }
+  NSLog(@"Setting up audio session");
+  if([self setupAudioSession] == NO) {
+    return NO;
   }
 
   self.running = YES;
@@ -282,11 +320,11 @@
 {
   [self startSpinner];
 
-  // this will return false if in the middle of a phone call,
-  // stop the spinner and requeue the process
+  // if audio recorder returns false, stop the acr process.
+  // it is up to the caller how to reactivate
   if([self.audioRecorder record:self.sampleDuration] == NO) {
     [self stopSpinner];
-    [self finishedRun];
+    self.running = NO;
   }
 
   return YES;
@@ -419,7 +457,7 @@
 - (void)recorderFailure:(NSError *)error
 {
   [self stopSpinner];
-  
+
   ADTLogInfo(@"ACR process ending: recorderFinished experienced and error..");
 
   self.running = NO;
@@ -565,7 +603,7 @@
   self.kvoSetup = YES;
 }
 
-	
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
   if([keyPath isEqual:@"running"]) {
@@ -573,7 +611,7 @@
     // is isRunning set to NO, call delegate finished method
     if(self.isRunning == NO && change[@"new"] != change[@"old"]) {
       [self stopSpinner];
-      
+
       if(self.isRunning == NO && [self.delegate respondsToSelector:@selector(ADTClientDidFinishSuccessfully)])
         [self.delegate ADTClientDidFinishSuccessfully];
     }

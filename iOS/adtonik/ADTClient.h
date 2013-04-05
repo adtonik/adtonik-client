@@ -39,13 +39,6 @@
 // audio processing errors as well as when the server returns results..
 @property (nonatomic, weak) id <ADTClientDelegate> delegate;
 
-/**
-  Set to true when audio session has been setup.
-  To prevent AdTonik library from doing session setup, set this to YES before calling start.
-  Library requires AVAudioSessionCategoryRecord or AVAudioSessionCategoryPlayAndRecord
- */
-@property (nonatomic, assign) BOOL didAudioSessionSetup;
-
 #pragma mark -
 #pragma mark Collecting SDK Version
 
