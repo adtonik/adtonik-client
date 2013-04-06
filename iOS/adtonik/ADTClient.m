@@ -141,8 +141,6 @@ void audioRouteChangeListenerCallback(void *inUserData,
                            &allowMixing                                          // 3
                            );
 
-  //  [[AVAudioSession sharedInstance] setMode:AVAudioSessionModeMeasurement error:nil];
-
   // Reactivate audio session
   [[AVAudioSession sharedInstance] setActive: YES error: nil];
 
