@@ -40,11 +40,8 @@ NSString *ADTAdvertisingIdentifier(void)
 {
   NSString *identifier = nil;
 
-  if (NSClassFromString(@"ASIdentifierManager")) {
+  if (NSClassFromString(@"ASIdentifierManager"))
     identifier = ADTSHA1Digest([[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString]);
-  } else {
-    identifier = ADTSHA1Digest([[UIDevice currentDevice] uniqueIdentifier]);
-  }
 
   return identifier;
 }

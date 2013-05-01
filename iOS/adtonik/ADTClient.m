@@ -158,6 +158,18 @@ void audioRouteChangeListenerCallback(void *inUserData,
   return NO;
 #endif
 
+  float version = [[[UIDevice currentDevice] systemVersion] floatValue];
+
+  if(version < 6) {
+    NSLog(@"ADTClient does not support iOS < 6");
+    return NO;
+  }
+
+  if(![self getAdvertiserIdentifier]) {
+    NSLog(@"ADTClient needs the advertiser identifier or equivalent to run");
+    return NO;
+  }
+
   if(self.isRunning) {
     ADTLogError(@"acr is already running..");
     return NO;
