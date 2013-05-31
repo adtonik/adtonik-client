@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/ADTClient.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/ADTClient</TokenIdentifier>
+			<Abstract type="html">An instance of the ADTClient class discovers what a user is watching on television using
+audio automated content recognition technology. This works by turning on the microphone and taking
+a sample, processing the raw audio to pull out fingerprints and then querying the ACR api server
+to receive the results.</Abstract>
+			<DeclaredIn>ADTClient.h</DeclaredIn>
+			
+			<NodeRef refid="2"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ADTClient/setDidAudioSessionSetup:</TokenIdentifier>
+			<Abstract type="html">  Set to true when audio session has been setup.
+  To prevent AdTonik library from doing session setup, set this to YES before calling start.
+  Library requires AVAudioSessionCategoryRecord or AVAudioSessionCategoryPlayAndRecord</Abstract>
+			<DeclaredIn>ADTClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) BOOL didAudioSessionSetup</Declaration>
+			
+			
+			<Anchor>//api/name/didAudioSessionSetup</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/ADTClient/didAudioSessionSetup</TokenIdentifier>
+			<Abstract type="html">  Set to true when audio session has been setup.
+  To prevent AdTonik library from doing session setup, set this to YES before calling start.
+  Library requires AVAudioSessionCategoryRecord or AVAudioSessionCategoryPlayAndRecord</Abstract>
+			<DeclaredIn>ADTClient.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) BOOL didAudioSessionSetup</Declaration>
+			
+			
+			<Anchor>//api/name/didAudioSessionSetup</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ADTClient/initWithDelegate:doRefresh:appID:appSecret:</TokenIdentifier>
+			<Abstract type="html">Initializes the audio ACR object</Abstract>
+			<DeclaredIn>ADTClient.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithDelegate:(id&lt;ADTClientDelegate&gt;)delegate doRefresh:(BOOL)refreshFlag appID:(NSString *)appID appSecret:(NSString *)appSecret</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>delegate</Name>
+					<Abstract type="html">The ADTClientDelegate object</Abstract>
+				</Parameter><Parameter>
+					<Name>refreshFlag</Name>
+					<Abstract type="html">Set to YES to continue to run in background</Abstract>
+				</Parameter><Parameter>
+					<Name>appID</Name>
+					<Abstract type="html">The AdTonik assigned appID</Abstract>
+				</Parameter><Parameter>
+					<Name>appSecret</Name>
+					<Abstract type="html">The AdTonik assigned appSecret</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">Returns initialized instance or nil if initialization fails.</Abstract></ReturnValue>
+			<Anchor>//api/name/initWithDelegate:doRefresh:appID:appSecret:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ADTClient/setupAudioSession</TokenIdentifier>
+			<Abstract type="html">  Sets up the audio session to allow microphone use.</Abstract>
+			<DeclaredIn>ADTClient.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)setupAudioSession</Declaration>
+			
+			
+			<Anchor>//api/name/setupAudioSession</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ADTClient/start</TokenIdentifier>
+			<Abstract type="html">Call start to begin ACR process.</Abstract>
+			<DeclaredIn>ADTClient.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)start</Declaration>
+			
+			<ReturnValue><Abstract type="html">YES if start was successful</Abstract></ReturnValue>
+			<Anchor>//api/name/start</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ADTClient/stop</TokenIdentifier>
+			<Abstract type="html">Call stop to end ACR process.</Abstract>
+			<DeclaredIn>ADTClient.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)stop</Declaration>
+			
+			<ReturnValue><Abstract type="html">YES if stop was successful</Abstract></ReturnValue>
+			<Anchor>//api/name/stop</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

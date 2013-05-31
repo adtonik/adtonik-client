@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/ADTClientDelegate.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/ADTClientDelegate</TokenIdentifier>
+			<Abstract type="html">The delegate of an ADTClient object must adopt the ADTClientDelegate protocol.
+These methods allow the delegate to receive ACR results and be notified upon errors.</Abstract>
+			<DeclaredIn>ADTClientDelegate.h</DeclaredIn>
+			
+			<NodeRef refid="4"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/ADTClientDelegate/ADTClientDidReceiveMatch:</TokenIdentifier>
+			<Abstract type="html">Called by the system when results have been received from the API server.</Abstract>
+			<DeclaredIn>ADTClientDelegate.h</DeclaredIn>			
+			
+			<Declaration>- (void)ADTClientDidReceiveMatch:(NSDictionary *)results</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>results</Name>
+					<Abstract type="html">NSDictionary containing meta-data of the content that was matched</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/ADTClientDidReceiveMatch:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/ADTClientDelegate/ADTClientDidReceiveAd:</TokenIdentifier>
+			<Abstract type="html">Called by the system when an ad is available for this device.</Abstract>
+			<DeclaredIn>ADTClientDelegate.h</DeclaredIn>			
+			
+			<Declaration>- (void)ADTClientDidReceiveAd:(ADTClient *)adtonik</Declaration>
+			
+			
+			<Anchor>//api/name/ADTClientDidReceiveAd:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/ADTClientDelegate/ADTAdvertiserIdentifier</TokenIdentifier>
+			<Abstract type="html">Optional method to override the AdvertiserIdentifier method. AdTonik uses the IFA to pair the
+ad call to the tv data, therefore this method must return the same IFA used by your chosen ad sdk.</Abstract>
+			<DeclaredIn>ADTClientDelegate.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)ADTAdvertiserIdentifier</Declaration>
+			
+			
+			<Anchor>//api/name/ADTAdvertiserIdentifier</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/ADTClientDelegate/ADTClientDidFinishSuccessfully</TokenIdentifier>
+			<Abstract type="html">Called by the system when the ACR process is complete. If doRefresh is set to YES, this method
+will only be executed when the caller calls the stop method.</Abstract>
+			<DeclaredIn>ADTClientDelegate.h</DeclaredIn>			
+			
+			<Declaration>- (void)ADTClientDidFinishSuccessfully</Declaration>
+			
+			
+			<Anchor>//api/name/ADTClientDidFinishSuccessfully</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/ADTClientDelegate/ADTClientErrorDidOccur:</TokenIdentifier>
+			<Abstract type="html">Called by the system when an error occurs.</Abstract>
+			<DeclaredIn>ADTClientDelegate.h</DeclaredIn>			
+			
+			<Declaration>- (void)ADTClientErrorDidOccur:(NSError *)error</Declaration>
+			
+			
+			<Anchor>//api/name/ADTClientErrorDidOccur:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/ADTClientDelegate/ADTWillPresentInfoPaneView:</TokenIdentifier>
+			<Abstract type="html">These callbacks are executed when the info panel is about to be presented or dismissed as a modal
+view. Your application may need to perform an action when the modal is displayed (i.e.: pausing
+the game).</Abstract>
+			<DeclaredIn>ADTClientDelegate.h</DeclaredIn>			
+			
+			<Declaration>- (void)ADTWillPresentInfoPaneView:(ADTClient *)client</Declaration>
+			
+			
+			<Anchor>//api/name/ADTWillPresentInfoPaneView:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

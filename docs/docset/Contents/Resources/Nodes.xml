@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DocSetNodes version="1.0">
+    <TOC>
+        <Node type="folder">
+            <Name>AdTonik SDK</Name>
+            <Path>index.html</Path>
+			<Subnodes>
+                
+				
+				<Node type="folder">
+					<Name>Classes</Name>
+					<Path>index.html</Path>
+					<Subnodes>
+						<NodeRef refid="1"/>
+						<NodeRef refid="2"/>
+						
+					</Subnodes>
+				</Node>
+				
+				
+				
+				<Node type="folder">
+					<Name>Protocols</Name>
+					<Path>index.html</Path>
+					<Subnodes>
+						<NodeRef refid="3"/>
+						<NodeRef refid="4"/>
+						
+					</Subnodes>
+				</Node>
+				
+			</Subnodes>
+        </Node>
+    </TOC>
+	<Library>
+		
+		<Node id="1">
+			<Name>ADTAudioRecorder</Name>
+			<Path>Classes/ADTAudioRecorder.html</Path>
+		</Node>
+		<Node id="2">
+			<Name>ADTClient</Name>
+			<Path>Classes/ADTClient.html</Path>
+		</Node>
+		
+		
+		<Node id="3">
+			<Name>ADTAudioRecorderDelegate</Name>
+			<Path>Protocols/ADTAudioRecorderDelegate.html</Path>
+		</Node>
+		<Node id="4">
+			<Name>ADTClientDelegate</Name>
+			<Path>Protocols/ADTClientDelegate.html</Path>
+		</Node>
+		
+	</Library>
+</DocSetNodes>
